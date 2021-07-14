@@ -1,0 +1,19 @@
+.column {
+    column-count: 5;
+    width: 60%;
+    margin:0 auto;
+    margin-top: 20px;
+    font-family:Arial, Verdana, sans-serif;
+}
+.link_theme_auto{
+    text-decoration:none;
+    color:#157ee1;
+}
+.link_theme_auto:hover{
+    color:#db3727;
+}
+.h2_style{
+    font-family:Arial, Verdana, sans-serif;
+    width: 60%;
+    margin:0 auto;
+}
