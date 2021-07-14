@@ -27,7 +27,7 @@ public class CatalogController {
     public String showBrands(Model model) {
         List<String> brands = transportService.findDistinctBrand();
         model.addAttribute("brands", brands);
-        return "catalog.cars/brands";
+        return "catalog/brands";
     }
 
     @GetMapping("/{brand}")
@@ -35,7 +35,7 @@ public class CatalogController {
         List<String> models = transportService.findDistinctModels(brand);
         model.addAttribute("brand", brand);
         model.addAttribute("models", models);
-        return "catalog.cars/models";
+        return "catalog/models";
     }
 
     @GetMapping("/{brand}/{model}")
@@ -44,7 +44,7 @@ public class CatalogController {
         m.addAttribute("brand", brand);
         m.addAttribute("model", model);
         m.addAttribute("generations", generations);
-        return "catalog.cars/generation";
+        return "catalog/generation";
     }
 
     @GetMapping("/{brand}/{model}/{generation}")
@@ -54,6 +54,6 @@ public class CatalogController {
                            Model m) {
         List<Transport> transports = transportService.findByModelAndGeneration(model, generation);
         m.addAttribute("transports", transports);
-        return "catalog.cars/transports";
+        return "catalog/transports";
     }
 }

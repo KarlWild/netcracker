@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Объявление</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body style="font-family: Arial,Helvetica Neue,Helvetica, sans-serif; margin:0 auto">
+
+
+<h2 class="h2_style" style="margin-left: 10%">
+    <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+    <p th:text="${ad.price} + ' ' + ₽"></p>
+</h2>
+
+<table width="30%" cellspacing="0" cellpadding="0" style="margin-left: 10%">
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Год выпуска</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Пробег</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.mileage} + ' км'"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Кузов</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.transport.bodyType}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Цвет</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.color}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Двигатель и коробка</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Привод</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.driveUnit}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Состояние</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.broken} ? 'Битый / не на ходу' : 'Не требует ремонта'"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Владельцы</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.numberOfOwners}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">ПТС</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.vehiclePassport}"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Таможня</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.customsCleared} ? 'Растоможен' : 'Не растоможен'"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Гарантия</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.guarantee} ? 'На гарантии' : 'Не на гарантии'"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">VIN</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "${ad.getStateNumber.substring(0, 3)} + '**************'"></p>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="40%" valign="top" style="color: grey">
+            <p style="margin: 5px">Госномер</p>
+        </td>
+        <td valign="top" style="color: black">
+            <p style="margin: 5px" th:text= "'******' + ${ad.getStateNumber.substring(6)}"></p>
+        </td>
+    </tr>
+
+</table>
+
+<div style="margin-left: 10%; word-wrap: break-word; width: 80%">
+    <b><p>Описание</p></b>
+    <p th:text="${ad.description}"></p>
+
+</div>
+
+<div th:if= "${ads != null}">
+    <div style="width: 50%; height: 50%" th:each="ad : ${ads}">
+
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" th:src="@{'/photos/' + ${preview.fileName}}" alt="First slide">
+                </div>
+
+                <div class="carousel-item" th:each="photo : ${ad.photos}">
+                    <img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}" alt="Second slide">
+                </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:if="${#lists.isEmpty(ads)}" style="width: 50%; height: 50%">
+    <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" th:src="@{'/photos/' + ${preview.fileName}}" alt="First slide">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
