@@ -3,11 +3,11 @@ package com.netcracker.auto.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -16,24 +16,46 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+    @Column(name = "first_name")
     private String first_name;
+    @Column(name = "last_name")
     private String last_name;
-    private Date date_of_birth;
+    @Column(name = "date_of_birth")
+    private LocalDate date_of_birth;
+    @Column(name = "phone_number")
     private String phone_number;
+    @Column(name = "email")
     private String email;
+    @Column(name = "confirmed")
     private boolean confirmed;
+    @Column(name = "balance")
     private double balance;
+    @Column(name = "seller_rating")
     private int seller_rating;
+    @Column(name = "buyers_rating")
     private int buyers_rating;
+    @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;
-    //private List<String> role;
+    @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<RolesEntity> roles;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+    public void setDefault(){
+        confirmed = false;
+        date_of_birth =  LocalDate.now();
+        balance = 0;
+        buyers_rating = 0;
+        seller_rating = 0;
+        phone_number = "";
+    }
 
     public void setFirstName(String firstName) {
         this.first_name = firstName;
@@ -41,10 +63,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.last_name = lastName;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
     }
 
     public void setPassword(String password) {
@@ -67,7 +85,7 @@ public class User {
         return confirmed;
     }
 
-    public Date getDate_of_birth() {
+    public LocalDate getDate_of_birth() {
         return date_of_birth;
     }
 
@@ -111,7 +129,7 @@ public class User {
         this.confirmed = confirmed;
     }
 
-    public void setDate_of_birth(Date date_of_birth) {
+    public void setDate_of_birth(LocalDate date_of_birth) {
         this.date_of_birth = date_of_birth;
     }
 
@@ -125,10 +143,6 @@ public class User {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
     }
 
     public void setUserId(Integer userId) {
