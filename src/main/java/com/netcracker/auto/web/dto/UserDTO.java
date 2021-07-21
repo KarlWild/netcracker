@@ -21,9 +21,9 @@ public class UserDTO {
     private String password;
     private String matchingPassword;
 
-    @ValidEmail
     @NotEmpty
     @NotNull
+    //@ValidEmail
     private String email;
 
     public String getEmail() {

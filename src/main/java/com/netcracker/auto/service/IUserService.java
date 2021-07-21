@@ -22,7 +22,7 @@ public interface IUserService {
 //
 //    void createVerificationTokenForUser(User user, String token);
 //
-//    User findUserByEmail(String email);
+   User findUserByEmail(String email);
 //
 //    Optional<User> getUserByID(long id);
 //

@@ -51,20 +51,19 @@
     </div>
 </nav>
 
-<h1>form</h1>
-<!--/*@thymesVar id="userDTO" type="com.netcracker.auto.web.dto.UserDTO"*/-->
-<form action="/" th:object="${userDTO}" method="POST" enctype="utf8">
+<h1>Registration</h1>
+<form action="/reg" th:object="${user}" method="POST" enctype="utf8">
     <div>
 <!--        <label th:text="#{userDTO.firstName}">first</label>-->
         <label>first name</label>
-        <input th:field="*{firstName}"/>
+        <input type="text" th:field="*{firstName}" />
         <p th:each="error: ${#fields.errors('firstName')}"
            th:text="${error}">Validation error</p>
     </div>
     <div>
         <!--label th:text="#{userDTO.lastName}">last</label-->
         <label>last name</label>
-        <input th:field="*{lastName}"/>
+        <input type="text" th:field="*{lastName}"/>
         <p th:each="error : ${#fields.errors('lastName')}"
            th:text="${error}">Validation error</p>
     </div>
@@ -92,7 +91,7 @@
 </form>
 
 <!--<a th:href="@{/login.html}" th:text="#{label.form.loginLink}">login</a>-->
-<a th:href="/login">login</a>
+<a href="/login">login</a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
