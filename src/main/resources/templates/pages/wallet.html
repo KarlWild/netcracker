@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+
+    <title>Кошелек</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalog/cars}">Объявления</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Отзывы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Сообщения</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Избранное</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Кошелек
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">История</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
+                </li>
+            </ul>
+            <form th:action="@{/lk/all}" class="d-flex">
+                <button type="submit" class="btn btn-outline-warning">Личный кабинет</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="form-group" style="width: 35%; padding-left: 50px">
+    <h1>Баланс кошелька</h1>
+    <!--<h2 th:field="*{user.balance}"></h2>-->
+    <p th:text="*{user.balance}" style="size: 20px">Balance</p>
+    <hr>
+    <form action="#"
+          th:action="@{/lk/addBalance}"
+          th:object="${user}"
+          method="post">
+        <input type="hidden" th:field="*{userId}">
+        <input type="hidden" th:field="*{first_name}">
+        <input type="hidden" th:field="*{last_name}">
+        <input type="hidden" th:field="*{phone_number}">
+        <input type="hidden" th:field="*{email}">
+        <input type="hidden" th:field="*{date_of_birth}">
+        <input type="hidden" th:field="*{seller_rating}">
+        <input type="hidden" th:field="*{buyers_rating}">
+        <input type="hidden" th:field="*{confirmed}">
+        <input type="hidden" th:field="*{balance}">
+        <input type="hidden" th:field="*{password}">
+
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <span class="input-group-text">₽</span>
+                <input type="text" class="form-control" placeholder="Введите сумму"
+                       th:name="money" aria-label="Количество">
+                <span class="input-group-text">.00</span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 50%">Пополнить</button>
+    </form>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

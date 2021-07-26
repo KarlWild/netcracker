@@ -51,4 +51,12 @@ public class UserService implements IUserService {
     }
 
     private boolean emailExist(String email) { return repository.findByEmail(email) != null; }
+
+    public void updateBalance(Double money, Long id) {
+        repository.updateUserBalanceById(money, id);
+    }
+
+    public void saveUser(User user) {
+        repository.save(user);
+    }
 }

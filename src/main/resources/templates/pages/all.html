@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+
+    <title>Кошелек</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalog/cars}">Объявления</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Отзывы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Сообщения</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Избранное</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/lk/wallet}">Кошелек</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">История</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
+                </li>
+            </ul>
+            <th:block sec:authorize="isAuthenticated()">
+                <h2 th:text="${user.email}"></h2>
+                <form th:action="@{/logout}" class="d-flex">
+                    <button type="submit" class="btn btn-danger">Выход</button>
+                </form>
+            </th:block>
+
+            <!--<form th:action="@{/reg}" class="d-flex">
+                <button type="submit" class="btn btn-outline-warning">Личный кабинет</button>
+            </form>-->
+        </div>
+    </div>
+</nav>
+
+<fieldset>
+    <div class="form-group" style="width: 35%; padding-left: 50px">
+        <label class="form-label mt-4" style="font-size: 35px;">Личный кабинет</label>
+        <!--<span sec:authentication="principal.first_name">Roles</span>-->
+
+        <!--<th:block sec:authorize="isAuthenticated()">
+            Hello
+            <a th:href="@{/lk/all}" th:utext="${user.balance}">..</a>
+            &nbsp;|&nbsp;
+            <a th:href="@{/lk/logout}">Logout</a>
+        </th:block>
+
+        <th:block sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}">Login</a>
+        </th:block>-->
+
+        <form action="#"
+              th:action="@{/lk/all/update}"
+              th:object="${user}"
+              method="post">
+            <input type="hidden" th:field="*{userId}">
+            <input type="hidden" th:field="*{seller_rating}">
+            <input type="hidden" th:field="*{buyers_rating}">
+            <input type="hidden" th:field="*{confirmed}">
+            <input type="hidden" th:field="*{balance}">
+            <input type="hidden" th:field="*{date_of_birth}">
+
+            <div class="form-group">
+                <label for="exampleInputFirstName" class="form-label mt-4">Имя</label>
+                <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="firstNameHelp" th:field="*{first_name}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputLastName" class="form-label mt-4">Фамилия</label>
+                <input type="text" class="form-control" id="exampleInputLastName" aria-describedby="lastNameHelp" th:field="*{last_name}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="form-label mt-4">E-mail</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:field="*{email}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль" th:field="*{password}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPhoneNumber" class="form-label mt-4">Номер телефона</label>
+                <input type="text" class="form-control" id="exampleInputPhoneNumber" aria-describedby="phoneNumberHelp" th:field="*{phone_number}">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 50%">Редактировать</button>
+        </form>
+
+        <!--<h1 th:text="${user.getBalance()}"></h1>-->
+        <!--<h1 th:text="${user.getUsername()}"></h1>
+        <h1 th:text="${user.getFirstName()}"></h1>-->
+    </div>
+</fieldset>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
