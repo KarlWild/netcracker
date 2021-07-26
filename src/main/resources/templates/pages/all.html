@@ -29,7 +29,7 @@
                     <a class="nav-link" th:href="@{/catalog/cars}">Объявления</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Отзывы</a>
+                    <a class="nav-link" th:href="@{/lk/reviews}">Отзывы</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Сообщения</a>
@@ -102,7 +102,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль" th:field="*{password}">
+                <input type="password" class="form-control" id="exampleInputPassword1" th:placeholder="*{password}" th:field="*{password}">
             </div>
             <div class="form-group">
                 <label for="exampleInputPhoneNumber" class="form-label mt-4">Номер телефона</label>

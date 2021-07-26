@@ -46,7 +46,7 @@ public class UserService implements IUserService {
         return repository.findByEmail(email);
     }
 
-    private void encodePassword( User userEntity, UserDTO user){
+    private void encodePassword(User userEntity, UserDTO user){
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
