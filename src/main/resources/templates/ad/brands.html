@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+    <h2 class="h2_style">Выбор марки</h2>
+    <div class="column">
+
+        <li style="margin-bottom: 10px" type="none" th:each="brand : ${brands}">
+            <a class="link_theme_auto" th:text="${brand.toString()}" th:href="@{{brand}(brand=${brand.toString()})}"></a>
+        </li>
+
+    </div>
+</body>
+</html>
+

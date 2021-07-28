@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+    <h2 class="h2_style">Выбор поколения <p th:text="${brand + ' ' + model}"></p> </h2>
+    <div style="width: 60%; font-family:Arial, Verdana, sans-serif; margin-top: 20px; margin:0 auto;">
+
+        <li style="margin-bottom: 10px" type="none" th:each="generation : ${generations}">
+            <a class="link_theme_auto"
+               th:text="${generation.key}"
+               th:href="@{{model}/{generation}(model=${model.toString()}, generation=${generation.value})}">
+            </a>
+        </li>
+
+    </div>
+</body>
+</html>
