@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+
+    <title>Каталог автомобилей</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalog/cars}">Каталог</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">О нас</a>
+                </li>
+                <li>
+                    <form class="d-flex">
+                        <input class="form-control me-sm-2" type="text" placeholder="Поиск по объявлениям">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Поиск</button>
+                    </form>
+                </li>
+            </ul>
+            <th:block sec:authorize="!isAuthenticated()">
+                <form th:action="@{/reg}" class="d-flex">
+                    <button type="submit" class="btn btn-outline-warning">Регистрация</button>
+                </form>
+                <form th:action="@{/login}" class="d-flex" style="margin-left: 15px">
+                    <button type="submit" class="btn btn-outline-success">Вход</button>
+                </form>
+            </th:block>
+        </div>
+    </div>
+</nav>
+<h2 class="h2_style">Выбор марки</h2>
+<div class="column">
+
+    <li style="margin-bottom: 10px" type="none" th:each="brand : ${brands}">
+        <a class="link_theme_auto" th:text="${brand.toString()}"
+           th:href="@{cars/{brand}(brand=${brand.toString()})}"></a>
+    </li>
+
+</div>
+</body>
+</html>
+
