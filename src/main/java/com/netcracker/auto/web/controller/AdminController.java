@@ -1,7 +1,6 @@
 package com.netcracker.auto.web.controller;
 
 import com.netcracker.auto.entity.Ad;
-import com.netcracker.auto.entity.Photo;
 import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
