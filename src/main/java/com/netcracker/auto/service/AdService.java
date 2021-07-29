@@ -34,7 +34,7 @@ public class AdService {
 
     @Transactional
     public List<Ad> findUnVerified(){
-        List<Ad> list = adRepository.findByVerified();
+        List<Ad> list = adRepository.findByVerifiedAndStatus("Отправлено на модерацию");
         //list.sort(new AdService.ComparatorIgnoreCaseAndSpace());
         return list;
     }

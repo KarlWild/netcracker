@@ -30,12 +30,20 @@ public class AdminController {
         model.addAttribute("admin", adService.findUnVerified());
         return "admin/admin";
     }
-    @PostMapping("/{id}")
+    @PostMapping("/approve/{id}")
     public String verifyAd(@PathVariable("id") Long id) {
         Ad ad = adService.findById(id).get();
+        ad.setStatus("Ок");
         ad.setVerified(true);
         adService.saveAd(ad);
 
+        return "redirect:/admin";
+    }
+    @PostMapping("/reject/{id}")
+    public String changeStatus(@PathVariable("id") Long id) {
+        Ad ad = adService.findById(id).get();
+        ad.setStatus("Отклонено");
+        adService.saveAd(ad);
         return "redirect:/admin";
     }
 }
