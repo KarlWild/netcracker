@@ -17,7 +17,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="entityManagerFactory" />
+          <factory-entry name="entityManagerFactory" value="2b4b3713-a883-4b23-bb61-b9c3de901e3e" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -64,7 +64,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.8" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.31" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:5.3.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:2.5.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.5.2" level="project" />
@@ -142,5 +141,7 @@
     <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.4.2.Final" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.31" level="project" />
   </component>
 </module>

@@ -18,7 +18,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Long userId;
     @Column(name = "first_name")
     private String first_name;
     @Column(name = "last_name")
@@ -97,7 +97,7 @@ public class User {
         return buyers_rating;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -145,7 +145,7 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

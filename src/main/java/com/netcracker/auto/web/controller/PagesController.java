@@ -30,4 +30,5 @@ public class PagesController {
         return "pages/reg";
     }
 
+
 }
