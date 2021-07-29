@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <th:block sec:authorize="isAuthenticated()">
-                <h2 th:text="${user.email}"></h2>
+                <h2 th:text="${user.email}" style="color:white"></h2>
                 <form th:action="@{/logout}" class="d-flex">
                     <button type="submit" class="btn btn-danger">Выход</button>
                 </form>

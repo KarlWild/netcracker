@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -42,12 +42,14 @@
                     </form>
                 </li>
             </ul>
-            <form th:action="@{/reg}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Регистрация</button>
-            </form>
-            <form th:action="@{/login}" class="d-flex" style="margin-left: 15px">
-                <button type="submit" class="btn btn-outline-success">Вход</button>
-            </form>
+            <th:block sec:authorize="!isAuthenticated()">
+                <form th:action="@{/reg}" class="d-flex">
+                    <button type="submit" class="btn btn-outline-warning">Регистрация</button>
+                </form>
+                <form th:action="@{/login}" class="d-flex" style="margin-left: 15px">
+                    <button type="submit" class="btn btn-outline-success">Вход</button>
+                </form>
+            </th:block>
         </div>
     </div>
 </nav>
