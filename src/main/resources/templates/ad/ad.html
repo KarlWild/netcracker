@@ -162,7 +162,7 @@
                         <p style="margin: 5px">VIN</p>
                     </td>
                     <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.getStateNumber.substring(0, 3)} + '**************'"></p>
+                        <p style="margin: 5px" th:text= "${ad.getStateNumber} + '**************'"></p><!--.substring(0, 3)-->
                     </td>
                 </tr>
 
@@ -171,7 +171,7 @@
                         <p style="margin: 5px">Госномер</p>
                     </td>
                     <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "'******' + ${ad.getStateNumber.substring(6)}"></p>
+                        <p style="margin: 5px" th:text= "'******' + ${ad.getStateNumber}"></p><!--.substring(6)-->
                     </td>
                 </tr>
 
