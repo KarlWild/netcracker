@@ -27,14 +27,10 @@ public class Ad {
     private Date yearOfIssue;
     private String color;
     private Integer mileage;
-    private Boolean broken;
-    private Boolean customsCleared;
     private String stateNumber;
     private String vin;
     private String sts;
-    private String vehiclePassport;
     private Integer numberOfOwners;
-    private Boolean guarantee;
     private String address;
     private Boolean verified;
     private String status;
