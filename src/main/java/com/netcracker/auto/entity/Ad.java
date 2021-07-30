@@ -34,6 +34,8 @@ public class Ad {
     private Long price;
     @Column(name = "drive_Unit")
     private String driveUnit;
+    private boolean verified;
+    private String status;
 
     public Ad(){}
 
@@ -71,10 +73,6 @@ public class Ad {
 
     public Date getYearOfIssue() {
         return yearOfIssue;
-    }
-
-    public void setYearOfIssue(Date yearOfIssue) {
-        this.yearOfIssue = yearOfIssue;
     }
 
     public String getColor() {
@@ -121,9 +119,6 @@ public class Ad {
         return numberOfOwners;
     }
 
-    public void setNumberOfOwners(Integer numberOfOwners) {
-        this.numberOfOwners = numberOfOwners;
-    }
 
     public String getAddress() {
         return address;
@@ -153,8 +148,5 @@ public class Ad {
         return driveUnit;
     }
 
-    public void setDriveUnit(String driveUnit) {
-        this.driveUnit = driveUnit;
-    }
 }
 

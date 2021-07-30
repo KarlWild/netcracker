@@ -1,4 +1,4 @@
-package com.netcracker.auto.controller;
+package com.netcracker.auto.web.controller;
 
 //import com.netcracker.auto.DAO.AdDAO;
 import com.netcracker.auto.entity.Ad;

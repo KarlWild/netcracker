@@ -81,13 +81,17 @@
         <td></td>
         <td></td>
         <td></td>
-        <td><button class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.adId})}">Подробнее</button></td>
-        <td><form th:action="@{/admin/approve/{id}(id=${ad.adId})}" method="POST">
+        <td><form th:action="@{/ads/{id}(id=${ad.id})}" method="GET">
+          <input type="hidden" name="param1" value="val" />
+          <input type="hidden" name="param2" value="val2" />
+          <button class="btn btn-dark" href="#" onclick="this.parentNode.submit()">Подробнее</button>
+        </form></td>
+        <td><form th:action="@{/admin/approve/{id}(id=${ad.id})}" method="POST">
           <input type="hidden" name="param1" value="val" />
           <input type="hidden" name="param2" value="val2" />
           <button class="btn btn-success" href="#" onclick="this.parentNode.submit()">Одобрить</button>
         </form></td>
-        <td><form th:action="@{/admin/reject/{id}(id=${ad.adId})}" method="POST">
+        <td><form th:action="@{/admin/reject/{id}(id=${ad.id})}" method="POST">
           <input type="hidden" name="param1" value="val" />
           <input type="hidden" name="param2" value="val2" />
           <button class="btn btn-danger" href="#" onclick="this.parentNode.submit()">Отклонить</button>

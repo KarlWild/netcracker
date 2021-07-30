@@ -19,11 +19,23 @@ public class AdService {
         this.adRepository = adRepository;
     }
 
+    @Transactional
+    public Optional<Ad> findById(int id) {
+        return adRepository.findById(id);
+    }
 
-
-    /*@Transactional
+    @Transactional
     public List<Ad> findAll() {
-        return adRepository.findAll();
-    }*/
+        return (List<Ad>) adRepository.findAll();
+    }
 
+    @Transactional
+    public List<Ad> findUnVerified(){
+        List<Ad> list = adRepository.findByVerifiedAndStatus("Отправлено на модерацию");
+        //list.sort(new AdService.ComparatorIgnoreCaseAndSpace());
+        return list;
+    }
+    public void saveAd(Ad ad){
+        adRepository.save(ad);
+    }
 }

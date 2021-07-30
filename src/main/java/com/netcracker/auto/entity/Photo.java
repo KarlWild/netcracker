@@ -26,7 +26,7 @@ public class Photo {
     public String toString() {
         return "Photo{" +
                 "photoId=" + photoId +
-                ", adId=" + ad.getAdId() +
+                //", adId=" + ad.getAdId() +
                 ", fileName='" + fileName + '\'' +
                 '}';
     }
