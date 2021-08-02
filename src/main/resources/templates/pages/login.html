@@ -8,56 +8,27 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
-
     <title>Главная страница</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalog/cars}">Каталог</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">О нас</a>
-                </li>
-                <li>
-                    <form class="d-flex">
-                        <label>
-                            <input class="form-control me-sm-2" type="text" placeholder="Поиск по объявлениям">
-                        </label>
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Поиск</button>
-                    </form>
-                </li>
-            </ul>
-            <form th:action="@{/reg}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Регистрация</button>
-            </form>
-            <form th:action="@{/login}" class="d-flex" style="margin-left: 15px">
-                <button type="submit" class="btn btn-outline-success">Вход</button>
-            </form>
-        </div>
-    </div>
-</nav>
+<div th:replace="fragments/navbar :: header"/>
 <h1>Login</h1>
 <form name='f' action="login" method='POST'>
     <table>
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">
+                Invalid username and password.
+            </div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">
+                You have been logged out.
+            </div>
+        </div>
         <tr>
             <td>User:</td>
-            <td><input type='email' name='username' value=''></td>
+            <td><input type='text' name='username' value=''></td>
         </tr>
         <tr>
             <td>Password:</td>

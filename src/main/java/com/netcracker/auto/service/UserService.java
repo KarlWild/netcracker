@@ -5,6 +5,7 @@ import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.UserRepository;
 import com.netcracker.auto.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class UserService implements IUserService {
     private UserRepository repository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public User registerNewUserAccount(UserDTO userDto) {//throws UserAlreadyExistException
@@ -33,11 +34,11 @@ public class UserService implements IUserService {
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-        user.setRoles(Set.of(RolesEntity.USER));
+        user.setRoles(Set.of(RolesEntity.ROLE_ADMIN));
         user.setDefault();
-        //encodePassword(user, userDto);
         return repository.save(user);
     }
 
@@ -46,9 +47,6 @@ public class UserService implements IUserService {
         return repository.findByEmail(email);
     }
 
-    private void encodePassword(User userEntity, UserDTO user){
-        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
 
     private boolean emailExist(String email) { return repository.findByEmail(email) != null; }
 

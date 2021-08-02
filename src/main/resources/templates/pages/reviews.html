@@ -14,46 +14,7 @@
     <title>Отзывы</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalog/cars}">Объявления</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/lk/reviews}">Отзывы
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Сообщения</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Избранное</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/wallet}">Кошелек</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">История</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
-                </li>
-            </ul>
-            <form th:action="@{/lk/all}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Личный кабинет</button>
-            </form>
-        </div>
-    </div>
-</nav>
+<div th:replace="fragments/navbar :: header-lk"/>
 
 
 <h1>ОТЗЫВЫ</h1>

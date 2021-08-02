@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -46,8 +47,15 @@ public class User {
     private Set<RolesEntity> roles;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        Set<RolesEntity> roles = this.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for (RolesEntity role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+        }
+        return authorities;
     }
+
     public void setDefault(){
         confirmed = false;
         date_of_birth =  LocalDate.now();
@@ -55,6 +63,10 @@ public class User {
         buyers_rating = 0;
         seller_rating = 0;
         phone_number = "";
+    }
+
+    public Set<RolesEntity> getRoles() {
+        return roles;
     }
 
     public void setFirstName(String firstName) {

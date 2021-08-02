@@ -3,18 +3,16 @@ package com.netcracker.auto.web.controller;
 import com.netcracker.auto.entity.Review;
 import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.ReviewRepository;
-import com.netcracker.auto.security.MyUserDetails;
 import com.netcracker.auto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,8 +28,10 @@ public class UserController {
     private ReviewRepository reviewRepository;
 
     @GetMapping("/all")
-    public String mainPage(Principal principal, Model model) {
+    public String mainPage(Principal principal, Model model) throws Exception {
         User user = userService.findUserByEmail(principal.getName());
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        System.out.println(authorities.toString());
         model.addAttribute("user", user);
         return "pages/all";
     }

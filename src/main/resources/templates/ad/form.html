@@ -5,10 +5,10 @@
     <title>Заполнение</title>
 </head>
 <body>
-
+<div th:replace="fragments/navbar :: header"/>
 <form th:method="POST" th:action="@{/ad/tmp}" th:object="${ad}">
 
-    <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId" />
+    <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId"/>
     <label for="address">Введите адрес: </label>
     <input type="text" th:field="*{address}" id="address"/>
     <br/>

@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    BCryptPasswordEncoder passwordEncoder;
 
     public WebSecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -41,20 +41,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/h2-console/**").permitAll()//hasRole("ADMIN")
-                .antMatchers("/login*").permitAll().and().
+                .antMatchers("/lk/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
+                .antMatchers("/h2-console/**").permitAll()//hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
+                .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/reg*").permitAll()
+                .antMatchers("/login*").permitAll().anyRequest().authenticated().and()
+                .csrf().disable().
                 formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/lk/all", true)
-                .failureUrl("/login?error=true");
-
-
-        http.csrf().disable();
+                .failureUrl("/login?error=true");;
         http.headers().frameOptions().disable();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
