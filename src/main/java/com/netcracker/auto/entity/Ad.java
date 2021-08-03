@@ -35,7 +35,7 @@ public class Ad {
     @Column(name = "drive_Unit")
     private String driveUnit;
     private boolean verified;
-    private String status;
+    private String status="open";
 
     public Ad(){}
 
