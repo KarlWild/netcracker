@@ -16,70 +16,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/ads")
+//@RequestMapping("/ads")
 public class AdController {
 
     private AdService adService;
     private PhotoService photoService;
+    private TransportService transportService;
+    private AdRepository adRepository;
 
     @Autowired
-    public AdController(AdService adService, PhotoService photoService) {
+    public AdController(AdService adService, PhotoService photoService, TransportService transportService,
+                        AdRepository adRepository) {
         this.adService = adService;
         this.photoService = photoService;
+        this.transportService=transportService;
+        this.adRepository=adRepository;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("ads/{id}")
     public String getAd(@PathVariable("id") Integer id, Model model) {
         Ad ad = adService.findById(id).get();
-
-        Photo preview;
         List<Ad> ads = new ArrayList<>();
-
-        /*if (ad.getPhotos().isEmpty()) {
-            preview = photoService.getNoPhoto();
-        }
-        else {
-            preview = ad.getPhotos().get(0);
-            ad.getPhotos().remove(0);
-            ads.add(ad);
-        }*/
-
-        //model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
         return "ad/ad";
     }
 
-    @GetMapping
+    @GetMapping("ads")
     public String getAds(Model model) {
         model.addAttribute("ads", adService.findAll());
         return "ad/ads";
     }
-    private TransportService transportService;
-    private AdRepository adRepository;
 
     @GetMapping("/ad/tmp")
     public String tmp() {
         return "ad/button";
     }
 
-    //записывается в бд без transport_id
-  /* @GetMapping("/new")
-    public String newForm( @ModelAttribute("ad") Ad ad) {
-        return "ad/form";
-    }
-
-    @PostMapping("/ad/tmp")
-    public String create(@ModelAttribute("ad")  Ad ad) {
-        adRepository.save(ad);
-        return "redirect:tmp";
-    }*/
-
-
-
-///////////////////////////////////////////////////////////
-
-    //не добавляется transport_id, не знаю как пофиксить
     @GetMapping("/new/{id}")
     public String newForm(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
         Transport transport=transportService.findById(id).get();

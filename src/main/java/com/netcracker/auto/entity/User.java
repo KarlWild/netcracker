@@ -45,9 +45,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<RolesEntity> roles;
 
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
     public void setDefault(){
         confirmed = false;
         date_of_birth =  LocalDate.now();
@@ -55,6 +57,14 @@ public class User {
         buyers_rating = 0;
         seller_rating = 0;
         phone_number = "";
+    }
+
+    public Set<RolesEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RolesEntity> roles) {
+        this.roles = roles;
     }
 
     public void setFirstName(String firstName) {
