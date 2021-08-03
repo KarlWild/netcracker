@@ -18,16 +18,12 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         final User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException("No user found with username: " + email);
+            throw new UsernameNotFoundException("No user found with email: " + email);
         }
         UserDetails user1 = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
                 .password(user.getPassword())
                 .authorities(user.getAuthorities()).build();
         return user1;
-
-//        return new org.springframework.security.core.userdetails.User(
-//                user.getEmail(), user.getPassword().toLowerCase(), true, true,
-//                true, true, user.getAuthorities());//getAuthorities(user.getRoles()));
     }
 
 

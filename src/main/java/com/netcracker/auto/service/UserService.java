@@ -35,9 +35,8 @@ public class UserService implements IUserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-        user.setRoles(Set.of(RolesEntity.ROLE_ADMIN));
+        user.setRoles(Set.of(RolesEntity.ROLE_USER));
         user.setDefault();
         return repository.save(user);
     }
@@ -46,7 +45,6 @@ public class UserService implements IUserService {
     public User findUserByEmail(String email) {
         return repository.findByEmail(email);
     }
-
 
     private boolean emailExist(String email) { return repository.findByEmail(email) != null; }
 

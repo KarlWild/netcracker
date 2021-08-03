@@ -30,8 +30,6 @@ public class UserController {
     @GetMapping("/all")
     public String mainPage(Principal principal, Model model) throws Exception {
         User user = userService.findUserByEmail(principal.getName());
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        System.out.println(authorities.toString());
         model.addAttribute("user", user);
         return "pages/all";
     }

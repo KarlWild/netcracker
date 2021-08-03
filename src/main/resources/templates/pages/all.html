@@ -15,7 +15,12 @@
 </head>
 
 <body>
-<div th:replace="fragments/navbar :: header-lk"/>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="fragments/navbar :: header-admin"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="fragments/navbar :: header-lk"/>
+</div>
 
 <fieldset>
     <div class="form-group" style="width: 35%; padding-left: 50px">

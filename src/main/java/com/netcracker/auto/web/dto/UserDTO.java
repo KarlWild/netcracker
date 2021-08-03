@@ -23,7 +23,6 @@ public class UserDTO {
 
     @NotEmpty
     @NotNull
-    //@ValidEmail
     private String email;
 
     public String getEmail() {
