@@ -26,7 +26,4 @@ public class Review {
 
     @Column(name = "text")
     private String text;
-
-    @Column(name = "rating")
-    private Double rating;
 }
