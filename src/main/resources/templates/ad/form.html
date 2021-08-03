@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заполнение</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: header"/>
+<form th:method="POST" th:action="@{/ad/tmp}" th:object="${ad}">
+
+    <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId"/>
+    <label for="address">Введите адрес: </label>
+    <input type="text" th:field="*{address}" id="address"/>
+    <br/>
+    <label for="color">Выберите цвет: </label>
+    <input type="text" th:field="*{color}" id="color"/>
+    <br/>
+    <label for="description">Описание: </label>
+    <input type="text" th:field="*{description}" id="description"/>
+    <br/>
+    <label for="driveUnit">Выберите привод машины</label>
+    <input type="text" th:field="*{driveUnit}" id="driveUnit"/>
+    <br/>
+    <label for="mileage">Введите пробег: </label>
+    <input type="text" th:field="*{mileage}" id="mileage"/>
+    <br/>
+    <label for="numberOfOwners">Введите количество владельцев: </label>
+    <input type="text" th:field="*{numberOfOwners}" id="numberOfOwners"/>
+    <br/>
+    <label for="price">Введите цену: </label>
+    <input type="text" th:field="*{price}" id="price"/>
+    <br/>
+    <label for="stateNumber">Введите номер машины: </label>
+    <input type="text" th:field="*{stateNumber}" id="stateNumber"/>
+    <br/>
+    <label for="sts">Введите СТС: </label>
+    <input type="text" th:field="*{sts}" id="sts"/>
+    <br/>
+    <label for="vin">Введите ВИН: </label>
+    <input type="text" th:field="*{vin}" id="vin"/>
+    <br/>
+    <label for="yearOfIssue">Введите дату выпуска: </label>
+    <input type="text" th:field="*{yearOfIssue}" id="yearOfIssue"/>
+    <br/>
+    <input type="submit" value="Create!"/>
+
+</form>
+
+
+</body>
+</html>

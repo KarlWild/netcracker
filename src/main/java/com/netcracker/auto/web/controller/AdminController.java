@@ -4,6 +4,8 @@ import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +24,15 @@ public class AdminController {
         this.adService = adService;
         this.photoService = photoService;
     }
+    @Secured("ROLE_ADMIN")
     @GetMapping
     public String getUnVerifiedAds(Model model) {
         model.addAttribute("admin", adService.findUnVerified());
         return "admin/admin";
     }
+    @Secured("ROLE_ADMIN")
     @PostMapping("/approve/{id}")
-    public String verifyAd(@PathVariable("id") Long id) {
+    public String verifyAd(@PathVariable("id") int id) {
         Ad ad = adService.findById(id).get();
         ad.setStatus("Ок");
         ad.setVerified(true);
@@ -36,8 +40,9 @@ public class AdminController {
 
         return "redirect:/admin";
     }
+    @Secured("ROLE_ADMIN")
     @PostMapping("/reject/{id}")
-    public String changeStatus(@PathVariable("id") Long id) {
+    public String changeStatus(@PathVariable("id") int id) {
         Ad ad = adService.findById(id).get();
         ad.setStatus("Отклонено");
         adService.saveAd(ad);

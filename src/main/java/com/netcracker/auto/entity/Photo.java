@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
+//sdf
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +26,7 @@ public class Photo {
     public String toString() {
         return "Photo{" +
                 "photoId=" + photoId +
-                ", adId=" + ad.getAdId() +
+                //", adId=" + ad.getAdId() +
                 ", fileName='" + fileName + '\'' +
                 '}';
     }

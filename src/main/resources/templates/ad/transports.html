@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="fragments/navbar :: header"/>
+<div style="width: 60%; margin:0 auto">
+    <h2 class="h2_style">Комплектации <p
+            th:text="${transports.get(0).brand + ' ' + transports.get(0).model + ' ' + transports.get(0).generationName + ' ' + transports.get(0).generationYears}"></p>
+    </h2>
+    <table class="table table-hover">
+        <tbody>
+        <tr align="center">
+            <th>Название</th>
+            <th>Двигатель и коробка</th>
+            <th>Тип кузова</th>
+            <th></th>
+        </tr>
+        <tr th:each="transport : ${transports}">
+            <td>
+                <p align="center" th:text="${transport.equipment}"></p>
+            </td>
+            <td>
+                <p align="center"
+                   th:text="${transport.specificationType + ' ' + transport.specificationPower + ' ' + transport.fuel}"></p>
+            </td>
+            <td>
+                <p align="center" th:text="${transport.bodyType}"></p>
+            </td>
+            <td>
+                <!--                   <a style="text-decoration:none;" th:href="@{/new}">Это моя машина!</a>-->
+
+                <a style="text-decoration:none;" th:href="@{/new/{id}(id=${transport.transportId})}">Это моя машина!</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

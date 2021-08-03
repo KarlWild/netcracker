@@ -2,14 +2,15 @@ package com.netcracker.auto.web.controller;
 
 import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.entity.Photo;
+import com.netcracker.auto.entity.Transport;
+import com.netcracker.auto.repository.AdRepository;
 import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.PhotoService;
+import com.netcracker.auto.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +29,22 @@ public class AdController {
     }
 
     @GetMapping("/{id}")
-    public String getAd(@PathVariable("id") Long id, Model model) {
+    public String getAd(@PathVariable("id") Integer id, Model model) {
         Ad ad = adService.findById(id).get();
 
         Photo preview;
         List<Ad> ads = new ArrayList<>();
 
-        if (ad.getPhotos().isEmpty()) {
+        /*if (ad.getPhotos().isEmpty()) {
             preview = photoService.getNoPhoto();
         }
         else {
             preview = ad.getPhotos().get(0);
             ad.getPhotos().remove(0);
             ads.add(ad);
-        }
+        }*/
 
-        model.addAttribute("preview", preview);
+        //model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
         return "ad/ad";
@@ -53,5 +54,45 @@ public class AdController {
     public String getAds(Model model) {
         model.addAttribute("ads", adService.findAll());
         return "ad/ads";
+    }
+    private TransportService transportService;
+    private AdRepository adRepository;
+
+    @GetMapping("/ad/tmp")
+    public String tmp() {
+        return "ad/button";
+    }
+
+    //записывается в бд без transport_id
+  /* @GetMapping("/new")
+    public String newForm( @ModelAttribute("ad") Ad ad) {
+        return "ad/form";
+    }
+
+    @PostMapping("/ad/tmp")
+    public String create(@ModelAttribute("ad")  Ad ad) {
+        adRepository.save(ad);
+        return "redirect:tmp";
+    }*/
+
+
+
+///////////////////////////////////////////////////////////
+
+    //не добавляется transport_id, не знаю как пофиксить
+    @GetMapping("/new/{id}")
+    public String newForm(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
+        Transport transport=transportService.findById(id).get();
+        ad.setTransport(transport);
+        //adRepository.save(ad);
+        return "ad/form";
+    }
+
+    @PostMapping("/ad/tmp")
+    public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
+        Transport transport=transportService.findById(id).get();
+        ad.setTransport(transport);
+        adRepository.save(ad);
+        return "redirect:tmp";
     }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="fragments/navbar :: header"/>
+<h2 class="h2_style">Выбор модели <p th:text="${brand}"></p></h2>
+<div class="column">
+
+    <li style="margin-bottom: 10px" type="none" th:each="model : ${models}">
+        <a class="link_theme_auto"
+           th:text="${model.toString()}"
+           th:href="@{{brand}/{model}(brand=${brand.toString()}, model=${model.toString()})}">
+        </a>
+    </li>
+</div>
+</body>
+</html>

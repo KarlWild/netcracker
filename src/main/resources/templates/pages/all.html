@@ -15,78 +15,20 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalog/cars}">Объявления</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/reviews}">Отзывы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Сообщения</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Избранное</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/wallet}">Кошелек</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">История</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
-                </li>
-            </ul>
-            <th:block sec:authorize="isAuthenticated()">
-                <h2 th:text="${user.email}" style="color:white"></h2>
-                <form th:action="@{/logout}" class="d-flex">
-                    <button type="submit" class="btn btn-danger">Выход</button>
-                </form>
-            </th:block>
-
-            <!--<form th:action="@{/reg}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Личный кабинет</button>
-            </form>-->
-        </div>
-    </div>
-</nav>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="fragments/navbar :: header-admin"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="fragments/navbar :: header-lk"/>
+</div>
 
 <fieldset>
     <div class="form-group" style="width: 35%; padding-left: 50px">
         <label class="form-label mt-4" style="font-size: 35px;">Личный кабинет</label>
-        <!--<span sec:authentication="principal.first_name">Roles</span>-->
-
-        <!--<th:block sec:authorize="isAuthenticated()">
-            Hello
-            <a th:href="@{/lk/all}" th:utext="${user.balance}">..</a>
-            &nbsp;|&nbsp;
-            <a th:href="@{/lk/logout}">Logout</a>
-        </th:block>
-
-        <th:block sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}">Login</a>
-        </th:block>-->
-
         <form action="#"
               th:action="@{/lk/all/update}"
               th:object="${user}"
               method="post">
-            <input type="hidden" th:field="*{userId}">
-            <input type="hidden" th:field="*{seller_rating}">
-            <input type="hidden" th:field="*{buyers_rating}">
-            <input type="hidden" th:field="*{confirmed}">
-            <input type="hidden" th:field="*{balance}">
-            <input type="hidden" th:field="*{date_of_birth}">
 
             <div class="form-group">
                 <label for="exampleInputFirstName" class="form-label mt-4">Имя</label>
