@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -46,14 +45,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<RolesEntity> roles;
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<RolesEntity> roles = this.getRoles();
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        for (RolesEntity role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-        }
-        return authorities;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
     }
 
     public void setDefault(){
@@ -67,6 +61,10 @@ public class User {
 
     public Set<RolesEntity> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Set<RolesEntity> roles) {
+        this.roles = roles;
     }
 
     public void setFirstName(String firstName) {

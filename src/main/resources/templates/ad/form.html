@@ -43,7 +43,10 @@
     <label for="yearOfIssue">Введите дату выпуска: </label>
     <input type="date" th:field="*{yearOfIssue}" id="yearOfIssue"/>
     <br/>
-    <input type="submit" value="Create!"/>
+    <input type="hidden" th:value="${ad.getStatus()}" th:name="status" />
+    <input type="hidden" th:value="${ad.isVerified()}" th:name="verified" />
+
+    <input type="submit" value="Создать!"/>
 
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

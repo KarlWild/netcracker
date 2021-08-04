@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     private AdService adService;
     private PhotoService photoService;
+
     @Autowired
     public AdminController(AdService adService, PhotoService photoService) {
         this.adService = adService;
