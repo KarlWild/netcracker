@@ -1,17 +1,13 @@
 package com.netcracker.auto.web.controller;
 
-//import com.netcracker.auto.DAO.AdDAO;
 import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.entity.Transport;
 import com.netcracker.auto.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,12 +21,6 @@ public class ChoiseController {
     public ChoiseController(TransportService transportService) {
         this.transportService = transportService;
     }
-
-    //временный адрес для перехода к заполнению/просмотру объявления
-    /*@GetMapping("/tmp")
-    public String tmp(){
-        return "ad/button";
-    }*/
 
     @GetMapping("/brands")
     public String showBrands(Model model) {
@@ -65,12 +55,6 @@ public class ChoiseController {
         List<Transport> transports = transportService.findByModelAndGeneration(model, generation);
         m.addAttribute("transports", transports);
         return "ad/transports";
-    }
-
-    //просмотр своих объявлений
-    @GetMapping("/myAds")
-    public String showAds(){
-        return "ad/ads";
     }
 
 }

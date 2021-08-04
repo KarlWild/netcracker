@@ -34,15 +34,28 @@ public class AdController {
     }
 
     @GetMapping("ads/{id}")
-    public String getAd(@PathVariable("id") Integer id, Model model) {
+    public String getAd(@PathVariable("id") int id, Model model) {
         Ad ad = adService.findById(id).get();
+
+        Photo preview;
         List<Ad> ads = new ArrayList<>();
+
+        if (ad.getPhotos().isEmpty()) {
+            preview = photoService.getNoPhoto();
+        }
+        else {
+            preview = ad.getPhotos().get(0);
+            ad.getPhotos().remove(0);
+            ads.add(ad);
+        }
+
+        model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
         return "ad/ad";
     }
 
-    @GetMapping("ads")
+    @GetMapping("/ads")
     public String getAds(Model model) {
         model.addAttribute("ads", adService.findAll());
         return "ad/ads";
@@ -57,7 +70,6 @@ public class AdController {
     public String newForm(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
         Transport transport=transportService.findById(id).get();
         ad.setTransport(transport);
-        //adRepository.save(ad);
         return "ad/form";
     }
 
