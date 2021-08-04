@@ -34,8 +34,8 @@ public class Ad {
     private Long price;
     @Column(name = "drive_Unit")
     private String driveUnit;
-    private boolean verified;
-    private String status;
+//    private boolean verified;
+//    private String status;
 
     public Ad(){}
 

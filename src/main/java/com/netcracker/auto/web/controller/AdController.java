@@ -21,11 +21,16 @@ public class AdController {
 
     private AdService adService;
     private PhotoService photoService;
+    @Autowired
+    private TransportService transportService;
+    @Autowired
+    private AdRepository adRepository;
 
     @Autowired
     public AdController(AdService adService, PhotoService photoService) {
         this.adService = adService;
         this.photoService = photoService;
+
     }
 
     @GetMapping("/{id}")
@@ -55,8 +60,7 @@ public class AdController {
         model.addAttribute("ads", adService.findAll());
         return "ad/ads";
     }
-    private TransportService transportService;
-    private AdRepository adRepository;
+
 
     @GetMapping("/ad/tmp")
     public String tmp() {

@@ -31,9 +31,10 @@ public class AdService {
 
     @Transactional
     public List<Ad> findUnVerified(){
-        List<Ad> list = adRepository.findByVerifiedAndStatus("Отправлено на модерацию");
+        //List<Ad> list = adRepository.findByVerifiedAndStatus("Отправлено на модерацию");
         //list.sort(new AdService.ComparatorIgnoreCaseAndSpace());
-        return list;
+       // return list;
+        return null;
     }
     public void saveAd(Ad ad){
         adRepository.save(ad);

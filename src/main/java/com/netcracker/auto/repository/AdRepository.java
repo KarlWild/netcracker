@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface AdRepository extends CrudRepository<Ad, Integer> {
-    @Query("select t from Ad t where t.verified = false and t.status = :status")
-    List<Ad> findByVerifiedAndStatus(@Param("status") String status);
+//    @Query("select t from Ad t where t.verified = false and t.status = :status")
+//    List<Ad> findByVerifiedAndStatus(@Param("status") String status);
     @Override
     <S extends Ad> S save(S s);
 }

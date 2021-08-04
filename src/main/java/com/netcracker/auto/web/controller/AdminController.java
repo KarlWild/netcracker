@@ -34,8 +34,8 @@ public class AdminController {
     @PostMapping("/approve/{id}")
     public String verifyAd(@PathVariable("id") int id) {
         Ad ad = adService.findById(id).get();
-        ad.setStatus("Ок");
-        ad.setVerified(true);
+        //ad.setStatus("Ок");
+        //ad.setVerified(true);
         adService.saveAd(ad);
 
         return "redirect:/admin";
@@ -44,7 +44,7 @@ public class AdminController {
     @PostMapping("/reject/{id}")
     public String changeStatus(@PathVariable("id") int id) {
         Ad ad = adService.findById(id).get();
-        ad.setStatus("Отклонено");
+        //ad.setStatus("Отклонено");
         adService.saveAd(ad);
         return "redirect:/admin";
     }
