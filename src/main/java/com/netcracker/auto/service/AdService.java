@@ -1,6 +1,7 @@
 package com.netcracker.auto.service;
 
 import com.netcracker.auto.entity.Ad;
+import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.AdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,16 +26,17 @@ public class AdService {
     }
 
     @Transactional
+    public List<Ad> findByUser(User user) {return adRepository.findByUser(user);}
+
+    @Transactional
     public List<Ad> findAll() {
         return (List<Ad>) adRepository.findAll();
     }
 
     @Transactional
     public List<Ad> findUnVerified(){
-        //List<Ad> list = adRepository.findByVerifiedAndStatus("Отправлено на модерацию");
-        //list.sort(new AdService.ComparatorIgnoreCaseAndSpace());
-       // return list;
-        return null;
+        List<Ad> list = adRepository.findByVerifiedAndStatus("open");
+        return list;
     }
     public void saveAd(Ad ad){
         adRepository.save(ad);

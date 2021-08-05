@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:replace="fragments/navbar :: header"/>
-<form th:method="POST" th:action="@{/ads/ad/tmp}" th:object="${ad}">
+<form th:method="POST" th:action="@{/ad/tmp}" th:object="${ad}">
 
     <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId"/>
     <label for="address">Введите адрес: </label>

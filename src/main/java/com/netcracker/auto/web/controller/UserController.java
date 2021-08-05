@@ -3,8 +3,10 @@ package com.netcracker.auto.web.controller;
 import com.netcracker.auto.entity.Review;
 import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.ReviewRepository;
+import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdService adService;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -61,5 +66,14 @@ public class UserController {
         List<Review> reviewList = reviewRepository.findAllByUsername(principal.getName());
         model.addAttribute("list", reviewList);
         return "pages/reviews";
+    }
+
+    /**      User's ads      **/
+    @GetMapping("/my_ads")
+    public String showAds(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
+        return "ad/ads";
     }
 }

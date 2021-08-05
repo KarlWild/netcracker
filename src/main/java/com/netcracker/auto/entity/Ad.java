@@ -19,6 +19,10 @@ public class Ad {
     @JoinColumn(name="transport_id")
     private Transport transport;
 
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user_id;
+
     @Column(name = "year_Of_Issue")
     private Date yearOfIssue;
     private String color;
@@ -39,9 +43,13 @@ public class Ad {
 
     public Ad(){}
 
-    public Ad(Integer id, Transport transport, Date yearOfIssue, String color, Integer mileage, String stateNumber, String vin, String sts, Integer numberOfOwners, String address, String description, Long price, String driveUnit, boolean verified, String status) {
+    public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
+              String stateNumber, String vin, String sts, Integer numberOfOwners,
+              String address, String description, Long price, String driveUnit,
+              boolean verified, String status) {
         this.id = id;
         this.transport = transport;
+        this.user_id = user_id;
         this.yearOfIssue = yearOfIssue;
         this.color = color;
         this.mileage = mileage;
@@ -175,6 +183,14 @@ public class Ad {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public User getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(User user_id) {
+        this.user_id = user_id;
     }
 }
 
