@@ -29,4 +29,7 @@ public class Review {
 
     @Column(name = "rating")
     private Double rating;
+
+    @Column(name = "giver")
+    private String giver;
 }

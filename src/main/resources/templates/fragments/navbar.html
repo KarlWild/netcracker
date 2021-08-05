@@ -42,21 +42,20 @@
             </ul>
 
             <th:block sec:authorize="isAuthenticated()">
-                <!--<a href="/lk/all"><h2 sec:authentication="name" style="color:white; margin-right: 10px"></h2></a>
-                <form th:action="@{/logout}" class="d-flex">
-                    <button type="submit" class="btn btn-danger">Выход</button>
-                </form>-->
-
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                     <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-info dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);" data-popper-placement="bottom-start">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle show"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu show" aria-labelledby="btnGroupDrop1"
+                             style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);"
+                             data-popper-placement="bottom-start">
                             <a class="dropdown-item" th:href="@{/lk/all}">Настройки</a>
                             <a class="dropdown-item" th:href="@{/logout}">Выход</a>
                         </div>
                     </div>
                 </div>
+
             </th:block>
 
             <th:block sec:authorize="!isAuthenticated()">
@@ -83,7 +82,8 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalog/cars}">Мои Объявления</a><!-- Добавить контроллер своих объявлений -->
+                    <a class="nav-link" th:href="@{/catalog/cars}">Мои Объявления</a>
+                    <!-- Добавить контроллер своих объявлений -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/lk/reviews}">Отзывы</a>
@@ -106,10 +106,13 @@
             </ul>
             <th:block sec:authorize="isAuthenticated()">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info" sec:authentication="name">E-mail</button>
+                    <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-info dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);" data-popper-placement="bottom-start">
+                        <button id="btnGroupDrop2" type="button" class="btn btn-info dropdown-toggle show"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu show" aria-labelledby="btnGroupDrop2"
+                             style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);"
+                             data-popper-placement="bottom-start">
                             <a class="dropdown-item" th:href="@{/lk/all}">Настройки</a>
                             <a class="dropdown-item" th:href="@{/logout}">Выход</a>
                         </div>
@@ -131,7 +134,8 @@
         <div class="collapse navbar-collapse" id="navbarColor03">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin}">Объявления на модерации</a><!-- Добавить контроллер своих объявлений -->
+                    <a class="nav-link" th:href="@{/admin}">Объявления на модерации</a>
+                    <!-- Добавить контроллер своих объявлений -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Сообщения</a>
@@ -147,8 +151,11 @@
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                     <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-info dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" style="position: absolute; right: auto; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);" data-popper-placement="bottom-start">
+                        <button id="btnGroupDrop3" type="button" class="btn btn-info dropdown-toggle show"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu show" aria-labelledby="btnGroupDrop3"
+                             style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);"
+                             data-popper-placement="bottom-start">
                             <a class="dropdown-item" th:href="@{/lk/all}">Настройки</a>
                             <a class="dropdown-item" th:href="@{/logout}">Выход</a>
                         </div>
