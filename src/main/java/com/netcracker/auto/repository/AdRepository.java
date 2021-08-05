@@ -12,6 +12,8 @@ import java.util.List;
 public interface AdRepository extends CrudRepository<Ad, Integer> {
     @Query("select t from Ad t where t.verified = false and t.status = :status")
     List<Ad> findByVerifiedAndStatus(@Param("status") String status);
+
     @Override
     <S extends Ad> S save(S s);
+
 }

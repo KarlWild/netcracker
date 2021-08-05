@@ -78,6 +78,45 @@ public class AdController {
         Transport transport=transportService.findById(id).get();
         ad.setTransport(transport);
         adRepository.save(ad);
-        return "redirect:tmp";
+        return "redirect:/ads";
     }
+
+    @GetMapping("ads/{id}/edit")
+    public String update(@PathVariable("id") int id, Model model) {
+        Ad ad = adService.findById(id).get();
+
+        /*Photo preview;
+        List<Ad> ads = new ArrayList<>();
+
+        if (ad.getPhotos().isEmpty()) {
+            preview = photoService.getNoPhoto();
+        }
+        else {
+            preview = ad.getPhotos().get(0);
+            ad.getPhotos().remove(0);
+            ads.add(ad);
+        }
+
+        model.addAttribute("preview", preview);
+        model.addAttribute("ads", ads);*/
+        model.addAttribute("ad", ad);
+        return "ad/edit";
+    }
+
+    @PostMapping("ads/{id}/edit")
+    public String update(@PathVariable("id") int adId, @RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
+        Transport transport=transportService.findById(id).get();
+        ad.setTransport(transport);
+        adRepository.save(ad);
+        return "redirect:/ads";
+    }
+
+    //удаление
+    @PostMapping("ads/{id}/remove")
+    public String delete(@PathVariable("id") int adId, @ModelAttribute("ad") Ad ad) {
+        ad=adService.findById(adId).get();
+        adRepository.delete(ad);
+        return "redirect:/ads";
+    }
+
 }

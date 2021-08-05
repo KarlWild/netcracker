@@ -52,9 +52,13 @@
 
         <div style="margin-left: 10%;">
             <tr>
-                <td><a class="btn btn-dark" th:href="@{/ads}"> Удалить объявление </a></td>
-                <td><a class="btn btn-dark" th:href="@{/ads}"> Изменитьобъявление </a></td>
-                <td><a class="btn btn-dark" th:href="@{/ads}"> Отправить на модерацию </a></td>
+
+                <form th:action= "'/ads/' + ${ad.id} + '/remove'" method="post">
+                <button class="btn btn-dark" type="submit"> Удалить объявление </button>
+            </form>
+
+
+                <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/edit'"> Редактировать объявление </a></td>
             </tr>
             <h2 class="h2_style">
                 <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
