@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
     <title>Заполнение</title>
 </head>
 <body>
@@ -40,12 +41,17 @@
     <input type="text" th:field="*{vin}" id="vin"/>
     <br/>
     <label for="yearOfIssue">Введите дату выпуска: </label>
-    <input type="text" th:field="*{yearOfIssue}" id="yearOfIssue"/>
+    <input type="date" th:field="*{yearOfIssue}" id="yearOfIssue"/>
     <br/>
-    <input type="submit" value="Create!"/>
+    <input type="hidden" th:value="${ad.getStatus()}" th:name="status" />
+    <input type="hidden" th:value="${ad.isVerified()}" th:name="verified" />
+
+    <input type="submit" value="Создать!"/>
 
 </form>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

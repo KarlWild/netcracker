@@ -66,11 +66,4 @@ public class ChoiseController {
         m.addAttribute("transports", transports);
         return "ad/transports";
     }
-
-    //просмотр своих объявлений
-    @GetMapping("/myAds")
-    public String showAds(){
-        return "ad/ads";
-    }
-
 }

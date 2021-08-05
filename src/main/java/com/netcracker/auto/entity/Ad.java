@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Data
 @Entity
-@Table(name = "Ad")
+@Table(name="Ad")
 public class Ad {
 
     @Id
@@ -18,6 +18,10 @@ public class Ad {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="transport_id")
     private Transport transport;
+
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user_id;
 
     @Column(name = "year_Of_Issue")
     private Date yearOfIssue;
@@ -35,13 +39,17 @@ public class Ad {
     @Column(name = "drive_Unit")
     private String driveUnit;
     private boolean verified;
-    private String status;
+    private String status="open";
 
     public Ad(){}
 
-    public Ad(Integer id, Transport transport, Date yearOfIssue, String color, Integer mileage, String stateNumber, String vin, String sts, Integer numberOfOwners, String address, String description, Long price, String driveUnit) {
+    public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
+              String stateNumber, String vin, String sts, Integer numberOfOwners,
+              String address, String description, Long price, String driveUnit,
+              boolean verified, String status) {
         this.id = id;
         this.transport = transport;
+        this.user_id = user_id;
         this.yearOfIssue = yearOfIssue;
         this.color = color;
         this.mileage = mileage;
@@ -53,6 +61,8 @@ public class Ad {
         this.description = description;
         this.price = price;
         this.driveUnit = driveUnit;
+        this.verified = verified;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -73,6 +83,10 @@ public class Ad {
 
     public Date getYearOfIssue() {
         return yearOfIssue;
+    }
+
+    public void setYearOfIssue(Date yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
     }
 
     public String getColor() {
@@ -119,6 +133,9 @@ public class Ad {
         return numberOfOwners;
     }
 
+    public void setNumberOfOwners(Integer numberOfOwners) {
+        this.numberOfOwners = numberOfOwners;
+    }
 
     public String getAddress() {
         return address;
@@ -148,5 +165,32 @@ public class Ad {
         return driveUnit;
     }
 
+    public void setDriveUnit(String driveUnit) {
+        this.driveUnit = driveUnit;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public User getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(User user_id) {
+        this.user_id = user_id;
+    }
 }
 
