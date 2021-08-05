@@ -40,12 +40,25 @@
                     </form>
                 </li>
             </ul>
+
             <th:block sec:authorize="isAuthenticated()">
-                <a href="/lk/all"><h2 sec:authentication="name" style="color:white; margin-right: 10px"></h2></a>
+                <!--<a href="/lk/all"><h2 sec:authentication="name" style="color:white; margin-right: 10px"></h2></a>
                 <form th:action="@{/logout}" class="d-flex">
                     <button type="submit" class="btn btn-danger">Выход</button>
-                </form>
+                </form>-->
+
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-info dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);" data-popper-placement="bottom-start">
+                            <a class="dropdown-item" th:href="@{/lk/all}">Настройки</a>
+                            <a class="dropdown-item" th:href="@{/logout}">Выход</a>
+                        </div>
+                    </div>
+                </div>
             </th:block>
+
             <th:block sec:authorize="!isAuthenticated()">
                 <form th:action="@{/reg}" class="d-flex">
                     <button type="submit" class="btn btn-outline-warning">Регистрация</button>
@@ -57,6 +70,7 @@
         </div>
     </div>
 </nav>
+
 <!--    this is navbar for logged-in users -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" th:fragment="header-lk">
     <div class="container-fluid">
@@ -91,10 +105,16 @@
                 </li>
             </ul>
             <th:block sec:authorize="isAuthenticated()">
-                <h2 sec:authentication="name" style="color:white; margin-right: 10px"></h2>
-                <form th:action="@{/logout}" class="d-flex">
-                    <button type="submit" class="btn btn-danger">Выход</button>
-                </form>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-info" sec:authentication="name">E-mail</button>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-info dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" style="position: absolute; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);" data-popper-placement="bottom-start">
+                            <a class="dropdown-item" th:href="@{/lk/all}">Настройки</a>
+                            <a class="dropdown-item" th:href="@{/logout}">Выход</a>
+                        </div>
+                    </div>
+                </div>
             </th:block>
         </div>
     </div>
@@ -124,10 +144,16 @@
                 </li>
             </ul>
             <th:block sec:authorize="isAuthenticated()">
-                <h2 sec:authentication="name" style="color:white; margin-right: 10px"></h2>
-                <form th:action="@{/logout}" class="d-flex">
-                    <button type="submit" class="btn btn-danger">Выход</button>
-                </form>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-info dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop3" style="position: absolute; right: auto; inset: 0px auto auto -105px; margin: 0px; transform: translate(0px, 50px);" data-popper-placement="bottom-start">
+                            <a class="dropdown-item" th:href="@{/lk/all}">Настройки</a>
+                            <a class="dropdown-item" th:href="@{/logout}">Выход</a>
+                        </div>
+                    </div>
+                </div>
             </th:block>
         </div>
     </div>

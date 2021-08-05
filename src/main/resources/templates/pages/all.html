@@ -11,15 +11,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
-    <title>Кошелек</title>
+    <title>Настройки</title>
 </head>
 
 <body>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    <div th:replace="fragments/navbar :: header-admin"/>
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
 </div>
 <div sec:authorize="hasRole('ROLE_USER')">
-    <div th:replace="fragments/navbar :: header-lk"/>
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
 </div>
 
 <fieldset>
