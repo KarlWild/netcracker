@@ -45,8 +45,8 @@
     </thead>
     <tbody>
     <tr th:each="review : ${reviewList}">
-        <td th:text="*{review.id}"></td>
-        <td th:text="*{review.text}"></td>
+        <td th:text="*{review.getId()}"></td>
+        <td th:text="*{review.getText()}"></td>
         <td>
             <!--<input id="rating-view" th:value="*{review.rating}" type="hidden" class="rating" title=""
                  data-show-clear=false data-show-caption=true data-display-only=true/>

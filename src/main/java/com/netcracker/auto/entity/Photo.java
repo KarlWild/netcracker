@@ -26,8 +26,32 @@ public class Photo {
     public String toString() {
         return "Photo{" +
                 "photoId=" + photoId +
-                //", adId=" + ad.getAdId() +
+                ", adId=" + ad.getId() +
                 ", fileName='" + fileName + '\'' +
                 '}';
+    }
+
+    public Long getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(Long photoId) {
+        this.photoId = photoId;
+    }
+
+    public Ad getAd() {
+        return ad;
+    }
+
+    public void setAd(Ad ad) {
+        this.ad = ad;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

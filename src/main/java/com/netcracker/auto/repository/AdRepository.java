@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface AdRepository extends CrudRepository<Ad, Integer> {
+
     @Query("select t from Ad t where t.verified = false and t.status = :status")
     List<Ad> findByVerifiedAndStatus(@Param("status") String status);
 
@@ -19,4 +20,5 @@ public interface AdRepository extends CrudRepository<Ad, Integer> {
 
     @Query("select t from Ad t where t.user_id = :user_id")
     List<Ad> findByUser(@Param("user_id") User user_id);
+
 }

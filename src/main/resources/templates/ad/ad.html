@@ -15,6 +15,15 @@
     <div style="display: flex; justify-content: flex-start; align-items: center">
 
         <div style="margin-left: 10%;">
+            <tr>
+
+                <form th:action= "'/ads/' + ${ad.id} + '/remove'" method="post">
+                <button class="btn btn-dark" type="submit"> Удалить объявление </button>
+            </form>
+
+
+                <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/edit'"> Редактировать объявление </a></td>
+            </tr>
             <h2 class="h2_style">
                 <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
                 <p th:text="${ad.price} + ' ' + ₽"></p>
@@ -135,7 +144,7 @@
                 </div>
             </div>
 
-            <!--div th:if="${#lists.isEmpty(ads)}" style="width: 440px; height: 280px; margin-left: 25%">
+            <div th:if="${#lists.isEmpty(ads)}" style="width: 440px; height: 280px; margin-left: 25%">
                 <div class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -143,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-            </div-->
+            </div>
         </div>
     </div>
 

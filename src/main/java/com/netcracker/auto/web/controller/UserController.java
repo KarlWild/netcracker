@@ -76,6 +76,6 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
-        return "ad/ads";
+        return "ad/myAds";
     }
 }

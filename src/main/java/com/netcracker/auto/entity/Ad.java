@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -63,6 +65,17 @@ public class Ad {
         this.driveUnit = driveUnit;
         this.verified = verified;
         this.status = status;
+    }
+
+    @OneToMany(mappedBy = "ad")
+    private List<Photo> photos;
+
+    public void addPhoto(Photo photo) {
+        if (photos == null) {
+            photos = new ArrayList<>();
+        }
+        photos.add(photo);
+        photo.setAd(this);
     }
 
     public Integer getId() {
@@ -192,5 +205,14 @@ public class Ad {
     public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
 }
 
