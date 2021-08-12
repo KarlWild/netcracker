@@ -11,15 +11,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
-    <title>Кошелек</title>
+    <title>Настройки</title>
 </head>
 
 <body>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    <div th:replace="fragments/navbar :: header-admin"/>
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
 </div>
 <div sec:authorize="hasRole('ROLE_USER')">
-    <div th:replace="fragments/navbar :: header-lk"/>
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
 </div>
 
 <fieldset>
@@ -28,8 +28,25 @@
         <form action="#"
               th:action="@{/lk/all/update}"
               th:object="${user}"
-              method="post">
+              method="post"
+              enctype="multipart/form-data">
 
+            <input type="hidden" th:field="${user.userId}">
+            <input type="hidden" th:field="${user.balance}">
+            <input type="hidden" th:field="${user.confirmed}">
+            <input type="hidden" th:field="${user.seller_rating}">
+            <input type="hidden" th:field="${user.buyers_rating}">
+            <input type="hidden" th:field="${user.date_of_birth}">
+            <input type="hidden" th:field="${user.images}">
+            <input type="hidden" th:field="${user.imagesPath}">
+            <input type="hidden" th:field="${user.roles}">
+            <input type="hidden" th:field="${user.authorities}">
+
+            <div class="form-group">
+                <label>Фото: </label>
+                <img class="img-thumbnail" style="max-width:30%;" th:src="@{${user.imagesPath}}" />
+                <input type="file" name="image" accept="image/png, image/jpeg"/>
+            </div>
             <div class="form-group">
                 <label for="exampleInputFirstName" class="form-label mt-4">Имя</label>
                 <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="firstNameHelp" th:field="*{first_name}">
@@ -43,12 +60,12 @@
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:field="*{email}">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" th:placeholder="Пароль" th:field="*{password}">
+                <label for="exampleInputEmail1" class="form-label mt-4">Пароль</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp" placeholder="Оставьте пустым, если не меняете пароль" th:field="*{password}">
             </div>
             <div class="form-group">
                 <label for="exampleInputPhoneNumber" class="form-label mt-4">Номер телефона</label>
-                <input type="text" class="form-control" id="exampleInputPhoneNumber" aria-describedby="phoneNumberHelp" th:field="*{phone_number}">
+                <input type="text" class="form-control" id="exampleInputPhoneNumber" aria-describedby="phoneNumberHelp"  th:field="*{phone_number}">
             </div>
 
             <button type="submit" class="btn btn-primary" style="width: 50%">Редактировать</button>

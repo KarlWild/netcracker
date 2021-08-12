@@ -38,15 +38,15 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">ID</th>
+        <th scope="col">Отправитель</th>
         <th scope="col">Текст</th>
         <th scope="col">Рейтинг</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="review : ${reviewList}">
-        <td th:text="*{review.getId()}"></td>
-        <td th:text="*{review.getText()}"></td>
+        <td th:text="*{review.giver}"></td>
+        <td th:text="*{review.text}"></td>
         <td>
             <!--<input id="rating-view" th:value="*{review.rating}" type="hidden" class="rating" title=""
                  data-show-clear=false data-show-caption=true data-display-only=true/>
@@ -58,11 +58,15 @@
     </tbody>
 </table>
 
+
 <!--<form method="post" th:object="${review}" class="mt-5">
+    <h2>Оставить отзыв</h2>
     <input th:value="*{rating}" type="hidden" class="rating" data-glyphicon="0"
            data-show-clear=false data-show-caption=true readonly>
     <button class="btn btn-primary" type="submit">Submit form</button>
 </form>-->
+
+<a th:href="@{/lk/reviews/create}">Оставить отзыв</a>
 
 <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>

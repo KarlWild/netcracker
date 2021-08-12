@@ -39,6 +39,8 @@ public class User {
     private int buyers_rating;
     @Column(name = "password")
     private String password;
+    @Column(name = "images", length = 64)
+    private String images;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -57,6 +59,12 @@ public class User {
         buyers_rating = 0;
         seller_rating = 0;
         phone_number = "";
+    }
+
+    @Transient
+    public String getImagesPath() {
+        if (images == null || userId == null) return null;
+        return "/user-photos/" + userId + "/" + images;
     }
 
     public Set<RolesEntity> getRoles() {
@@ -161,5 +169,13 @@ public class User {
 
     public void setSeller_rating(int seller_rating) {
         this.seller_rating = seller_rating;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 }
