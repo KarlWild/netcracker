@@ -70,7 +70,7 @@ public class UserController {
         }
 
         userService.saveUser(loggedUser);
-        loggedUser.setEmail(principal.getName());
+        //loggedUser.setEmail(principal.getName());
         redirectAttributes.addFlashAttribute("message", "Ваши данные обновлены");
         return "redirect:/lk/all";
     }
