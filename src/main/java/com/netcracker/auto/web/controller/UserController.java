@@ -1,9 +1,12 @@
 package com.netcracker.auto.web.controller;
 
+import com.netcracker.auto.entity.Favourite;
 import com.netcracker.auto.entity.Review;
 import com.netcracker.auto.entity.User;
+import com.netcracker.auto.repository.FavouriteRepository;
 import com.netcracker.auto.repository.ReviewRepository;
 import com.netcracker.auto.service.AdService;
+import com.netcracker.auto.service.FavouriteService;
 import com.netcracker.auto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -78,4 +81,14 @@ public class UserController {
         model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
         return "ad/myAds";
     }
+
+    //   User's favourites
+    /*@GetMapping("/favourite")
+    public String showFavourites(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("user", adService.find);
+        return "ad/myFavourites";
+    }*/
+
 }

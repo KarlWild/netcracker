@@ -1,13 +1,12 @@
 package com.netcracker.auto.web.controller;
 
 import com.netcracker.auto.entity.Ad;
+import com.netcracker.auto.entity.Favourite;
 import com.netcracker.auto.entity.Photo;
 import com.netcracker.auto.entity.Transport;
 import com.netcracker.auto.repository.AdRepository;
-import com.netcracker.auto.service.AdService;
-import com.netcracker.auto.service.PhotoService;
-import com.netcracker.auto.service.TransportService;
-import com.netcracker.auto.service.UserService;
+import com.netcracker.auto.repository.FavouriteRepository;
+import com.netcracker.auto.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,11 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/ads")
 public class AdController {
 
     private AdService adService;
@@ -27,15 +26,17 @@ public class AdController {
     private TransportService transportService;
     private AdRepository adRepository;
     private UserService userService;
+    private FavouriteRepository favouriteRepository;
 
     @Autowired
     public AdController(AdService adService, PhotoService photoService, TransportService transportService,
-                        AdRepository adRepository,UserService userService) {
+                        AdRepository adRepository,UserService userService, FavouriteRepository favouriteRepository) {
         this.userService = userService;
         this.adService = adService;
         this.photoService = photoService;
         this.transportService=transportService;
         this.adRepository=adRepository;
+        this.favouriteRepository=favouriteRepository;
     }
 
     @GetMapping("ads/{id}")
@@ -125,10 +126,42 @@ public class AdController {
 
     //удаление
     @PostMapping("ads/{id}/remove")
-    public String delete(@PathVariable("id") int adId, @ModelAttribute("ad") Ad ad) {
+    public String delete(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
         ad=adService.findById(adId).get();
+        //Principal principal
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        if(ad.getUser_id()==userService.findUserByEmail(currentPrincipalName))
         adRepository.delete(ad);
         return "redirect:/lk/my_ads";
     }
 
+    //добавление в избранное
+    @GetMapping("ads/{id}/favourite")
+    public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        f.setUser_id(userService.findUserByEmail(currentPrincipalName));
+        f.setAd(adService.findById(adId).get());
+        favouriteRepository.save(f);
+        return "redirect:/lk/my_ads";
+    }
+
+    //отправка на модерацию
+    @PostMapping("ads/{id}/check")
+    public String check(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
+        ad=adService.findById(adId).get();
+        ad.setStatus("open");
+        adRepository.save(ad);
+        return "redirect:/lk/my_ads";
+    }
+
+    //продано
+    @PostMapping("ads/{id}/sold")
+    public String sold(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
+        ad=adService.findById(adId).get();
+        ad.setStatus(" продано ");
+        adRepository.save(ad);
+        return "redirect:/lk/my_ads";
+    }
 }

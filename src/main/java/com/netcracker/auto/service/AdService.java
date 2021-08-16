@@ -1,6 +1,7 @@
 package com.netcracker.auto.service;
 
 import com.netcracker.auto.entity.Ad;
+import com.netcracker.auto.entity.Favourite;
 import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.AdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
