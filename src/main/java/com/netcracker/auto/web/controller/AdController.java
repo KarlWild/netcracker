@@ -123,7 +123,7 @@ public class AdController {
         adRepository.save(ad);
         return "redirect:/lk/my_ads";
     }
-
+   
     //удаление
     @PostMapping("ads/{id}/remove")
     public String delete(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
