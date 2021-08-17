@@ -43,9 +43,9 @@
             <input type="hidden" th:field="${user.authorities}">
 
             <div class="form-group">
-                <label>Фото: </label>
                 <img class="img-thumbnail" style="max-width:30%;" th:src="@{${user.imagesPath}}" />
-                <input type="file" name="image" accept="image/png, image/jpeg"/>
+                <h1> </h1>
+                <input class="form-control" type="file" id="image" title=" " accept="image/png, image/jpeg"/>
             </div>
             <div class="form-group">
                 <label for="exampleInputFirstName" class="form-label mt-4">Имя</label>

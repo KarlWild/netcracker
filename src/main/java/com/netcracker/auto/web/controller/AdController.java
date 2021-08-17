@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +31,16 @@ public class AdController {
 
     @Autowired
     public AdController(AdService adService, PhotoService photoService, TransportService transportService,
-                        AdRepository adRepository,UserService userService) {
+                        AdRepository adRepository, UserService userService) {
         this.userService = userService;
         this.adService = adService;
         this.photoService = photoService;
-        this.transportService=transportService;
-        this.adRepository=adRepository;
+        this.transportService = transportService;
+        this.adRepository = adRepository;
     }
 
     @GetMapping("ads/{id}")
-    public String getAd(@PathVariable("id") int id, Model model) {
+    public String getAd(Principal principal, @PathVariable("id") int id, Model model) {
         Ad ad = adService.findById(id).get();
 
         Photo preview;
@@ -47,8 +48,7 @@ public class AdController {
 
         if (ad.getPhotos().isEmpty()) {
             preview = photoService.getNoPhoto();
-        }
-        else {
+        } else {
             preview = ad.getPhotos().get(0);
             ad.getPhotos().remove(0);
             ads.add(ad);
@@ -61,8 +61,19 @@ public class AdController {
     }
 
     @GetMapping("/ads")
-    public String getAds(Model model) {
-        model.addAttribute("ads", adService.findAll());
+    public String getAds(Model model, String keyword, String brand, Integer yearStart, Integer yearEnd) {
+        model.addAttribute("brands", transportService.findDistinctBrand());
+        /*if (keyword != null) {
+            model.addAttribute("ads", adRepository.findByKeyword(keyword));
+        } else model.addAttribute("ads", adRepository.findAll());*/
+
+        if (yearStart == null && yearEnd == null && keyword == null) {
+            model.addAttribute("ads", adRepository.findAll());
+        } else {
+            List<Ad> results = adService.getAdsByNameAndYears(keyword, yearStart, yearEnd);
+            model.addAttribute("ads", results);
+        }
+
         return "ad/catalogAds";
     }
 
@@ -73,14 +84,14 @@ public class AdController {
 
     @GetMapping("/new/{id}")
     public String newAd(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
-        Transport transport=transportService.findById(id).get();
+        Transport transport = transportService.findById(id).get();
         ad.setTransport(transport);
         return "ad/form";
     }
 
     @PostMapping("/ad/tmp")
     public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
-        Transport transport=transportService.findById(id).get();
+        Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
@@ -113,7 +124,7 @@ public class AdController {
 
     @PostMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int adId, @RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
-        Transport transport=transportService.findById(id).get();
+        Transport transport = transportService.findById(id).get();
         ad.setTransport(transport);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -126,9 +137,16 @@ public class AdController {
     //удаление
     @PostMapping("ads/{id}/remove")
     public String delete(@PathVariable("id") int adId, @ModelAttribute("ad") Ad ad) {
-        ad=adService.findById(adId).get();
+        ad = adService.findById(adId).get();
         adRepository.delete(ad);
         return "redirect:/lk/my_ads";
+    }
+
+    // Filtered
+    @GetMapping("/adsFiltered")
+    public String getAdsFiltered(Model model) {
+        model.addAttribute("ads", adService.findAll());
+        return "ad/catalogAdsFiltered";
     }
 
 }

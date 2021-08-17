@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -161,6 +163,34 @@
         <p th:text="${ad.description}"></p>
 
     </div>
+
+<div class="form-group" style="width: 35%; padding-left: 50px">
+    <form action="#"
+          th:action="@{/lk/reviews/post}"
+          th:object="${review}"
+          method="post"
+          class="mt-5">
+        <h1>Оставить отзыв</h1>
+
+        <input type="hidden" th:field="${ad.user_id}">
+        <input type="hidden" sec:authentication="name">
+
+        <div class="form-group">
+            <label for="exampleInputText" class="form-label mt-4">Текст</label>
+            <input type="text" class="form-control" id="exampleInputText" aria-describedby="firstNameHelp" th:field="*{text}">
+        </div>
+
+        <div class="form-group">
+            <input th:value="*{rating}" type="hidden" class="rating" data-glyphicon="0"
+                   data-show-clear=false data-show-caption=true>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Оставить отзыв</button>
+    </form>
+</div>
+
+<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

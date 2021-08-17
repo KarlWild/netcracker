@@ -3,10 +3,12 @@ package com.netcracker.auto.web.controller;
 import com.netcracker.auto.entity.Review;
 import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.ReviewRepository;
+import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.UserService;
 import com.netcracker.auto.util.FileUploadUtil;
 import org.assertj.core.util.Files;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +43,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AdService adService;
 
     @GetMapping("/all")
     public String mainPage(Principal principal, Model model) {
@@ -126,4 +131,12 @@ public class UserController {
         return "redirect:/lk/wallet";
     }*/
 
+    /**      User's ads      **/
+    @GetMapping("/my_ads")
+    public String showAds(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
+        return "ad/myAds";
+    }
 }
