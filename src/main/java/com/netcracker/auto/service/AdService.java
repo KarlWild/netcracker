@@ -68,6 +68,30 @@ public class AdService {
         return adRepository.findAll(Specification.where(yearBetween(parseDate(yearStart), parseDate(yearEnd))));
     }
 
+    public List<Ad> findByAnyCriteria(String brand, String model,
+                                   Integer yearStart, Integer yearEnd,
+                                   Integer priceStart, Integer priceEnd,
+                                   Integer mileageStart, Integer mileageEnd,
+                                   Integer ownersCount) {
+        Date dateStart = yearStart == null ? null : parseDate(yearStart);
+        Date dateEnd = yearEnd == null ? null : parseDate(yearEnd);
+
+        Integer finalPriceStart = priceStart == null ? 0 : priceStart;
+        Integer finalPriceEnd = priceEnd == null ? Integer.MAX_VALUE : priceEnd;
+        Integer finalMileageStart = mileageStart == null ? 0 : mileageStart;
+        Integer finalMileageEnd = mileageEnd == null ? Integer.MAX_VALUE : mileageEnd;
+
+
+        Specification<Ad> specification = Specification
+                .where(brand == null ? null : brandLike(brand))
+                .and(model == null ? null : modelLike(model))
+                .and(yearBetween(dateStart, dateEnd))
+                .and(priceBetween(finalPriceStart, finalPriceEnd))
+                .and(mileageBetween(finalMileageStart, finalMileageEnd))
+                .and(ownersCount == null ? null : ownersEqual(ownersCount));
+        return adRepository.findAll(specification);
+    }
+
     private Date parseDate(Integer year) {
         Date date = null;
         if (year != 0) {
@@ -81,17 +105,17 @@ public class AdService {
         return date;
     }
 
-    private Specification<Ad> brandLike(String name) {
+    private static Specification<Ad> brandLike(String name) {
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(root.get(Ad_.TRANSPORT).get(Transport_.BRAND), "%" + name + "%");
     }
 
-    private Specification<Ad> modelLike(String name) {
+    private static Specification<Ad> modelLike(String name) {
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(root.get(Ad_.TRANSPORT).get(Transport_.MODEL), "%" + name + "%");
     }
 
-    private Specification<Ad> nameLike(String name) {
+    private static Specification<Ad> nameLike(String name) {
         return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.or(
                         criteriaBuilder.like(root.get(Ad_.TRANSPORT).get(Transport_.MODEL), "%" + name + "%"),
@@ -99,12 +123,32 @@ public class AdService {
                 );
     }
 
-    private Specification<Ad> yearBetween(Date yearStart, Date yearEnd) {
+    private static Specification<Ad> yearBetween(Date yearStart, Date yearEnd) {
+        Date finalYearStart = yearStart != null ? yearStart
+                : new GregorianCalendar(1950, Calendar.JANUARY, 1).getTime();;
+        Date finalYearEnd = yearEnd != null ? yearEnd
+                : new GregorianCalendar().getTime();
+
         return (root, criteriaQuery, criteriaBuilder) ->
-                criteriaBuilder.between(root.get(Ad_.YEAR_OF_ISSUE), yearStart, yearEnd);
+                criteriaBuilder.between(root.get(Ad_.YEAR_OF_ISSUE), finalYearStart, finalYearEnd);
     }
 
-    /*public List<Ad> findByLikeCriteria(String text, Integer yearStart, Integer yearEnd) {
+    private static Specification<Ad> priceBetween(Integer priceStart, Integer priceEnd) {
+        return (root, criteriaQuery, criteriaBuilder) ->
+                criteriaBuilder.between(root.get(Ad_.PRICE), priceStart, priceEnd);
+    }
+
+    private static Specification<Ad> mileageBetween(Integer mileageStart, Integer mileageEnd) {
+        return (root, criteriaQuery, criteriaBuilder) ->
+                criteriaBuilder.between(root.get(Ad_.MILEAGE), mileageStart, mileageEnd);
+    }
+
+    private static Specification<Ad> ownersEqual(Integer count) {
+        return (root, criteriaQuery, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(Ad_.NUMBER_OF_OWNERS), count);
+    }
+
+        /*public List<Ad> findByLikeCriteria(String text, Integer yearStart, Integer yearEnd) {
         return adRepository.findAll((Specification<Ad>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (text != null) {

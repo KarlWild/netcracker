@@ -61,19 +61,17 @@ public class AdController {
     }
 
     @GetMapping("/ads")
-    public String getAds(Model model, String keyword, String brand, Integer yearStart, Integer yearEnd) {
+
+    public String getAds(Model model, String keyword, String brand, String carModel,
+                         Integer yearStart, Integer yearEnd,
+                         Integer priceStart, Integer priceEnd,
+                         Integer mileageStart, Integer mileageEnd,
+                         Integer ownersCount) {
+        List<Ad> ads = adService.findByAnyCriteria(brand, carModel,
+                yearStart, yearEnd, priceStart, priceEnd, mileageStart, mileageEnd, ownersCount);
+
         model.addAttribute("brands", transportService.findDistinctBrand());
-        /*if (keyword != null) {
-            model.addAttribute("ads", adRepository.findByKeyword(keyword));
-        } else model.addAttribute("ads", adRepository.findAll());*/
-
-        if (yearStart == null && yearEnd == null && keyword == null) {
-            model.addAttribute("ads", adRepository.findAll());
-        } else {
-            List<Ad> results = adService.getAdsByNameAndYears(keyword, yearStart, yearEnd);
-            model.addAttribute("ads", results);
-        }
-
+        model.addAttribute("ads", ads);
         return "ad/catalogAds";
     }
 
