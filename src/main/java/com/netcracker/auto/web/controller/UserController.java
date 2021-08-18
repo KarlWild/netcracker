@@ -1,6 +1,8 @@
 package com.netcracker.auto.web.controller;
 
+import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.entity.Review;
+import com.netcracker.auto.entity.RolesEntity;
 import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.ReviewRepository;
 import com.netcracker.auto.service.AdService;
@@ -28,6 +30,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Anton Popkov
@@ -138,5 +141,16 @@ public class UserController {
         String currentPrincipalName = authentication.getName();
         model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
         return "ad/myAds";
+    }
+    //@{/lk/get/role_seller/{id}(id=${user.userId})}
+    @GetMapping("/get/role_seller/{id}")
+    public String buySellerRole(@PathVariable("id") Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userService.findUserByEmail(currentPrincipalName);
+        if(user.getBalance()-100>=0) user.setBalance(user.getBalance()-100);
+        user.addRole(RolesEntity.ROLE_SELLER);
+        userService.saveUser(user);
+        return "redirect:/lk/all";
     }
 }

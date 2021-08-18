@@ -65,6 +65,8 @@ public class User {
     public String getImagesPath() {
         if (images == null || userId == null) return null;
         return "/user-photos/" + userId + "/" + images;
+    public void addRole(RolesEntity rolesEntity){
+        this.roles.add(rolesEntity);
     }
 
     public Set<RolesEntity> getRoles() {

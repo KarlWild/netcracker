@@ -1,0 +1,12 @@
+.lk-table{
+    width: 100%; /* Try setting this to 400px or something */
+    display: table;
+}
+.lk-child{
+    display: table-cell;
+}
+.button-seller {
+    margin-right: 50px;
+    width: 70%;
+    margin-left: auto;
+}
