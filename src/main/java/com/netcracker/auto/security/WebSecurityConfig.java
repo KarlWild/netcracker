@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/lk/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
                 .antMatchers("/ad/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
+                .antMatchers("/chat/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
                 .antMatchers("/h2-console/**").permitAll()//hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/reg*").permitAll()

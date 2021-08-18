@@ -59,6 +59,10 @@ public class User {
         phone_number = "";
     }
 
+    public void addRole(RolesEntity rolesEntity){
+        this.roles.add(rolesEntity);
+    }
+
     public Set<RolesEntity> getRoles() {
         return roles;
     }
