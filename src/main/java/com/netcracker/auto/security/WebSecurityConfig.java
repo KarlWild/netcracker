@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/lk/all", true)
-                .failureUrl("/login?error=true");;
+                .failureUrl("/login?error=true");
         http.headers().frameOptions().disable();
     }
 
