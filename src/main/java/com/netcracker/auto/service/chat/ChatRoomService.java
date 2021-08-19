@@ -20,34 +20,38 @@ public class ChatRoomService {
                 .findBySenderIdAndRecipientId(senderId, recipientId)
                 .map(ChatRoom::getChatId)
                 .or(() -> {
-                    //if(chatRoomRepository.findByRecipientIdAndSenderId(senderId, recipientId).get()==null) {
                         if (!createIfNotExist) {
                             return Optional.empty();
                         }
-//                        String chatId =
-//                                String.format("%s_%s", senderId, recipientId);
-
                         ChatRoom senderRecipient = ChatRoom
                                 .builder()
-                                //.chatId(chatId)
                                 .senderId(senderId)
                                 .recipientId(recipientId)
                                 .build();
-
-//                        ChatRoom recipientSender = ChatRoom
-//                                .builder()
-//                                //.chatId(chatId)
-//                                .senderId(recipientId)
-//                                .recipientId(senderId)
-//                                .build();
                         chatRoomRepository.save(senderRecipient);
-                        //chatRoomRepository.save(recipientSender);
-
                         return Optional.of(chatRoomRepository.findBySenderIdAndRecipientId(senderId,recipientId).get().getChatId());
-                    //}
-                    //else {
-                    //    return Optional.of(chatRoomRepository.findByRecipientIdAndSenderId(senderId, recipientId).get().getChatId());
-                    //}
                 });
     }
+//    public Optional<Long> getChatIdByAdId(Long adId, Long senderId, Long recipientId, boolean createIfNotExist){
+//        return chatRoomRepository
+//                .findByAdId(adId)
+//                .map(ChatRoom::getChatId)
+//                .or(() -> {
+//                    if (!createIfNotExist) {
+//                        return Optional.empty();
+//                    }
+//
+//                    ChatRoom senderRecipient = ChatRoom
+//                            .builder()
+//                            .senderId(senderId)
+//                            .recipientId(recipientId)
+//                            .adId(adId)
+//                            .build();
+//
+//
+//                    chatRoomRepository.save(senderRecipient);
+//
+//                    return Optional.of(chatRoomRepository.findBySenderIdAndRecipientId(senderId,recipientId).get().getChatId());
+//                });
+//    }
 }

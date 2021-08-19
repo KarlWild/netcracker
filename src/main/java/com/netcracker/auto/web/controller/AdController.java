@@ -53,7 +53,7 @@ public class AdController {
             ad.getPhotos().remove(0);
             ads.add(ad);
         }
-
+        model.addAttribute("user",userService.findUserByEmail(principal.getName()));
         model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
@@ -102,7 +102,7 @@ public class AdController {
     public String update(@PathVariable("id") int id, Model model) {
         Ad ad = adService.findById(id).get();
 
-        /*Photo preview;
+        Photo preview;
         List<Ad> ads = new ArrayList<>();
 
         if (ad.getPhotos().isEmpty()) {
@@ -115,7 +115,7 @@ public class AdController {
         }
 
         model.addAttribute("preview", preview);
-        model.addAttribute("ads", ads);*/
+        model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
         return "ad/edit";
     }

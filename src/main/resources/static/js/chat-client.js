@@ -28,9 +28,9 @@ connectToChat();
 function sendMsg(text, to) {
     var chatMessage = {
         senderId: userId,
-        recipientId: to.userId,
+        recipientId: selectedUser.userId,
         senderName: user,
-        recipientName: to.email,
+        recipientName: selectedUser.email,
         content: text,
         timestamp: new Date(),
     };

@@ -10,9 +10,16 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+    <link href="../css/chat.css" rel="stylesheet">
     <title>Объявление</title>
 </head>
 <body style="font-family: Arial,Helvetica Neue,Helvetica, sans-serif; margin:0 auto">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
     <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
 </div>
@@ -23,7 +30,7 @@
 <div style="display: flex; justify-content: flex-start; align-items: center">
 
     <div style="margin-left: 10%;">
-        <tr>
+        <tr th:if="${user} == ${ad.user_id}">
 
             <form th:action="'/ads/' + ${ad.id} + '/remove'" method="post">
                 <button class="btn btn-dark" type="submit"> Удалить объявление</button>
@@ -171,21 +178,22 @@
 
 </div>
 
-<div class="form-group">
+<div class="form-group" style="margin-left: 20px">
     <form action="#"
           th:action="@{/lk/reviews/post}"
-          th:object=""
+          th:object="${ad}"
           method="post">
         <input type="hidden" th:field="${ad.user_id}">
         <input type="hidden" sec:authentication="name">
 
-        <label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
+        <label for="exampleTextarea" class="form-label mt-4"></label>
         <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 111px;"></textarea>
 
         <button class="btn btn-primary" type="submit">Оставить отзыв</button>
     </form>
 
 </div>
+
 
 <!--<div class="form-group" style="width: 35%; padding-left: 50px">
     <form action="#"
@@ -211,7 +219,75 @@
         <button class="btn btn-primary" type="submit">Оставить отзыв</button>
     </form>
 </div>-->
+<div class="container clearfix">
+    <div class="chat">
+        <div class="chat-header clearfix">
+            <!--            <img alt="avatar" height="55px"-->
+            <!--                 src=""-->
+            <!--                 width="55px"/>-->
 
+            <div class="chat-about">
+                <div class="chat-with" th:attr="chatIdAttr=${ad.user_id.getUserId()}" id="selectedUserId" th:text="${ad.user_id.getFullName()}"></div>
+                <div class="chat-num-messages"></div>
+            </div>
+            <i class="fa fa-star"></i>
+        </div> <!-- end chat-header -->
+
+        <div class="chat-history" id="chatHistoryId">
+            <ul>
+
+            </ul>
+        </div> <!-- end chat-history -->
+
+        <div class="chat-message clearfix">
+            <textarea id="message-to-send" name="message-to-send" placeholder="Type your message" rows="3"></textarea>
+
+            <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+            <i class="fa fa-file-image-o"></i>
+
+            <button id="sendBtn">Send</button>
+
+        </div> <!-- end chat-message -->
+
+    </div> <!-- end chat -->
+
+</div> <!-- end container -->
+
+<script id="message-template" type="text/x-handlebars-template">
+    <li class="clearfix">
+        <div class="message-data align-right">
+            <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
+            <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
+        </div>
+        <div class="message other-message float-right">
+            {{messageOutput}}
+        </div>
+    </li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+    <li>
+        <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
+            <span class="message-data-time">{{time}}, Today</span>
+        </div>
+        <div class="message my-message">
+            {{response}}
+        </div>
+    </li>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script>
+    let user = "[[${user.getEmail()}]]";
+    selectedUser = "[[${ad.user_id}]]";
+    let selectedUserId = "[[${ad.user_id.getUserId()}]]";
+    let selectedUserName = "[[${ad.user_id.getEmail()}]]";
+    let userId = "[[${user.getUserId()}]]";
+</script>
+<script th:src="@{/js/custom.js}"></script>
+<script th:src="@{/js/chatInAd.js}"></script>
 <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>
 
