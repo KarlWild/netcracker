@@ -107,9 +107,7 @@ public class UserController {
     @GetMapping("/reviews")
     public String reviewsPage(Principal principal, Model model) {
         List<Review> reviewList = reviewRepository.findAllByUsername(principal.getName());
-        Review review = reviewList.get(1);
         model.addAttribute("reviewList", reviewList);
-        model.addAttribute("review", review);
         return "pages/reviews";
     }
 

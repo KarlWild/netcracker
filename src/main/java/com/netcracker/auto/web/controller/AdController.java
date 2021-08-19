@@ -24,16 +24,17 @@ public class AdController {
     private TransportService transportService;
     private AdRepository adRepository;
     private UserService userService;
+    private FavouriteRepository favouriteRepository;
 
     @Autowired
     public AdController(AdService adService, PhotoService photoService, TransportService transportService,
-                        AdRepository adRepository,UserService userService, FavouriteRepository favouriteRepository) {
+                        AdRepository adRepository, UserService userService, FavouriteRepository favouriteRepository) {
         this.userService = userService;
         this.adService = adService;
         this.photoService = photoService;
-        this.transportService=transportService;
-        this.adRepository=adRepository;
-        this.favouriteRepository=favouriteRepository;
+        this.transportService = transportService;
+        this.adRepository = adRepository;
+        this.favouriteRepository = favouriteRepository;
     }
 
     @GetMapping("ads/{id}")
@@ -45,8 +46,7 @@ public class AdController {
 
         if (ad.getPhotos().isEmpty()) {
             preview = photoService.getNoPhoto();
-        }
-        else {
+        } else {
             preview = ad.getPhotos().get(0);
             ad.getPhotos().remove(0);
             ads.add(ad);
@@ -80,14 +80,14 @@ public class AdController {
 
     @GetMapping("/new/{id}")
     public String newAd(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
-        Transport transport=transportService.findById(id).get();
+        Transport transport = transportService.findById(id).get();
         ad.setTransport(transport);
         return "ad/form";
     }
 
     @PostMapping("/ad/tmp")
     public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
-        Transport transport=transportService.findById(id).get();
+        Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
@@ -97,7 +97,7 @@ public class AdController {
     }
 
 
-   @GetMapping("ads/{id}/edit")
+    @GetMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int id, Model model) {
         Ad ad = adService.findById(id).get();
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -109,31 +109,31 @@ public class AdController {
 
     @PostMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int adId, @RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
-        Transport transport=transportService.findById(id).get();
+        Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
         //adService.updateAd(adId, ad);
-            adRepository.save(ad);
+        adRepository.save(ad);
         return "redirect:/lk/my_ads";
     }
 
     //удаление
     @PostMapping("ads/{id}/remove")
     public String delete(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
-        ad=adService.findById(adId).get();
+        ad = adService.findById(adId).get();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        if(ad.getUser_id()==userService.findUserByEmail(currentPrincipalName))
-        adRepository.delete(ad);
+        if (ad.getUser_id() == userService.findUserByEmail(currentPrincipalName))
+            adRepository.delete(ad);
         return "redirect:/lk/my_ads";
     }
 
     //добавление в избранное
     @GetMapping("ads/{id}/favourite")
-    public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f){
+    public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         f.setUser_id(userService.findUserByEmail(currentPrincipalName));
@@ -145,7 +145,7 @@ public class AdController {
     //отправка на модерацию
     @PostMapping("ads/{id}/check")
     public String check(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
-        ad=adService.findById(adId).get();
+        ad = adService.findById(adId).get();
         ad.setStatus("open");
         adRepository.save(ad);
         return "redirect:/lk/my_ads";
@@ -154,20 +154,18 @@ public class AdController {
     //продано
     @PostMapping("ads/{id}/sold")
     public String sold(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
-        ad=adService.findById(adId).get();
+        ad = adService.findById(adId).get();
         ad.setStatus(" продано ");
         adRepository.save(ad);
         return "redirect:/lk/my_ads";
     }
-}
 
+    /*@PatchMapping("/ads/{id}/edit")
+        public String change(@ModelAttribute("ad") Ad ad, @PathVariable("id") int adId, @RequestParam("transportId") int id){
+            ad=adService.findById(adId).get();
 
-/*@PatchMapping("/ads/{id}/edit")
-    public String change(@ModelAttribute("ad") Ad ad, @PathVariable("id") int adId, @RequestParam("transportId") int id){
-        ad=adService.findById(adId).get();
-
-        return "redirect:/lk/my_ads";
-    }*/
+            return "redirect:/lk/my_ads";
+        }*/
 
     // Filtered
     @GetMapping("/adsFiltered")
