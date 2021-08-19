@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FavouriteService {
@@ -22,7 +24,11 @@ public class FavouriteService {
 
     @Transactional
     public List<Ad> findFavourite(User user_id) {
-        return favouriteRepository.findFavourite(user_id);
+        List<Favourite> list =favouriteRepository.findFavouriteByUser_id(user_id);
+        List<Ad> listOfAds = list.stream().map(Favourite::getAd).collect(Collectors.toList());
+        //List<Long> listOfIds = listOfUsers.stream().map(User::getUserId).collect(Collectors.toList());
+        // List<Ad> ads=favouriteRepository.findFavourite(listOfAds);
+         return listOfAds;
     }
 
 }
