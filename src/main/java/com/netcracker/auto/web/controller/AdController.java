@@ -100,7 +100,6 @@ public class AdController {
 
     @PostMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int adId, @RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
-        //ad=adService.findById(adId).get();
         Transport transport=transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
