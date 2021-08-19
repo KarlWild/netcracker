@@ -56,4 +56,8 @@ public class UserService implements IUserService {
         repository.save(user);
     }
 
+    public User findUserById(Long id) {
+        return repository.findUserByUserId(id);
+    }
+
 }

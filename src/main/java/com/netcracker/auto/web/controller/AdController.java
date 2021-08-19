@@ -1,13 +1,9 @@
 package com.netcracker.auto.web.controller;
 
-import com.netcracker.auto.entity.Ad;
-import com.netcracker.auto.entity.Photo;
-import com.netcracker.auto.entity.Transport;
+import com.netcracker.auto.entity.*;
 import com.netcracker.auto.repository.AdRepository;
-import com.netcracker.auto.service.AdService;
-import com.netcracker.auto.service.PhotoService;
-import com.netcracker.auto.service.TransportService;
-import com.netcracker.auto.service.UserService;
+import com.netcracker.auto.repository.ReviewRepository;
+import com.netcracker.auto.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,19 +24,23 @@ public class AdController {
     private TransportService transportService;
     private AdRepository adRepository;
     private UserService userService;
+    private ReviewRepository reviewRepository;
 
     @Autowired
     public AdController(AdService adService, PhotoService photoService, TransportService transportService,
-                        AdRepository adRepository, UserService userService) {
+                        AdRepository adRepository, UserService userService, ReviewRepository reviewRepository) {
         this.userService = userService;
         this.adService = adService;
         this.photoService = photoService;
         this.transportService = transportService;
         this.adRepository = adRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping("ads/{id}")
-    public String getAd(Principal principal, @PathVariable("id") int id, Model model) {
+    public String getAd(@ModelAttribute("user") User user,
+                        Principal principal, @PathVariable("id") int id, Model model) {
+        User loggedUser = userService.findUserByEmail(principal.getName());
         Ad ad = adService.findById(id).get();
 
         Photo preview;
@@ -57,11 +57,24 @@ public class AdController {
         model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
+
+        Review review = new Review();
+        review.setGiver(principal.getName());
+        review.setUsername(userService.findUserById(ad.getUser_id().getUserId()).getEmail());
+        review.setRating(0.0);
+        review.setText(" ");
+
+        model.addAttribute("review", review);
         return "ad/ad";
     }
 
-    @GetMapping("/ads")
+    @PostMapping("/ads/reviews/post")
+    public String postReview (@ModelAttribute("review") Review review) {
+        reviewRepository.save(review);
+        return "redirect:/ads";
+    }
 
+    @GetMapping("/ads")
     public String getAds(Model model, String keyword, String brand, String carModel,
                          Integer yearStart, Integer yearEnd,
                          Integer priceStart, Integer priceEnd,
