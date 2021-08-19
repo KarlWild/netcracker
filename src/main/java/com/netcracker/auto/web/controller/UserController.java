@@ -33,6 +33,9 @@ public class UserController {
     private AdService adService;
 
     @Autowired
+    private FavouriteService favouriteService;
+
+    @Autowired
     private ReviewRepository reviewRepository;
 
     @GetMapping("/all")
@@ -83,12 +86,12 @@ public class UserController {
     }
 
     //   User's favourites
-    /*@GetMapping("/favourite")
+    @GetMapping("/favourite")
     public String showFavourites(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        model.addAttribute("user", adService.find);
+        model.addAttribute("user", favouriteService.findFavourite(userService.findUserByEmail(currentPrincipalName)));
         return "ad/myFavourites";
-    }*/
+    }
 
 }

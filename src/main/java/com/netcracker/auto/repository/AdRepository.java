@@ -22,7 +22,11 @@ public interface AdRepository extends CrudRepository<Ad, Integer> {
     @Query("select t from Ad t where t.user_id = :user_id")
     List<Ad> findByUser(@Param("user_id") User user_id);
 
+   // public void update(Ad ad);
+
     /*@Query("select t from Ad t where t.id = :ad_id")
     List<Ad> findFavourite(@Param("ad_id") Favourite ad_id);*/
+
+
 
 }

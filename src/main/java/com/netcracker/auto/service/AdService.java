@@ -42,4 +42,21 @@ public class AdService {
     public void saveAd(Ad ad){
         adRepository.save(ad);
     }
+
+    public void updateAd(int adId, Ad updatedAd){
+        Ad ad=findById(adId).get();
+        ad.setAddress(updatedAd.getAddress());
+        ad.setColor(updatedAd.getColor());
+        ad.setDescription(updatedAd.getDescription());
+        ad.setDriveUnit(updatedAd.getDriveUnit());
+        ad.setMileage(updatedAd.getMileage());
+        ad.setNumberOfOwners(updatedAd.getNumberOfOwners());
+        ad.setPrice(updatedAd.getPrice());
+        ad.setStateNumber(updatedAd.getStateNumber());
+        ad.setSts(updatedAd.getSts());
+        ad.setVin(updatedAd.getVin());
+        ad.setYearOfIssue(updatedAd.getYearOfIssue());
+
+    }
+
 }

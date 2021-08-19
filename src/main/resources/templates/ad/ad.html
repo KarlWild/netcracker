@@ -13,6 +13,7 @@
 <body style="font-family: Arial,Helvetica Neue,Helvetica, sans-serif; margin:0 auto">
 <div th:replace="fragments/navbar :: header"/>
 
+<th:block sec:authorize="isAuthenticated()">
 <tr>
     <div style="margin-left: 60%;">
        <div>
@@ -39,7 +40,8 @@
        </div>
     </div>
 </tr>
-    <div style="display: flex; justify-content: flex-start; align-items: center">
+
+<div style="display: flex; justify-content: flex-start; align-items: center">
 
             <div style="margin-left: 10%;">
             <div>
@@ -195,30 +197,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script>
-    document.addEventListener("click", function(thenew)
-    {
-        if_id = thenew . target. id;
-        the_class = thenew . target.className;
-        if(the_class == "click_me")
-        {
-            if_id = document.getElementById(if_id);
-            if(if_id .style . background == "red")
-            {
-                if_id .style . background = "#efefef";
-            }
-            else
-            {
-                var links = document.querySelectorAll(".click_me");
-                links.forEach(link => {
-                    link.setAttribute("style", "background:#efefef");
-                })
-                if_id .style . background = "red";
-            }
-        }
-    });
-
-</script>
 
 </body>
 </html>
