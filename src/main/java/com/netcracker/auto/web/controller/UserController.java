@@ -4,8 +4,10 @@ import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.entity.Review;
 import com.netcracker.auto.entity.RolesEntity;
 import com.netcracker.auto.entity.User;
+import com.netcracker.auto.repository.FavouriteRepository;
 import com.netcracker.auto.repository.ReviewRepository;
 import com.netcracker.auto.service.AdService;
+import com.netcracker.auto.service.FavouriteService;
 import com.netcracker.auto.service.UserService;
 import com.netcracker.auto.util.FileUploadUtil;
 import org.assertj.core.util.Files;
@@ -46,6 +48,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private FavouriteService favouriteService;
 
     @Autowired
     private AdService adService;
@@ -102,7 +107,9 @@ public class UserController {
     @GetMapping("/reviews")
     public String reviewsPage(Principal principal, Model model) {
         List<Review> reviewList = reviewRepository.findAllByUsername(principal.getName());
+        Review review = reviewList.get(1);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("review", review);
         return "pages/reviews";
     }
 
@@ -153,4 +160,14 @@ public class UserController {
         userService.saveUser(user);
         return "redirect:/lk/all";
     }
+
+    //   User's favourites
+    @GetMapping("/favourite")
+    public String showFavourites(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("user", favouriteService.findFavourite(userService.findUserByEmail(currentPrincipalName)));
+        return "ad/myFavourites";
+    }
+
 }

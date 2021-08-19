@@ -41,7 +41,7 @@ public class Ad {
     @Column(name = "drive_Unit")
     private String driveUnit;
     private boolean verified;
-    private String status="open";
+    private String status=" неактивно ";
 
     public Ad(){}
 
