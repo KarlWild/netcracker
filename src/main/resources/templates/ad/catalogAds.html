@@ -25,64 +25,73 @@
     <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
 </div>
 
-<div style="width: 70%; margin:0 auto; font-family: Arial,Helvetica Neue,Helvetica, sans-serif;">
+<div class="container">
     <form th:action="@{/ads}" method="get">
-        <h2>Фильтр</h2>
+        <label class="form-label mt-4" id="label-filter">Фильтр</label>
         <div class="form-group" style="width: 80%">
-            <div class="row">
-                <div class="col-4">
-                    <select class="form-select form-select-sm" id="brandSelect" name="brand">
-                        <option value="" selected disabled hidden>Брэнд</option>
-                        <option th:each="brand : ${brands}" th:value="*{brand}" th:text="*{brand}"></option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <input type="text" class="form-control form-control-sm" placeholder="Модель" id="modelSelect" name="carModel">
-                </div>
-            </div>
-            <!--<div class="row">
-                <div class="col-4">
-                    <input type="text" class="form-control form-control-sm" placeholder="Поиск" id="nameSelect" name="keyword">
-                </div>
-            </div>-->
-            <div class="row">
-                <div class="input-group" id="yearSelect">
-                    <div class="col-2">
-                        <!--<input type="number" class="form-control form-control-sm" placeholder="Год от" name="yearStart">-->
-                        <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
-                            <option value="" selected disabled hidden>Год от</option>
-                            <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-5">
+                        <select class="form-select form-select-sm" id="brandSelect" name="brand">
+                            <option value="" selected disabled hidden>Брэнд</option>
+                            <option th:each="brand : ${brands}" th:value="*{brand}" th:text="*{brand}"></option>
                         </select>
                     </div>
-                    <div class="col-2">
-                        <!--<input type="number" class="form-control form-control-sm" placeholder="до" name="yearEnd">-->
-                        <select class="form-select form-select-sm" id="yearEndSelect" name="yearEnd">
-                            <option value="" selected disabled hidden>До</option>
-                            <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
+                    <div class="col-5">
+                        <input type="text" class="form-control form-control-sm" placeholder="Модель" id="modelSelect" name="carModel">
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <div class="col-4">
+                        <input type="text" class="form-control form-control-sm" placeholder="Поиск" id="nameSelect" name="keyword">
+                    </div>
+                </div>-->
+                <div class="row">
+                    <div class="col-5">
+                        <div class="input-group">
+                            <div class="col-6">
+                                <!--<input type="number" class="form-control form-control-sm" placeholder="Год от" name="yearStart">-->
+                                <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
+                                    <option value="" selected disabled hidden>Год от</option>
+                                    <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <!--<input type="number" class="form-control form-control-sm" placeholder="до" name="yearEnd">-->
+                                <select class="form-select form-select-sm" id="yearEndSelect" name="yearEnd">
+                                    <option value="" selected disabled hidden>До</option>
+                                    <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <div class="col-6">
+                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                       class="form-control form-control-sm" placeholder="Цена от" name="priceStart">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                       class="form-control form-control-sm" placeholder="до" name="priceEnd">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <select class="form-select form-select-sm" id="ownersSelect" name="ownersCount">
+                            <option value="" selected disabled hidden>Число владельцев</option>
+                            <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="*{i}" th:text="*{i}"></option>
                         </select>
                     </div>
-                </div>
-                <div class="input-group" id="priceSelect">
-                    <div class="col-2">
-                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                               class="form-control form-control-sm" placeholder="Цена от" name="priceStart">
-                    </div>
-                    <div class="col-2">
-                        <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                               class="form-control form-control-sm" placeholder="до" name="priceEnd">
+                    <div class="col col-md-6">
+                        <button type="submit" class="btn btn-primary" id="btn-filter">Искать</button>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4">
-                    <select class="form-select form-select-sm" id="ownersSelect" name="ownersCount">
-                        <option value="" selected disabled hidden>Число владельцев</option>
-                        <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="*{i}" th:text="*{i}"></option>
-                    </select>
-                </div>
-            </div>
+
         </div>
-        <button type="submit" class="btn btn-primary">Искать</button>
     </form>
 
     <table class="table table-hover">

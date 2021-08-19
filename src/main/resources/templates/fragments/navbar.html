@@ -44,7 +44,7 @@
             </ul>
             <th:block sec:authorize="isAuthenticated()">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
+                    <a class="btn btn-info" th:href="@{/lk/all}" sec:authentication="name">Info</a>
                     <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle show"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -104,7 +104,7 @@
             <th:block sec:authorize="isAuthenticated()">
                 <!--<img th:object="${user}" th:src="@{${user.imagesPath}}"/>-->
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
+                    <a class="btn btn-info" th:href="@{/lk/all}" sec:authentication="name">Info</a>
                     <div class="btn-group" role="group">
                         <button id="btnGroupDrop2" type="button" class="btn btn-info dropdown-toggle show"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
@@ -143,7 +143,7 @@
             </ul>
             <th:block sec:authorize="isAuthenticated()">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
+                    <a class="btn btn-info" th:href="@{/lk/all}" sec:authentication="name">Info</a>
                     <div class="btn-group" role="group">
                         <button id="btnGroupDrop3" type="button" class="btn btn-info dropdown-toggle show"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>

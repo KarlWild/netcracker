@@ -10,44 +10,53 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
+    <!-- Style -->
+    <link rel="stylesheet" th:href="@{/css/wallet.css}">
+
     <title>Кошелек</title>
 </head>
 
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
 
-<div class="form-group" style="width: 35%; padding-left: 50px">
-    <h1>Баланс кошелька</h1>
-    <!--<h2 th:field="*{user.balance}"></h2>-->
-    <p th:text="*{user.balance}" style="size: 20px">Balance</p>
-    <hr>
-    <form action="#"
-          th:action="@{/lk/addBalance}"
-          th:object="${user}"
-          method="post">
-        <input type="hidden" th:field="*{userId}">
-        <input type="hidden" th:field="*{first_name}">
-        <input type="hidden" th:field="*{last_name}">
-        <input type="hidden" th:field="*{phone_number}">
-        <input type="hidden" th:field="*{email}">
-        <input type="hidden" th:field="*{date_of_birth}">
-        <input type="hidden" th:field="*{seller_rating}">
-        <input type="hidden" th:field="*{buyers_rating}">
-        <input type="hidden" th:field="*{confirmed}">
-        <input type="hidden" th:field="*{balance}">
-        <input type="hidden" th:field="*{password}">
+<div class="form-group" id="wallet-form">
+    <div class="container">
+        <label class="form-label mt-4" id="label-lk">Баланс кошелька</label>
+        <p th:text="*{user.balance}" style="size: 20px">Balance</p>
+        <form action="#"
+              th:action="@{/lk/addBalance}"
+              th:object="${user}"
+              method="post">
+            <input type="hidden" th:field="*{userId}">
+            <input type="hidden" th:field="*{first_name}">
+            <input type="hidden" th:field="*{last_name}">
+            <input type="hidden" th:field="*{phone_number}">
+            <input type="hidden" th:field="*{email}">
+            <input type="hidden" th:field="*{date_of_birth}">
+            <input type="hidden" th:field="*{seller_rating}">
+            <input type="hidden" th:field="*{buyers_rating}">
+            <input type="hidden" th:field="*{confirmed}">
+            <input type="hidden" th:field="*{balance}">
+            <input type="hidden" th:field="*{password}">
 
-        <div class="form-group">
-            <div class="input-group mb-3">
-                <span class="input-group-text">₽</span>
-                <input type="text" class="form-control" placeholder="Введите сумму"
-                       th:name="money" aria-label="Количество">
-                <span class="input-group-text">.00</span>
+            <div class="form-group col-5">
+                <div class="col-12">
+                    <hr>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">₽</span>
+                    <input type="text" class="form-control" placeholder="Введите сумму"
+                           th:name="money" aria-label="Количество">
+                    <span class="input-group-text">.00</span>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Пополнить</button>
+                </div>
             </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 50%">Пополнить</button>
-    </form>
+
+        </form>
+    </div>
 </div>
 
 
