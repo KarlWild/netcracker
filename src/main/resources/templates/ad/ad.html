@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,156 +13,179 @@
     <title>Объявление</title>
 </head>
 <body style="font-family: Arial,Helvetica Neue,Helvetica, sans-serif; margin:0 auto">
-<div th:replace="fragments/navbar :: header"/>
-    <div style="display: flex; justify-content: flex-start; align-items: center">
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
+</div>
 
-        <div style="margin-left: 10%;">
-            <tr>
+<div style="display: flex; justify-content: flex-start; align-items: center">
 
-                <form th:action= "'/ads/' + ${ad.id} + '/remove'" method="post">
-                <button class="btn btn-dark" type="submit"> Удалить объявление </button>
+    <div style="margin-left: 10%;">
+        <tr>
+
+            <form th:action="'/ads/' + ${ad.id} + '/remove'" method="post">
+                <button class="btn btn-dark" type="submit"> Удалить объявление</button>
             </form>
 
 
-                <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/edit'"> Редактировать объявление </a></td>
+            <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/edit'"> Редактировать объявление </a></td>
+        </tr>
+        <h2 class="h2_style">
+            <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+            <p th:text="${ad.price} + ' ' + ₽"></p>
+        </h2>
+
+        <table width="100%" cellspacing="0" cellpadding="0">
+
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Год выпуска</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
+                </td>
             </tr>
-            <h2 class="h2_style">
-                <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
-                <p th:text="${ad.price} + ' ' + ₽"></p>
-            </h2>
 
-            <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Пробег</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
+                </td>
+            </tr>
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Год выпуска</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Кузов</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${ad.transport.bodyType}"></p>
+                </td>
+            </tr>
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Пробег</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.mileage} + ' км'"></p>
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Цвет</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${ad.color}"></p>
+                </td>
+            </tr>
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Кузов</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.transport.bodyType}"></p>
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Двигатель и коробка</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px"
+                       th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
+                </td>
+            </tr>
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Цвет</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.color}"></p>
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Привод</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${ad.driveUnit}"></p>
+                </td>
+            </tr>
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Двигатель и коробка</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Привод</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.driveUnit}"></p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Владельцы</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.numberOfOwners}"></p>
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Владельцы</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${ad.numberOfOwners}"></p>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">VIN</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "${ad.getStateNumber} + '**************'"></p><!--.substring(0, 3)-->
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">VIN</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="${ad.getStateNumber} + '**************'"></p><!--.substring(0, 3)-->
+                </td>
+            </tr>
 
-                <tr>
-                    <td width="40%" valign="top" style="color: grey">
-                        <p style="margin: 5px">Госномер</p>
-                    </td>
-                    <td valign="top" style="color: black">
-                        <p style="margin: 5px" th:text= "'******' + ${ad.getStateNumber}"></p><!--.substring(6)-->
-                    </td>
-                </tr>
+            <tr>
+                <td width="40%" valign="top" style="color: grey">
+                    <p style="margin: 5px">Госномер</p>
+                </td>
+                <td valign="top" style="color: black">
+                    <p style="margin: 5px" th:text="'******' + ${ad.getStateNumber}"></p><!--.substring(6)-->
+                </td>
+            </tr>
 
-            </table>
+        </table>
 
-        </div>
+    </div>
 
-        <div>
-            <div th:if= "${ads != null}">
-                <div style="width: 640px; height: 480px; margin-left: 25%" th:each="ad : ${ads}">
+    <div>
+        <div th:if="${ads != null}">
+            <div style="width: 640px; height: 480px; margin-left: 25%" th:each="ad : ${ads}">
 
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel"; >
-                        <div class="carousel-inner" style="width: 640px; height: 480px;">
-                            <div class="carousel-item active">
-                                <img class="d-block w-100" th:src="@{'/photos/' + ${preview.fileName}}" alt="First slide">
-                            </div>
-
-                            <div class="carousel-item" th:each="photo : ${ad.photos}">
-                                <img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}" alt="Second slide">
-                            </div>
-
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div th:if="${#lists.isEmpty(ads)}" style="width: 440px; height: 280px; margin-left: 25%">
-                <div class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" ;>
+                    <div class="carousel-inner" style="width: 640px; height: 480px;">
                         <div class="carousel-item active">
                             <img class="d-block w-100" th:src="@{'/photos/' + ${preview.fileName}}" alt="First slide">
                         </div>
+
+                        <div class="carousel-item" th:each="photo : ${ad.photos}">
+                            <img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}" alt="Second slide">
+                        </div>
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(ads)}" style="width: 440px; height: 280px; margin-left: 25%">
+            <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" th:src="@{'/photos/' + ${preview.fileName}}" alt="First slide">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div style="margin-left: 10%; margin-top: 15px; word-wrap: break-word; width: 80%">
-        <b><p>Описание</p></b>
-        <p th:text="${ad.description}"></p>
+<div style="margin-left: 10%; margin-top: 15px; word-wrap: break-word; width: 80%">
+    <b><p>Описание</p></b>
+    <p th:text="${ad.description}"></p>
 
-    </div>
+</div>
+
+<div class="form-group">
+    <form action="#"
+          th:action="@{/lk/reviews/post}"
+          th:object=""
+          method="post">
+        <input type="hidden" th:field="${ad.user_id}">
+        <input type="hidden" sec:authentication="name">
+
+        <label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
+        <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 111px;"></textarea>
+
+        <button class="btn btn-primary" type="submit">Оставить отзыв</button>
+    </form>
+
+</div>
 
 <!--<div class="form-group" style="width: 35%; padding-left: 50px">
     <form action="#"

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -96,13 +98,11 @@
                     <a class="nav-link" href="#">История</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" th:href="@{/ads}">Каталог</a>
                 </li>
             </ul>
             <th:block sec:authorize="isAuthenticated()">
+                <!--<img th:object="${user}" th:src="@{${user.imagesPath}}"/>-->
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                     <button type="button" class="btn btn-info" sec:authentication="name">Info</button>
                     <div class="btn-group" role="group">
@@ -139,9 +139,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">История</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
                 </li>
             </ul>
             <th:block sec:authorize="isAuthenticated()">

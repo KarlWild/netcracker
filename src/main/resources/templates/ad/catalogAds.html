@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Каталог автомобилей</title>
     <!-- Required meta tags -->
@@ -16,43 +17,13 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/ads}">Каталог</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">О нас</a>
-                </li>
-                <li>
-                    <form class="d-flex">
-                        <input class="form-control me-sm-2" type="text" placeholder="Поиск по объявлениям">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Поиск</button>
-                    </form>
-                </li>
-            </ul>
-            <form th:action="@{/reg}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Регистрация</button>
-            </form>
-            <form th:action="@{/login}" class="d-flex" style="margin-left: 15px">
-                <button type="submit" class="btn btn-outline-success">Вход</button>
-            </form>
-        </div>
-    </div>
-</nav>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
+</div>
 
 <div style="width: 70%; margin:0 auto; font-family: Arial,Helvetica Neue,Helvetica, sans-serif;">
     <form th:action="@{/ads}" method="get">

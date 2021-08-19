@@ -25,7 +25,4 @@ public interface AdRepository extends CrudRepository<Ad, Integer>, JpaSpecificat
 
     @Query("from Ad ad where ad.transport.model like %:keyword% or ad.transport.brand like %:keyword%")
     List<Ad> findByKeyword(@Param("keyword") String keyword);
-
-    List<Ad> findAdsByYearOfIssueBetween(Date yearStart, Date yearEnd);
-
 }

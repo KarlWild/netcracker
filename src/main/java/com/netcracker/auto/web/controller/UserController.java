@@ -53,7 +53,7 @@ public class UserController {
     @GetMapping("/all")
     public String mainPage(Principal principal, Model model) {
         User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
+        model.addAttribute( "user", user);
         return "pages/all";
     }
 
