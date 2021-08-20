@@ -32,6 +32,10 @@
     <title>Объявление</title>
 </head>
 <body>
+
+<div sec:authorize="isAnonymous()">
+    <div th:replace="~{/fragments/navbar.html :: header}"/>
+</div>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
     <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
 </div>

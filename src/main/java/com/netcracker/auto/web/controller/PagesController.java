@@ -15,7 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 public class PagesController {
     @GetMapping
     public String home() {
-        return "pages/index";
+        return "ad/catalogAds";
     }
 
     @GetMapping("/login")
@@ -24,7 +24,7 @@ public class PagesController {
     }
 
     @GetMapping("/reg")
-    public String registration(WebRequest request, Model model){
+    public String registration(Model model){
         UserDTO userDTO = new UserDTO();
         model.addAttribute("user", userDTO);
         return "pages/reg";

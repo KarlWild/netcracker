@@ -60,7 +60,7 @@ public class AdController {
 
         Review review = new Review();
         review.setGiver(principal.getName());
-        review.setUsername(userService.findUserById(ad.getUser_id().getUserId()).getEmail());
+        review.setUsername(ad.getUser_id().getEmail());
         review.setRating(0.0);
         review.setText(" ");
 
