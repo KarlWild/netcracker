@@ -16,6 +16,9 @@
 </head>
 <body>
 
+<div sec:authorize="isAnonymous()">
+    <div th:replace="~{/fragments/navbar.html :: header}"/>
+</div>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
     <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
 </div>
@@ -25,8 +28,7 @@
 
 <div class="container">
     <form th:action="@{/ads}" method="get">
-        <label class="form-label mt-4" id="label-filter">Фильтр</label>
-        <div class="form-group" style="width: 80%">
+        <div class="form-group" style="width: 80%; margin-top: 30px">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-5">

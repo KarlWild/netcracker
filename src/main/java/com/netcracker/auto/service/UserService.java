@@ -55,5 +55,4 @@ public class UserService implements IUserService {
     public void saveUser(User user) {
         repository.save(user);
     }
-
 }
