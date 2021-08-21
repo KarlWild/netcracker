@@ -8,8 +8,6 @@ import com.netcracker.auto.service.UserService;
 import com.netcracker.auto.service.chat.ChatMessageService;
 import com.netcracker.auto.service.chat.ChatRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -22,9 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class ChatController {

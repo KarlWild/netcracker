@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -26,18 +25,18 @@ public class AdController {
     private AdRepository adRepository;
     private UserService userService;
     private FavouriteRepository favouriteRepository;
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
     @Autowired
     public AdController(AdService adService, PhotoService photoService, TransportService transportService,
-                        AdRepository adRepository, UserService userService, FavouriteRepository favouriteRepository, ReviewRepository reviewRepository) {
+                        AdRepository adRepository, UserService userService, FavouriteRepository favouriteRepository, ReviewService reviewService) {
         this.userService = userService;
         this.adService = adService;
         this.photoService = photoService;
         this.transportService = transportService;
         this.adRepository = adRepository;
         this.favouriteRepository = favouriteRepository;
-        this.reviewRepository = reviewRepository;
+        this.reviewService = reviewService;
     }
 
     @GetMapping("ads/{id}")
@@ -55,7 +54,7 @@ public class AdController {
             ad.getPhotos().remove(0);
             ads.add(ad);
         }
-        model.addAttribute("user",userService.findUserByEmail(principal.getName()));
+        model.addAttribute("user", userService.findUserByEmail(principal.getName()));
         model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
@@ -68,8 +67,8 @@ public class AdController {
     }
 
     @PostMapping("/ads/post-review")
-    public String postReview (@ModelAttribute("review") Review review) {
-        reviewRepository.save(review);
+    public String postReview(@ModelAttribute("review") Review review) {
+        reviewService.saveReview(review);
         return "redirect:/ads";
     }
 
@@ -122,8 +121,7 @@ public class AdController {
 
         if (ad.getPhotos().isEmpty()) {
             preview = photoService.getNoPhoto();
-        }
-        else {
+        } else {
             preview = ad.getPhotos().get(0);
             ad.getPhotos().remove(0);
             ads.add(ad);
@@ -202,5 +200,4 @@ public class AdController {
         model.addAttribute("ads", adService.findAll());
         return "ad/catalogAdsFiltered";
     }
-
 }

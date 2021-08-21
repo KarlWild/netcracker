@@ -1,38 +1,28 @@
 package com.netcracker.auto.web.controller;
 
-import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.entity.Review;
 import com.netcracker.auto.entity.RolesEntity;
 import com.netcracker.auto.entity.User;
-import com.netcracker.auto.repository.FavouriteRepository;
 import com.netcracker.auto.repository.ReviewRepository;
 import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.FavouriteService;
 import com.netcracker.auto.service.UserService;
 import com.netcracker.auto.util.FileUploadUtil;
-import org.assertj.core.util.Files;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Anton Popkov

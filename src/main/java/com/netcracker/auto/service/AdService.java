@@ -164,7 +164,7 @@ public class AdService {
                 criteriaBuilder.equal(root.get(Ad_.NUMBER_OF_OWNERS), count);
     }
 
-        /*public List<Ad> findByLikeCriteria(String text, Integer yearStart, Integer yearEnd) {
+    /*public List<Ad> findByLikeCriteria(String text, Integer yearStart, Integer yearEnd) {
         return adRepository.findAll((Specification<Ad>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (text != null) {

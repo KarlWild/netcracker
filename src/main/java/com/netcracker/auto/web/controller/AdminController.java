@@ -3,7 +3,6 @@ package com.netcracker.auto.web.controller;
 import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.service.AdService;
 import com.netcracker.auto.service.PhotoService;
-import com.netcracker.auto.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
