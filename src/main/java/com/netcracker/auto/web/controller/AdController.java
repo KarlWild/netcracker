@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -40,7 +41,6 @@ public class AdController {
     @GetMapping("ads/{id}")
     public String getAd(@ModelAttribute("user") User user,
                         Principal principal, @PathVariable("id") int id, Model model) {
-        User loggedUser = userService.findUserByEmail(principal.getName());
         Ad ad = adService.findById(id).get();
 
         Photo preview;
@@ -58,24 +58,21 @@ public class AdController {
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
 
-        Review review = new Review();
-        review.setGiver(principal.getName());
-        review.setUsername(ad.getUser_id().getEmail());
-        review.setRating(0.0);
-        review.setText(" ");
-
+        Review review = new Review(ad.getUser_id().getEmail(),
+                " ", 0, principal.getName());
         model.addAttribute("review", review);
+
         return "ad/ad";
     }
 
-    @PostMapping("/ads/reviews/post")
+    @PostMapping("/ads/post-review")
     public String postReview (@ModelAttribute("review") Review review) {
         reviewRepository.save(review);
         return "redirect:/ads";
     }
 
     @GetMapping("/ads")
-    public String getAds(Model model, String keyword, String brand, String carModel,
+    public String getAds(Model model, String brand, String carModel,
                          Integer yearStart, Integer yearEnd,
                          Integer priceStart, Integer priceEnd,
                          Integer mileageStart, Integer mileageEnd,

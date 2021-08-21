@@ -35,43 +35,38 @@
 
 <div class="form-group" id="wallet-form">
     <div class="container">
-        <label class="form-label mt-4" id="label-lk">Отзывы</label>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Отправитель</th>
-                <th scope="col">Текст</th>
-                <th scope="col">Рейтинг</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="review : ${reviewList}">
-                <td th:text="*{review.giver}"></td>
-                <td th:text="*{review.text}"></td>
-                <td>
-                    <!--<input id="rating-view" th:value="*{review.rating}" type="hidden" class="rating" title=""
-                         data-show-clear=false data-show-caption=true data-display-only=true/>
-                    <div class="clearfix"></div>-->
-                    <input id="rating-view" class="kv-ltr-theme-fas-star rating-stars" th:value="*{review.rating}"
-                           dir="ltr" data-size="md"
-                           data-show-clear=false data-show-caption=false data-display-only=true>
-                    <br/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div th:if="${reviewList.size()} == 0">
+            <div class="col" style="margin: auto">
+                <label class="form-label mt-4" style="font-size: 35px">Пока вы не получали отзывов</label>
+                <i class="far fa-frown" style="font-size: 30px"></i>
+            </div>
+        </div>
+        <div th:unless="${reviewList.size()} == 0">
+            <label class="form-label mt-4" id="label-lk">Отзывы</label>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Отправитель</th>
+                    <th scope="col">Текст</th>
+                    <th scope="col">Рейтинг</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${reviewList}">
+                    <td th:text="*{review.author}"></td>
+                    <td th:text="*{review.comment}"></td>
+                    <td>
+                        <input id="rating-view" class="kv-ltr-theme-fas-star rating-stars" th:value="*{review.rating}"
+                               dir="ltr" data-size="md"
+                               data-show-clear=false data-show-caption=false data-display-only=true>
+                        <br/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
-
-<!--<form method="post" th:object="${review}" class="mt-5">
-    <h2>Оставить отзыв</h2>
-    <input th:value="*{rating}" type="hidden" class="rating" data-glyphicon="0"
-           data-show-clear=false data-show-caption=true readonly>
-    <button class="btn btn-primary" type="submit">Submit form</button>
-</form>-->
-
-<!--<a th:href="@{/lk/reviews/create}">Оставить отзыв</a>-->
 
 <script>
     $(document).ready(function () {

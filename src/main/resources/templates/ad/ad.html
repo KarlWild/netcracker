@@ -27,8 +27,6 @@
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/themes/krajee-fas/theme.js"></script>
 
-    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-
     <title>Объявление</title>
 </head>
 <body>
@@ -189,40 +187,41 @@
 <div style="margin-left: 10%; margin-top: 15px; word-wrap: break-word; width: 80%">
     <b><p>Описание</p></b>
     <p th:text="${ad.description}"></p>
-
 </div>
 
-<div class="container">
-    <form action="#"
-          th:action="@{/ads/reviews/post}"
-          th:object="${review}"
-          method="post">
-        <label class="form-label mt-4" style="font-size: 25px;">Написать отзыв</label>
-        <div class="form-group">
-            <div class="row">
-                <!--<div th:with="name=${ad.user_id.email}">
-                    <input type="hidden" th:text="${name}" th:field="*{username}">
+<fieldset>
+    <div class="container">
+        <form action="#"
+              th:action="@{/ads/post-review}"
+              th:object="${review}"
+              method="post"
+              enctype="multipart/form-data">
+            <div class="form-group" id="review-form">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" th:field="*{author}">
+                            <input type="hidden" class="form-control" th:field="*{username}">
+                            <label for="inputComment" class="form-label mt-4" style="font-size: 25px">Оставить отзыв</label>
+                            <textarea class="form-control" id="inputComment" rows="4"
+                                      style="height: 125px; margin-bottom: 50px;"
+                                      placeholder="Напишите отзыв" th:field="*{comment}"></textarea>
+                            <!--<input type="text" class="form-control" id="inputComment"
+                                   aria-describedby="commentHelp" placeholder="Оставьте отзыв" th:field="*{comment}">-->
+                        </div>
+                    </div>
+                    <div class="col-3" id="stars" style="margin-top: 70px">
+                        <input id="rating" class="kv-ltr-theme-fas-star rating-stars"
+                               dir="ltr" data-size="md"
+                               data-show-clear=false data-show-caption=false
+                               th:field="*{rating}">
+                        <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+                    </div>
                 </div>
-                <div th:with="author=${principal.username}">
-                    <input type="hidden" th:text="${author}" th:field="*{giver}">
-                </div>-->
-
             </div>
-            <div class="row">
-                <div class="col-6">
-                <textarea class="form-control" rows="3" style="height: 125px;"
-                          th:field="*{text}"></textarea>
-                </div>
-                <div class="col-3">
-                    <input id="rating" class="kv-ltr-theme-fas-star rating-stars" th:field="*{rating}"
-                           dir="ltr" data-size="md"
-                           data-show-clear=false data-show-caption=false>
-                    <button class="btn btn-primary" type="submit">Оставить отзыв</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+</fieldset>
 
 <script>
     $(document).ready(function () {
