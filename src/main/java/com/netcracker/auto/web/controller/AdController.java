@@ -51,7 +51,7 @@ public class AdController {
             ad.getPhotos().remove(0);
             ads.add(ad);
         }
-
+        model.addAttribute("user",userService.findUserByEmail(principal.getName()));
         model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
@@ -96,13 +96,27 @@ public class AdController {
         return "redirect:/lk/my_ads";
     }
 
-
     @GetMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int id, Model model) {
         Ad ad = adService.findById(id).get();
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String currentPrincipalName = authentication.getName();
 //        ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
+
+        Photo preview;
+        List<Ad> ads = new ArrayList<>();
+
+        if (ad.getPhotos().isEmpty()) {
+            preview = photoService.getNoPhoto();
+        }
+        else {
+            preview = ad.getPhotos().get(0);
+            ad.getPhotos().remove(0);
+            ads.add(ad);
+        }
+
+        model.addAttribute("preview", preview);
+        model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
         return "ad/edit";
     }

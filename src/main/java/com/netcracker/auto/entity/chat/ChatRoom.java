@@ -21,6 +21,14 @@ public class ChatRoom {
     private Long chatId;
     private Long senderId;
     private Long recipientId;
+//
+//    public Long getAdId() {
+//        return adId;
+//    }
+//
+//    public void setAdId(Long adId) {
+//        this.adId = adId;
+//    }
 
     public Long getChatId() {
         return chatId;

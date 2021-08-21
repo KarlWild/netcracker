@@ -66,6 +66,9 @@ public class User {
         if (images == null || userId == null) return null;
         return "/user-photos/" + userId + "/" + images;
     }
+    public String getFullName(){
+        return last_name+" "+first_name;
+    }
 
     public void addRole(RolesEntity rolesEntity){
         this.roles.add(rolesEntity);

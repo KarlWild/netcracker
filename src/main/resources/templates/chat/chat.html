@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Spring Boot WebSocket</title>
+    <title>Чат</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -20,7 +21,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-<div th:replace="fragments/navbar :: header"/>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
+</div>
 
 <div class="container clearfix">
     <div class="people-list" id="people-list">

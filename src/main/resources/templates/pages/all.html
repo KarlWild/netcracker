@@ -132,9 +132,9 @@
                                     </table>
                                     <p>Роль продавца стоит 100 рублей.</p>
 
-                                    <button class="btn btn-primary" onclick="this.parentNode.submit()"
-                                            style="width: 50%; margin-top: 30px">Получить возможности продавца
-                                    </button>
+                                    <form th:object="${user}" th:action="@{/lk/get/role_seller/{id}(id=${user.userId})}" method="GET">
+                                        <button class="btn btn-primary" onclick="this.parentNode.submit()" style="width: 50%; margin-top: 30px">Получить возможности продавца</button>
+                                    </form>
 
                                 </div>
                             </div>

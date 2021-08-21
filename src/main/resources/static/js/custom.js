@@ -47,14 +47,14 @@ function renderAllMessages(message) {
         templateResponse = Handlebars.compile($("#message-template").html());
         contextResponse = {
             messageOutput: message.content,
-            time: message.timestamp,
+            time: message.timestamp,//.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
             toUserName: message.senderName
         };
     } else {
          templateResponse = Handlebars.compile($("#message-response-template").html());
          contextResponse = {
             response: message.content,
-            time: message.timestamp,
+            time: message.timestamp,//.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
             userName: message.senderName
         };
     }
@@ -65,8 +65,10 @@ function renderAllMessages(message) {
 }
 
 function sendMessage(message) {
+    let id;
     let preview = document.getElementById("selectedUserId");
-    let id = preview.getAttribute("chatIdAttr");
+    //if(selectedUserId!=null) id = selectedUserId;
+    id = preview.getAttribute("chatIdAttr");
     $.get(url + "/chat/" + id, function (response) {
         to = response;
         console.log(to);
@@ -76,7 +78,7 @@ function sendMessage(message) {
             var template = Handlebars.compile($("#message-template").html());
             var context = {
                 messageOutput: message,
-                time: getCurrentTime(),
+                time: getCurrentTime().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
                 toUserName: selectedUser
             };
 
