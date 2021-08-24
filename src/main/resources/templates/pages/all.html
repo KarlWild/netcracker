@@ -82,12 +82,48 @@
                                accept="image/png, image/jpeg"/>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary">Редактировать</button>
+                        <button type="submit" class="btn btn-primary" id="btn-update">Редактировать</button>
                     </div>
                 </form>
             </div>
 
-            <div class="container-md col-5 lk-child button-seller">
+            <div class="container col-5 lk-child button-seller">
+                <label class="form-label mt-4" id="label-balance">Баланс</label>
+                <div>
+                    <p th:text="*{user.balance}" style="size: 20px">Balance</p>
+                    <form action="#"
+                          th:action="@{/lk/addBalance}"
+                          th:object="${user}"
+                          method="post">
+                        <input type="hidden" th:field="*{userId}">
+                        <input type="hidden" th:field="*{first_name}">
+                        <input type="hidden" th:field="*{last_name}">
+                        <input type="hidden" th:field="*{phone_number}">
+                        <input type="hidden" th:field="*{email}">
+                        <input type="hidden" th:field="*{date_of_birth}">
+                        <input type="hidden" th:field="*{seller_rating}">
+                        <input type="hidden" th:field="*{buyers_rating}">
+                        <input type="hidden" th:field="*{confirmed}">
+                        <input type="hidden" th:field="*{balance}">
+                        <input type="hidden" th:field="*{password}">
+
+                        <div class="form-group">
+                            <div class="col">
+                                <hr>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">₽</span>
+                                <input type="text" class="form-control" placeholder="Введите сумму"
+                                       th:name="money" aria-label="Количество">
+                                <span class="input-group-text">.00</span>
+                            </div>
+                            <div class="col" id>
+                                <button type="submit" class="btn btn-primary" id="btn-balance">Пополнить</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
                 <div sec:authorize="!hasRole('ROLE_SELLER')&&!hasRole('ROLE_ADMIN')">
                     <form th:object="${user}"
                           th:action="@{/lk/get/role_seller/{id}(id=${user.userId})}"
@@ -149,7 +185,6 @@
     <div class="lk-child" style="color:white;">
         sdfsdfsdf
     </div>
-
 
 </fieldset>
 

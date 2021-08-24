@@ -90,7 +90,7 @@ public class UserController {
     public String addBalance(@RequestParam(value = "money") Double money,
                              @ModelAttribute("user") User user) {
         userService.updateBalance(money, user.getUserId());
-        return "redirect:/lk/wallet";
+        return "redirect:/lk/all";
     }
 
     /* Reviews */

@@ -7,9 +7,19 @@
     font-size: 35px;
 }
 
-.btn-primary {
+#label-balance {
+    font-size: 35px;
+}
+
+#btn-update {
     margin: 40px auto 20px auto;
     width: 100%;
+}
+
+#btn-balance {
+    margin: auto auto 20px auto;
+    width: 100%;
+    align-self: center;
 }
 
 img {
@@ -23,7 +33,6 @@ img {
     display: table;
 }
 .lk-child{
-    margin-top: 140px;
     display: table-cell;
 }
 .button-seller {
