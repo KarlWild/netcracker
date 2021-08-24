@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PagesController {
     @GetMapping
     public String home() {
-        return "ad/catalogAds";
+        return "redirect:/ads";
     }
 
     @GetMapping("/login")

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/ads")
 public class AdController {
 
     private AdService adService;
@@ -58,6 +57,7 @@ public class AdController {
         model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
+        model.addAttribute("current", principal);
 
         Review review = new Review(ad.getUser_id().getEmail(),
                 " ", 0, principal.getName());
@@ -69,6 +69,12 @@ public class AdController {
     @PostMapping("/ads/post-review")
     public String postReview(@ModelAttribute("review") Review review) {
         reviewService.saveReview(review);
+
+        User user = userService.findUserByEmail(review.getUsername());
+        Double seller_rating = reviewService.calculateSellerRatingByUsername(user.getEmail());
+        user.setSeller_rating(seller_rating);
+        userService.saveUser(user);
+
         return "redirect:/ads";
     }
 
@@ -194,10 +200,4 @@ public class AdController {
             return "redirect:/lk/my_ads";
         }*/
 
-    // Filtered
-    @GetMapping("/adsFiltered")
-    public String getAdsFiltered(Model model) {
-        model.addAttribute("ads", adService.findAll());
-        return "ad/catalogAdsFiltered";
-    }
 }
