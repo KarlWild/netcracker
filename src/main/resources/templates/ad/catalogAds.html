@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <title>Каталог автомобилей</title>
     <!-- Required meta tags -->
@@ -16,118 +15,118 @@
     <link rel="stylesheet" th:href="@{/css/catalog.css}">
 
 </head>
+
 <body>
 
-<div sec:authorize="isAnonymous()">
-    <div th:replace="~{/fragments/navbar.html :: header}"/>
-</div>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
-    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
-</div>
-<div sec:authorize="hasRole('ROLE_USER')">
-    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
-</div>
+    <div sec:authorize="isAnonymous()">
+        <div th:replace="~{/fragments/navbar.html :: header}" />
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div th:replace="~{/fragments/navbar.html :: header-admin}" />
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <div th:replace="~{/fragments/navbar.html :: header-lk}" />
+    </div>
 
-<div class="container">
-    <form th:action="@{/ads}" method="get">
-        <div class="form-group" style="width: 80%; margin-top: 30px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-5">
-                        <select class="form-select form-select-sm" id="brandSelect" name="brand">
+    <div class="container">
+        <form th:action="@{/ads}" method="get">
+            <div class="form-group" style="width: 80%; margin-top: 30px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-select form-select-sm" id="brandSelect" name="brand">
                             <option value="" selected disabled hidden>Брэнд</option>
                             <option th:each="brand : ${brands}" th:value="*{brand}" th:text="*{brand}"></option>
                         </select>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" class="form-control form-control-sm" placeholder="Модель" id="modelSelect" name="carModel">
+                        </div>
                     </div>
-                    <div class="col-5">
-                        <input type="text" class="form-control form-control-sm" placeholder="Модель" id="modelSelect" name="carModel">
-                    </div>
-                </div>
-                <!--<div class="row">
+                    <!--<div class="row">
                     <div class="col-4">
                         <input type="text" class="form-control form-control-sm" placeholder="Поиск" id="nameSelect" name="keyword">
                     </div>
                 </div>-->
-                <div class="row">
-                    <div class="col-5">
-                        <div class="input-group">
-                            <div class="col-6">
-                                <!--<input type="number" class="form-control form-control-sm" placeholder="Год от" name="yearStart">-->
-                                <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="input-group">
+                                <div class="col-6">
+                                    <!--<input type="number" class="form-control form-control-sm" placeholder="Год от" name="yearStart">-->
+                                    <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
                                     <option value="" selected disabled hidden>Год от</option>
                                     <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
                                 </select>
-                            </div>
-                            <div class="col-6">
-                                <!--<input type="number" class="form-control form-control-sm" placeholder="до" name="yearEnd">-->
-                                <select class="form-select form-select-sm" id="yearEndSelect" name="yearEnd">
+                                </div>
+                                <div class="col-6">
+                                    <!--<input type="number" class="form-control form-control-sm" placeholder="до" name="yearEnd">-->
+                                    <select class="form-select form-select-sm" id="yearEndSelect" name="yearEnd">
                                     <option value="" selected disabled hidden>До</option>
                                     <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
                                 </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="input-group">
+                                <div class="col-6">
+                                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control form-control-sm" placeholder="Цена от" name="priceStart">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control form-control-sm" placeholder="до" name="priceEnd">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-5">
-                        <div class="input-group">
-                            <div class="col-6">
-                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                                       class="form-control form-control-sm" placeholder="Цена от" name="priceStart">
-                            </div>
-                            <div class="col-6">
-                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                                       class="form-control form-control-sm" placeholder="до" name="priceEnd">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <select class="form-select form-select-sm" id="ownersSelect" name="ownersCount">
+                    <div class="row">
+                        <div class="col-5">
+                            <select class="form-select form-select-sm" id="ownersSelect" name="ownersCount">
                             <option value="" selected disabled hidden>Число владельцев</option>
                             <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="*{i}" th:text="*{i}"></option>
                         </select>
-                    </div>
-                    <div class="col col-md-6">
-                        <button type="submit" class="btn btn-primary" id="btn-filter">Искать</button>
+                        </div>
+                        <div class="col col-md-6">
+                            <button type="submit" class="btn btn-primary" id="btn-filter">Искать</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
+        </form>
 
-        </div>
-    </form>
+        <table class="table table-hover">
+            <tbody>
+                <th:block th:each="ad : ${ads}">
+                    <tr scope="row">
+                        <td>
+                            <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+                            <p th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
+                            <p th:text="${ad.transport.bodyType}"></p>
+                        </td>
+                        <td>
+                            <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
+                            <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
+                            <p style="margin: 5px" th:text=" Автор + '  '  + ${ad.user_id.email}"></p>
+                        </td>
+                        <td>
+                            <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
+                        </td>
+                        <td>
+                            <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
+                        </td>
+                        <td>
+                            <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
+                        </td>
+                        <td>
+                            <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
+                        </td>
+                    </tr>
 
-    <table class="table table-hover">
-        <tbody>
-        <th:block th:each="ad : ${ads}">
-            <tr scope="row">
-                <td>
-                    <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
-                    <p th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
-                    <p th:text="${ad.transport.bodyType}"></p>
-                </td>
-                <td>
-                    <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
-                    <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
-                    <p style="margin: 5px" th:text= " Автор + '  '  + ${ad.user_id.email}"></p>
-                </td>
-                <td>
-                    <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
-                </td>
-                <td>
-                    <p style="margin: 5px" th:text= "${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
-                </td>
-                <td>
-                    <p style="margin: 5px" th:text= "${ad.mileage} + ' км'"></p>
-                </td>
-                <td>
-                    <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
-                </td>
-            </tr>
+                </th:block>
+            </tbody>
 
-        </th:block>
-        </tbody>
-
-    </table>
-</div>
+        </table>
+    </div>
 </body>
+
 </html>

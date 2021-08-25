@@ -200,4 +200,14 @@ public class AdController {
             return "redirect:/lk/my_ads";
         }*/
 
+    // Filtered
+    @GetMapping("/adsFiltered")
+    public String getAdsFiltered(Model model) {
+        model.addAttribute("ads", adService.findAll());
+        return "ad/catalogAdsFiltered";
+    }
+    @GetMapping("/api/get_addresses")
+    public @ResponseBody List<Object[]> getAllAddresses(){
+        return adService.findAllAddresses();
+    }
 }
