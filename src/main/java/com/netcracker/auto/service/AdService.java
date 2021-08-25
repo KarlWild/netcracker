@@ -50,6 +50,10 @@ public class AdService {
         List<Ad> list = adRepository.findByVerifiedAndStatus("open");
         return list;
     }
+    @Transactional
+    public List<Object[]> findAllAddresses(){
+        return adRepository.findAllAddresses();
+    }
 
     public void saveAd(Ad ad) {
         adRepository.save(ad);

@@ -17,18 +17,18 @@
 <div th:replace="fragments/navbar :: header"/>
 
 <div class="form-group" id="main-form" style="padding-left: 100px; padding-right: 100px;">
-    <div class="container col-5">
+    <div class="container col-5" style="margin-top: 20px;">
 
-        <h1>Registration</h1>
+        <h1>Регистрация</h1>
         <form action="/reg" th:object="${user}" method="POST" enctype="utf8">
             <div class="form-group">
-                <label class="col-form-label mt-4" for="First name">First name</label>
-                <input th:field="*{firstName}" type="text" class="form-control" placeholder="First name"
-                       id="First name">
+                <label class="col-form-label mt-4" for="Имя">Имя</label>
+                <input th:field="*{firstName}" type="text" class="form-control" placeholder="Имя"
+                       id="Имя">
             </div>
             <div class="form-group">
-                <label class="col-form-label mt-4" for="Last name">Last name</label>
-                <input th:field="*{lastName}" type="text" class="form-control" placeholder="Last name" id="Last name">
+                <label class="col-form-label mt-4" for="Фамилия">Фамилия</label>
+                <input th:field="*{lastName}" type="text" class="form-control" placeholder="Фамилия" id="Фамилия">
             </div>
             <div class="form-group">
                 <label class="col-form-label mt-4" for="Email">Email</label>
@@ -37,19 +37,19 @@
                 <!--           th:text="${error}">Validation error</p>-->
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+                <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
                 <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1"
-                       placeholder="Password">
+                       placeholder="Пароль">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Confirm password</label>
+                <label for="exampleInputPassword1" class="form-label mt-4">Подтвердите пароль</label>
                 <input th:field="*{matchingPassword}" type="password" class="form-control" id="exampleInputPassword2"
-                       placeholder="Confirm password">
+                       placeholder="Подтвердите пароль">
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px">Зарегистрироваться</button>
         </form>
 
-        <a href="/login" style="margin-top: 10px">Login</a>
+        <a href="/login" style="margin-top: 10px">Авторизация</a>
     </div>
 </div>
 

@@ -200,4 +200,8 @@ public class AdController {
         model.addAttribute("ads", adService.findAll());
         return "ad/catalogAdsFiltered";
     }
+    @GetMapping("/api/get_addresses")
+    public @ResponseBody List<Object[]> getAllAddresses(){
+        return adService.findAllAddresses();
+    }
 }

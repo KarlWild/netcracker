@@ -9,6 +9,7 @@ import com.netcracker.auto.service.FavouriteService;
 import com.netcracker.auto.service.UserService;
 import com.netcracker.auto.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -130,6 +131,7 @@ public class UserController {
     }*/
 
     /**      User's ads      **/
+    @Secured("ROLE_SELLER")
     @GetMapping("/my_ads")
     public String showAds(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -158,4 +160,11 @@ public class UserController {
         return "ad/myFavourites";
     }
 
+    @GetMapping("/map")
+    public String showMap(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("user", favouriteService.findFavourite(userService.findUserByEmail(currentPrincipalName)));
+        return "map/map2";
+    }
 }
