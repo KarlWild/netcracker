@@ -62,14 +62,14 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/my_ads}">Мои Объявления</a>
+                    <a class="nav-link" th:href="@{/lk/my_ads}" onclick="sessionStorage.clear()">Мои Объявления</a>
                     <!-- Добавить контроллер своих объявлений -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/reviews}">Отзывы</a>
+                    <a class="nav-link" th:href="@{/lk/reviews}" onclick="sessionStorage.clear()">Отзывы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/chat}">Сообщения</a>
+                    <a class="nav-link" th:href="@{/chat}" onclick="sessionStorage.clear()">Сообщения</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/lk/favourite}">Избранное</a>
@@ -81,7 +81,7 @@
                     <a class="nav-link" href="#">История</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/ads}">Каталог</a>
+                    <a class="nav-link" th:href="@{/ads}" onclick="sessionStorage.clear()">Каталог</a>
                 </li>
             </ul>
             <th:block sec:authorize="isAuthenticated()">

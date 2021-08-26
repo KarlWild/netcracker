@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Каталог автомобилей</title>
     <!-- Required meta tags -->
@@ -11,6 +11,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <!-- Style -->
     <link rel="stylesheet" th:href="@{/css/catalog.css}">
@@ -29,13 +32,14 @@
 </div>
 
 <div class="container">
-    <form th:action="@{/ads}" method="get">
+    <form th:action="@{/ads}" method="get" id="filter-form">
         <div class="form-group" style="width: 80%; margin-top: 30px">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-5">
                         <select class="form-select form-select-sm" id="brandSelect" name="brand">
                             <option value="" selected disabled hidden>Брэнд</option>
+                            <option value="">Любой</option>
                             <option th:each="brand : ${brands}" th:value="*{brand}" th:text="*{brand}"></option>
                         </select>
                     </div>
@@ -55,6 +59,7 @@
                                 <!--<input type="number" class="form-control form-control-sm" placeholder="Год от" name="yearStart">-->
                                 <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
                                     <option value="" selected disabled hidden>Год от</option>
+                                    <option value="">Не указан</option>
                                     <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
                                 </select>
                             </div>
@@ -62,6 +67,7 @@
                                 <!--<input type="number" class="form-control form-control-sm" placeholder="до" name="yearEnd">-->
                                 <select class="form-select form-select-sm" id="yearEndSelect" name="yearEnd">
                                     <option value="" selected disabled hidden>До</option>
+                                    <option value="">Не указан</option>
                                     <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
                                 </select>
                             </div>
@@ -71,11 +77,11 @@
                         <div class="input-group">
                             <div class="col-6">
                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                                       class="form-control form-control-sm" placeholder="Цена от" name="priceStart">
+                                       class="form-control form-control-sm" placeholder="Цена от" name="priceStart" id="priceStartSelect">
                             </div>
                             <div class="col-6">
                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                                       class="form-control form-control-sm" placeholder="до" name="priceEnd">
+                                       class="form-control form-control-sm" placeholder="до" name="priceEnd" id="priceEndSelect">
                             </div>
                         </div>
                     </div>
@@ -84,6 +90,7 @@
                     <div class="col-5">
                         <select class="form-select form-select-sm" id="ownersSelect" name="ownersCount">
                             <option value="" selected disabled hidden>Число владельцев</option>
+                            <option value="">Любое</option>
                             <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="*{i}" th:text="*{i}"></option>
                         </select>
                     </div>
@@ -96,7 +103,13 @@
         </div>
     </form>
 
-    <table class="table table-hover">
+    <div th:if="${ads.size()} == 0" class="container justify-content-center">
+        <h5>Ничего не найдено</h5>
+    </div>
+    <div th:unless="${ads.size()} == 0" class="container justify-content-center">
+        <h5> Найдено <span th:text="${ads.size()}">size</span> объявлений</h5>
+    </div>
+    <table class="table table-hover" id="result-table">
         <tbody>
         <th:block th:each="ad : ${ads}">
             <tr scope="row">
@@ -126,8 +139,39 @@
 
         </th:block>
         </tbody>
-
     </table>
 </div>
+
+<script th:inline="javascript">
+    window.onunload = function () {
+        sessionStorage.setItem("brand", document.getElementById("brandSelect").value);
+        sessionStorage.setItem("model", document.getElementById("modelSelect").value);
+        sessionStorage.setItem("yearStart", document.getElementById("yearStartSelect").value);
+        sessionStorage.setItem("yearEnd", document.getElementById("yearEndSelect").value);
+        sessionStorage.setItem("priceStart", document.getElementById("priceStartSelect").value);
+        sessionStorage.setItem("priceEnd", document.getElementById("priceEndSelect").value);
+        sessionStorage.setItem("ownersCount", document.getElementById("ownersSelect").value);
+    }
+
+    window.onload = function() {
+        let brand = sessionStorage.getItem("brand");
+        let model = sessionStorage.getItem("model");
+        let yearStart = sessionStorage.getItem("yearStart");
+        let yearEnd = sessionStorage.getItem("yearEnd");
+        let priceStart = sessionStorage.getItem("priceStart");
+        let priceEnd = sessionStorage.getItem("priceEnd");
+        let ownersCount = sessionStorage.getItem("ownersCount");
+
+        if (brand) $('#brandSelect').val(brand);
+        if (model) $('#modelSelect').val(model);
+        if (yearStart) $('#yearStartSelect').val(yearStart);
+        if (yearEnd) $('#yearEndSelect').val(yearEnd);
+        if (priceStart) $('#priceStartSelect').val(priceStart);
+        if (priceEnd) $('#priceEndSelect').val(priceEnd);
+        if (ownersCount) $('#ownersSelect').val(ownersCount);
+
+    }
+
+</script>
 </body>
 </html>
