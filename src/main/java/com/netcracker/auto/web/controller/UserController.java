@@ -81,14 +81,6 @@ public class UserController {
         return "redirect:/lk/all";
     }
 
-    /**** Wallet *****/
-    @GetMapping("/wallet")
-    public String viewWallet(Principal principal, Model model) {
-        User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        return "pages/wallet";
-    }
-
     @PostMapping("/addBalance")
     public String addBalance(@RequestParam(value = "money") Double money,
                              @ModelAttribute("user") User user) {
@@ -105,33 +97,6 @@ public class UserController {
         model.addAttribute("user", loggedInUser);
         return "pages/reviews";
     }
-
-    @GetMapping("/reviews/create")
-    public String createReview(Principal principal, Review review, Model model) {
-        model.addAttribute("rating", review);
-        return "pages/create-review";
-    }
-
-    @PostMapping("/reviews/post")
-    public String postReview(Principal principal,
-                             @ModelAttribute("review") Review review) {
-        reviewRepository.save(review);
-        return "redirect:/lk/reviews";
-    }
-
-    /* Password */
-    @GetMapping("/password")
-    public String passwordPage(Principal principal, Model model) {
-        User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        return "pages/change-password";
-    }
-
-    /*@PostMapping("/changePassword")
-    public String changePassword(@ModelAttribute("user") User user, Model model) {
-        userService.chan();
-        return "redirect:/lk/wallet";
-    }*/
 
     /**      User's ads      **/
     @Secured("ROLE_SELLER")
