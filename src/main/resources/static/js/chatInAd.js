@@ -30,7 +30,30 @@ function connectToChat() {
 }
 
 connectToChat();
+function sendMessage(message) {
+    let id;
+    let preview = document.getElementById("selectedUserId");
+    id = selectedUserId;
+    //id = preview.getAttribute("chatIdAttr");
+    $.get(url + "/chat/" + id, function (response) {
+        to = response;
+        console.log(to);
+        sendMsg(message, to);
+        scrollToBottom();
+        if (message.trim() !== '') {
+            var template = Handlebars.compile($("#message-template").html());
+            var context = {
+                messageOutput: message,
+                time: getCurrentTime().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
+                toUserName: selectedUser
+            };
 
+            $chatHistoryList.append(template(context));
+            scrollToBottom();
+            $textarea.val('');
+        }
+    });
+}
 function sendMsg(text, to) {
     var chatMessage = {
         senderId: userId,

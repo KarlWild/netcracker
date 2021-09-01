@@ -1,14 +1,9 @@
-body {
-    #background: #C5DDEB;
-    color: white;
-}
-
-.container {
-    margin: 0 auto;
-    /*width: 750px;*/
-    background: #444753;
-    border-radius: 5px;
-}
+/*.container {*/
+/*    margin: 0 auto;*/
+/*    !*width: 750px;*!*/
+/*    background: #444753;*/
+/*    border-radius: 5px;*/
+/*}*/
 
 .container.clearfix {
     margin-top: 20px;
@@ -17,6 +12,8 @@ body {
 .people-list {
     width: 260px;
     float: left;
+    overflow-y: scroll;
+    height: 836px;
 }
 
 .people-list .search {
@@ -54,6 +51,11 @@ body {
 .people-list .about {
     float: left;
     margin-top: 8px;
+}
+
+.name{
+    cursor:pointer;
+    text-decoration: underline;
 }
 
 .people-list .about {

@@ -3,6 +3,16 @@ let map = L.map('map', {
     center: [55.75, 37.61],//Moscow
     zoom: 12
 });
+let carIcon = L.icon({
+    iconUrl: 'images/map_car.png',
+    // shadowUrl: 'leaf-shadow.png',
+
+    iconSize:     [32, 37], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
 L.esri.basemapLayer('Streets').addTo(map);
 
 function loadingaddressesOfAds(){
@@ -24,6 +34,7 @@ function addingPopupsOnMap(resp,id){
     let array = resp['results'];//55.75, 37.61
     let link = "/ads/"+id;
     L.marker([array[0].latlng.lat,array[0].latlng.lng], {
+        icon: carIcon,
         renderer: myRenderer
     }).addTo(map).bindPopup('<a href='+link+'>Посмотреть Объявление</a>',id);
     // let marker = L.marker([array[0].latlng.lat,array[0].latlng.lng]).addTo(map);

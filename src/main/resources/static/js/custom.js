@@ -64,30 +64,30 @@ function renderAllMessages(message) {
     }.bind(this), 1);
 }
 
-function sendMessage(message) {
-    let id;
-    let preview = document.getElementById("selectedUserId");
-    //if(selectedUserId!=null) id = selectedUserId;
-    id = preview.getAttribute("chatIdAttr");
-    $.get(url + "/chat/" + id, function (response) {
-        to = response;
-        console.log(to);
-        sendMsg(message, to);
-        scrollToBottom();
-        if (message.trim() !== '') {
-            var template = Handlebars.compile($("#message-template").html());
-            var context = {
-                messageOutput: message,
-                time: getCurrentTime().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
-                toUserName: selectedUser
-            };
-
-            $chatHistoryList.append(template(context));
-            scrollToBottom();
-            $textarea.val('');
-        }
-    });
-}
+// function sendMessage(message) {
+//     let id;
+//     let preview = document.getElementById("selectedUserId");
+//     //if(selectedUserId!=null) id = selectedUserId;
+//     id = preview.getAttribute("chatIdAttr");
+//     $.get(url + "/chat/" + id, function (response) {
+//         to = response;
+//         console.log(to);
+//         sendMsg(message, to);
+//         scrollToBottom();
+//         if (message.trim() !== '') {
+//             var template = Handlebars.compile($("#message-template").html());
+//             var context = {
+//                 messageOutput: message,
+//                 time: getCurrentTime().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
+//                 toUserName: selectedUser
+//             };
+//
+//             $chatHistoryList.append(template(context));
+//             scrollToBottom();
+//             $textarea.val('');
+//         }
+//     });
+// }
 
 function scrollToBottom() {
     $chatHistory.scrollTop($chatHistory[0].scrollHeight);

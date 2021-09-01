@@ -124,7 +124,7 @@
 
                     </form>
                 </div>
-                <div sec:authorize="!hasRole('ROLE_SELLER')&&!hasRole('ROLE_ADMIN')">
+                <div ><!--sec:authorize="!hasRole('ROLE_SELLER')&&!hasRole('ROLE_ADMIN')"-->
                     <form th:object="${user}"
                           th:action="@{/lk/get/role_seller/{id}(id=${user.userId})}"
                           method="GET">

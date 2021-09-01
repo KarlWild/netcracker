@@ -32,4 +32,18 @@ td {
     padding-bottom: 7px;
     padding-top: 7px;
 }
+#btn-filter2 {
+    width: 82%;
+    padding-bottom: 7px;
+    padding-top: 7px;
+}
+#map {
+    height: 500px;
+    margin: 20px;
+}
+.map-accordion {
+    margin-top: 20px;
+    width: 81%;
+    margin-left: 12px;
+}
 

@@ -47,7 +47,7 @@ public class AdService {
 
     @Transactional
     public List<Ad> findUnVerified() {
-        List<Ad> list = adRepository.findByVerifiedAndStatus("open");
+        List<Ad> list = adRepository.findByVerifiedAndStatus("неактивно");
         return list;
     }
     @Transactional
