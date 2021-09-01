@@ -60,21 +60,23 @@ public class UserController {
         User loggedUser = userService.findUserByEmail(principal.getName());
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            loggedUser.setImages(fileName);
+            user.setImages(fileName);
             //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
             String uploadDir = "user-photos/" + loggedUser.getUserId();
 
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         } else {
-            if (loggedUser.getImages().isEmpty())
-                loggedUser.setImages(null);
+            if (user.getImages().isEmpty())
+                user.setImages(null);
         }
         if (!user.getPassword().isEmpty()) {
-            loggedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        else {
+            user.setPassword(loggedUser.getPassword());
         }
 
-        userService.saveUser(loggedUser);
-        //loggedUser.setEmail(principal.getName());
+        userService.saveUser(user);
         redirectAttributes.addFlashAttribute("message", "Ваши данные обновлены");
         return "redirect:/lk/all";
     }
@@ -98,7 +100,9 @@ public class UserController {
     @GetMapping("/reviews")
     public String reviewsPage(Principal principal, Model model) {
         List<Review> reviewList = reviewRepository.findAllByUsername(principal.getName());
+        User loggedInUser = userService.findUserByEmail(principal.getName());
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("user", loggedInUser);
         return "pages/reviews";
     }
 
@@ -111,7 +115,6 @@ public class UserController {
     @PostMapping("/reviews/post")
     public String postReview(Principal principal,
                              @ModelAttribute("review") Review review) {
-        //review.setGiver(principal.getName());
         reviewRepository.save(review);
         return "redirect:/lk/reviews";
     }

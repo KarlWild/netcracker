@@ -78,6 +78,25 @@
                     <button class="btn btn-dark btn-md" type="submit">Продано</button>
                 </form>
             </div>
+            <div class="col d-grid gap-2">
+                <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
+                    <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:unless="${current.name} == ${ad.user_id.email}">
+    <div class="container justify-content-center" style="margin-top: 20px">
+        <div class="row">
+            <div class="col d-grid gap-2">
+                <a class="btn btn-dark btn-md" th:href="'/ads/' + ${ad.id} + '/favourite'">Добавить в избранное</a>
+            </div>
+            <div class="col d-grid gap-2">
+                <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
+                    <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
