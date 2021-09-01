@@ -56,7 +56,7 @@
                     <td th:text="*{review.author}"></td>
                     <td th:text="*{review.comment}"></td>
                     <td>
-                        <input id="rating-view" class="kv-ltr-theme-fas-star rating-stars" th:value="*{review.rating}"
+                        <input id="rating-view" class="review rating-stars" th:value="*{review.rating}"
                                dir="ltr" data-size="md"
                                data-show-clear=false data-show-caption=false data-display-only=true>
                         <br/>
@@ -64,14 +64,24 @@
                 </tr>
                 </tbody>
             </table>
+
+            <h4>Рейтинг продавца</h4>
+            <input class="seller-rating rating-stars" th:value="*{user.seller_rating}"
+                   dir="ltr" data-size="md"
+                   data-show-clear=false data-show-caption=false data-display-only=true>
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        $('.kv-ltr-theme-fas-star').rating({
+        $('.review').rating({
             theme: 'krajee-fas',
+        });
+
+        $('.seller-rating').rating({
+            theme: 'krajee-fas',
+            step: 0.1
         });
     });
 </script>
