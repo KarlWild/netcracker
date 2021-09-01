@@ -29,7 +29,7 @@
     <div class="form-group" id="main-form">
         <div class="row">
             <div class="container col-5">
-                <label class="form-label mt-4" id="label-lk">Личный кабинет</label>
+                <label class="form-label mt-4" id="label-lk" th:text="${user.fullName}">Личный кабинет</label>
                 <!--<img th:object="${user}" style="border-radius: 50%; width: 64px; margin-right: 15px;" th:src="@{${user.imagesPath}}"/>-->
                 <form action="#"
                       th:action="@{/lk/all/update}"
@@ -44,7 +44,6 @@
                     <input type="hidden" th:field="${user.buyers_rating}">
                     <input type="hidden" th:field="${user.date_of_birth}">
                     <input type="hidden" th:field="${user.images}">
-                    <input type="hidden" th:field="${user.imagesPath}">
                     <input type="hidden" th:field="${user.roles}">
                     <input type="hidden" th:field="${user.authorities}">
 
@@ -76,7 +75,7 @@
                                th:field="*{password}">
                     </div>
                     <div class="form-group">
-                        <!--<img class="img-thumbnail" th:src="@{${user.imagesPath}}"/>-->
+                        <img class="img-thumbnail" th:src="@{${user.imagesPath}}"/>
                         <label for="image" class="form-label mt-4">Загрузить фото</label>
                         <input class="form-control" type="file" id="image" name="image" title=" "
                                accept="image/png, image/jpeg"/>
