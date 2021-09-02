@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping("/all")
     public String mainPage(Principal principal, Model model) {
         User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
+        model.addAttribute( "user", user);
         return "pages/all";
     }
 
@@ -71,21 +71,14 @@ public class UserController {
         }
         if (!user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else {
+        }
+        else {
             user.setPassword(loggedUser.getPassword());
         }
 
         userService.saveUser(user);
         redirectAttributes.addFlashAttribute("message", "Ваши данные обновлены");
         return "redirect:/lk/all";
-    }
-
-    /**** Wallet *****/
-    @GetMapping("/wallet")
-    public String viewWallet(Principal principal, Model model) {
-        User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        return "pages/wallet";
     }
 
     @PostMapping("/addBalance")
@@ -105,36 +98,7 @@ public class UserController {
         return "pages/reviews";
     }
 
-    @GetMapping("/reviews/create")
-    public String createReview(Principal principal, Review review, Model model) {
-        model.addAttribute("rating", review);
-        return "pages/create-review";
-    }
-
-    @PostMapping("/reviews/post")
-    public String postReview(Principal principal,
-                             @ModelAttribute("review") Review review) {
-        reviewRepository.save(review);
-        return "redirect:/lk/reviews";
-    }
-
-    /* Password */
-    @GetMapping("/password")
-    public String passwordPage(Principal principal, Model model) {
-        User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        return "pages/change-password";
-    }
-
-    /*@PostMapping("/changePassword")
-    public String changePassword(@ModelAttribute("user") User user, Model model) {
-        userService.chan();
-        return "redirect:/lk/wallet";
-    }*/
-
-    /**
-     * User's ads
-     **/
+    /**      User's ads      **/
     @Secured("ROLE_SELLER")
     @GetMapping("/my_ads")
     public String showAds(Model model) {

@@ -4,7 +4,7 @@
 }
 
 table {
-    width: 80%;
+    width: 100%;
     border-spacing: 50px 0;
     margin: auto auto 20px auto;
     border: 3px solid black;
@@ -32,20 +32,6 @@ td {
     padding-bottom: 7px;
     padding-top: 7px;
 }
-#btn-filter2 {
-    width: 82%;
-    padding-bottom: 7px;
-    padding-top: 7px;
-}
-#map {
-    height: 500px;
-    margin: 20px;
-}
-.map-accordion {
-    margin-top: 20px;
-    width: 81%;
-    margin-left: 12px;
-}
 
 .name-col {
     padding: 1.5rem;
@@ -61,3 +47,7 @@ td {
     color: #55595c;
 }
 
+.row {
+    margin-top: 0;
+    margin-bottom: 0;
+}

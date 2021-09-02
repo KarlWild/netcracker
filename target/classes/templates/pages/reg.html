@@ -17,39 +17,40 @@
 <div th:replace="fragments/navbar :: header"/>
 
 <div class="form-group" id="main-form" style="padding-left: 100px; padding-right: 100px;">
-    <div class="container col-5" style="margin-top: 20px;">
-
-        <h1>Регистрация</h1>
+    <div class="container col-5">
+        <label class="form-label mt-4" style="font-size: 35px">Регистрация</label>
         <form action="/reg" th:object="${user}" method="POST" enctype="utf8">
             <div class="form-group">
-                <label class="col-form-label mt-4" for="Имя">Имя</label>
-                <input th:field="*{firstName}" type="text" class="form-control" placeholder="Имя"
-                       id="Имя">
+                <div class="form-group">
+                    <label class="col-form-label mt-2" for="Имя">Имя</label>
+                    <input th:field="*{firstName}" type="text" class="form-control" placeholder="Имя"
+                           id="Имя">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label mt-2" for="Фамилия">Фамилия</label>
+                    <input th:field="*{lastName}" type="text" class="form-control" placeholder="Фамилия" id="Фамилия">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="Email">Email</label>
+                    <input th:field="*{email}" type="text" class="form-control" placeholder="Email" id="Email">
+                    <!--        <p th:each="error : ${#fields.errors('email')}"-->
+                    <!--           th:text="${error}">Validation error</p>-->
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
+                    <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1"
+                           placeholder="Пароль">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword2" class="form-label mt-4">Подтвердите пароль</label>
+                    <input th:field="*{matchingPassword}" type="password" class="form-control" id="exampleInputPassword2"
+                           placeholder="Подтвердите пароль">
+                </div>
+                <div class="col col-12 text-center">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px; width: 50%">Зарегистрироваться</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="Фамилия">Фамилия</label>
-                <input th:field="*{lastName}" type="text" class="form-control" placeholder="Фамилия" id="Фамилия">
-            </div>
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="Email">Email</label>
-                <input th:field="*{email}" type="text" class="form-control" placeholder="Email" id="Email">
-                <!--        <p th:each="error : ${#fields.errors('email')}"-->
-                <!--           th:text="${error}">Validation error</p>-->
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
-                <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1"
-                       placeholder="Пароль">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Подтвердите пароль</label>
-                <input th:field="*{matchingPassword}" type="password" class="form-control" id="exampleInputPassword2"
-                       placeholder="Подтвердите пароль">
-            </div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 10px">Зарегистрироваться</button>
         </form>
-
-        <a href="/login" style="margin-top: 10px">Авторизация</a>
     </div>
 </div>
 

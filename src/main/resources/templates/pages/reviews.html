@@ -1,6 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -31,14 +32,19 @@
     <title>Отзывы</title>
 </head>
 <body>
-<div th:replace="fragments/navbar :: header-lk"/>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
+</div>
 
 <div class="form-group" id="wallet-form">
     <div class="container">
         <div th:if="${reviewList.size()} == 0">
             <div class="col" style="margin: auto">
-                <label class="form-label mt-4" style="font-size: 35px">Пока вы не получали отзывов</label>
-                <i class="far fa-frown" style="font-size: 30px"></i>
+                <label class="form-label mt-4" style="font-size: 35px">Пока вы не получали отзывов  </label>
+                <i class="far fa-frown m-lg-2" style="font-size: 30px"></i>
             </div>
         </div>
         <div th:unless="${reviewList.size()} == 0">
