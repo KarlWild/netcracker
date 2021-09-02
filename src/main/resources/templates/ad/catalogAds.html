@@ -66,28 +66,23 @@
                                name="carModel">
                     </div>
                 </div>
-                <!--<div class="row">
-                    <div class="col-4">
-                        <input type="text" class="form-control form-control-sm" placeholder="Поиск" id="nameSelect" name="keyword">
-                    </div>
-                </div>-->
                 <div class="row">
                     <div class="col-5">
                         <div class="input-group">
                             <div class="col-6">
-                                <!--<input type="number" class="form-control form-control-sm" placeholder="Год от" name="yearStart">-->
                                 <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
                                     <option value="" selected disabled hidden>Год от</option>
                                     <option value="">Не указан</option>
-                                    <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
+                                    <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}"
+                                            th:text="*{i}"></option>
                                 </select>
                             </div>
                             <div class="col-6">
-                                <!--<input type="number" class="form-control form-control-sm" placeholder="до" name="yearEnd">-->
                                 <select class="form-select form-select-sm" id="yearEndSelect" name="yearEnd">
                                     <option value="" selected disabled hidden>До</option>
                                     <option value="">Не указан</option>
-                                    <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}" th:text="*{i}"></option>
+                                    <option th:each="i : ${#numbers.sequence(2021, 1950)}" th:value="*{i}"
+                                            th:text="*{i}"></option>
                                 </select>
                             </div>
                         </div>
@@ -96,11 +91,13 @@
                         <div class="input-group">
                             <div class="col-6">
                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                                       class="form-control form-control-sm" placeholder="Цена от" name="priceStart" id="priceStartSelect">
+                                       class="form-control form-control-sm" placeholder="Цена от" name="priceStart"
+                                       id="priceStartSelect">
                             </div>
                             <div class="col-6">
                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                                       class="form-control form-control-sm" placeholder="до" name="priceEnd" id="priceEndSelect">
+                                       class="form-control form-control-sm" placeholder="до" name="priceEnd"
+                                       id="priceEndSelect">
                             </div>
                         </div>
                     </div>
@@ -146,7 +143,8 @@
         <label class="col-form-label mt-2" style="font-size: 18px">Ничего не найдено</label>
     </div>
     <div th:unless="${ads.size()} == 0" class="container-fluid">
-        <label class="col-form-label mt-2" style="font-size: 18px">Найдено <span th:text="${ads.size()}">size</span> объявлений</label>
+        <label class="col-form-label mt-2" style="font-size: 18px">Найдено <span th:text="${ads.size()}">size</span>
+            объявлений</label>
     </div>
     <table class="table table-hover" id="result-table">
         <tbody>
@@ -160,16 +158,16 @@
                 <td>
                     <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
                     <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
-                    <p style="margin: 5px" th:text= " Автор + '  '  + ${ad.user_id.email}"></p>
+                    <p style="margin: 5px" th:text=" Автор + '  '  + ${ad.user_id.email}"></p>
                 </td>
                 <td>
                     <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
                 </td>
                 <td>
-                    <p style="margin: 5px" th:text= "${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
+                    <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
                 </td>
                 <td>
-                    <p style="margin: 5px" th:text= "${ad.mileage} + ' км'"></p>
+                    <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
                 </td>
                 <td class="align-middle">
                     <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
@@ -192,7 +190,7 @@
         sessionStorage.setItem("ownersCount", document.getElementById("ownersSelect").value);
     }
 
-    window.onload = function() {
+    window.onload = function () {
         let brand = sessionStorage.getItem("brand");
         let model = sessionStorage.getItem("model");
         let yearStart = sessionStorage.getItem("yearStart");
