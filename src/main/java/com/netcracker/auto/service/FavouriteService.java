@@ -23,12 +23,17 @@ public class FavouriteService {
     }
 
     @Transactional
-    public List<Ad> findFavourite(User user_id) {
+    public List<Ad> findFavourites(User user_id) {
         List<Favourite> list =favouriteRepository.findFavouriteByUser_id(user_id);
         List<Ad> listOfAds = list.stream().map(Favourite::getAd).collect(Collectors.toList());
         //List<Long> listOfIds = listOfUsers.stream().map(User::getUserId).collect(Collectors.toList());
         // List<Ad> ads=favouriteRepository.findFavourite(listOfAds);
          return listOfAds;
+    }
+
+    @Transactional
+    public Favourite findFavourite(User user, Ad ad){
+        return favouriteRepository.findFavourite(user, ad);
     }
 
 }

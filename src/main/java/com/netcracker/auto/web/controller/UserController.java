@@ -135,6 +135,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
+        User user=new User();
         return "ad/myAds";
     }
     //@{/lk/get/role_seller/{id}(id=${user.userId})}
@@ -154,7 +155,7 @@ public class UserController {
     public String showFavourites(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        model.addAttribute("user", favouriteService.findFavourite(userService.findUserByEmail(currentPrincipalName)));
+        model.addAttribute("user", favouriteService.findFavourites(userService.findUserByEmail(currentPrincipalName)));
         return "ad/myFavourites";
     }
 

@@ -29,6 +29,7 @@
 
     <title>Объявление</title>
 </head>
+
 <body>
 
 <div sec:authorize="isAnonymous()">
@@ -46,7 +47,34 @@
 <th:block sec:authorize="isAuthenticated()">
 <tr>
     <div style="margin-left: 60%;">
-       <div>
+
+        <div th:if="${ad.status==' продано '}">
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Данная машина продана.</strong>
+            </div>
+        </div>
+
+<div>
+        <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">
+            <button type="submit" class="btn btn-dark"> Добавить в избранное </button>
+<!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
+        </form>
+</div>
+
+        <div>
+            <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">
+                <button type="submit" class="btn btn-dark"> Убрать из избранного </button>
+            </form>
+        </div>
+
+        <!--        <div>-->
+<!--            <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/favourite'" id="favourite"> Добавить в избранное </a></td>-->
+<!--        </div>-->
+
+
+        <div th:if="${ad.user_id}==${user}">
+
                 <form th:action= "'/ads/' + ${ad.id} + '/remove'" method="post">
                 <button class="btn btn-dark" type="submit"> Удалить объявление </button>
             </form>
@@ -54,16 +82,14 @@
         <div>
                 <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/edit'"> Редактировать объявление </a></td>
         </div>
-            <div>
-                <td><a class="btn btn-dark" th:href="'/ads/' + ${ad.id} + '/favourite'"> Добавить в избранное </a></td>
-            </div>
+
            <div>
                <form th:action= "'/ads/' + ${ad.id} + '/check'" method="post">
                    <button class="btn btn-dark" type="submit"> Отправить на модерацию </button>
                </form>
            </div>
            <div>
-               <form th:action= "'/ads/' + ${ad.id} + '/sold'" method="post">
+               <form th:action= "'/ads/' + ${ad.id} + '/sold'" method="get">
                    <button class="btn btn-dark" type="submit"> Продано </button>
                </form>
            </div>
@@ -332,7 +358,8 @@
 </script>
 <script th:src="@{/js/custom.js}"></script>
 <script th:src="@{/js/chatInAd.js}"></script>
-<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<!--    <script th:src="@{/js/favourite.js}"></script>-->
+    <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.0.2/js/bootstrap.min.js}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -341,6 +368,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+    <script>
+$('#favourite').submit(function (e){
+    e.preventDefault();
+
+    $.ajax({
+        url:$(this).attr('action'),
+        type:$(this).attr('method'),
+        cache: false,
+        processData: false
+    }).done(function(data){
+        console.log(data);
+    })
+})
+        </script>
+
+    <script>
+        $('#notFavourite').submit(function (e){
+            e.preventDefault();
+
+            $.ajax({
+                url:$(this).attr('action'),
+                type:$(this).attr('method'),
+                cache: false,
+                processData: false
+            }).done(function(data){
+                console.log(data);
+            })
+        })
+    </script>
+
+    <script type="text/javascript">
+        function changeAction() {
+            document.getElementById('oldButton').innerHTML = 'Убрать из избранного';
+        }
+    </script>
 </body>
 </html>
