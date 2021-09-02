@@ -9,15 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -50,8 +44,9 @@ public class AdService {
         List<Ad> list = adRepository.findByVerifiedAndStatus("open");
         return list;
     }
+
     @Transactional
-    public List<Object[]> findAllAddresses(){
+    public List<Object[]> findAllAddresses() {
         return adRepository.findAllAddresses();
     }
 
@@ -59,8 +54,8 @@ public class AdService {
         adRepository.save(ad);
     }
 
-    public void updateAd(int adId, Ad updatedAd){
-        Ad ad=findById(adId).get();
+    public void updateAd(int adId, Ad updatedAd) {
+        Ad ad = findById(adId).get();
         ad.setAddress(updatedAd.getAddress());
         ad.setColor(updatedAd.getColor());
         ad.setDescription(updatedAd.getDescription());
@@ -89,10 +84,10 @@ public class AdService {
     }
 
     public List<Ad> findByAnyCriteria(String brand, String model,
-                                   Integer yearStart, Integer yearEnd,
-                                   Integer priceStart, Integer priceEnd,
-                                   Integer mileageStart, Integer mileageEnd,
-                                   Integer ownersCount) {
+                                      Integer yearStart, Integer yearEnd,
+                                      Integer priceStart, Integer priceEnd,
+                                      Integer mileageStart, Integer mileageEnd,
+                                      Integer ownersCount) {
         Date dateStart = yearStart == null ? null : parseDate(yearStart);
         Date dateEnd = yearEnd == null ? null : parseDate(yearEnd);
 
@@ -145,7 +140,8 @@ public class AdService {
 
     private static Specification<Ad> yearBetween(Date yearStart, Date yearEnd) {
         Date finalYearStart = yearStart != null ? yearStart
-                : new GregorianCalendar(1950, Calendar.JANUARY, 1).getTime();;
+                : new GregorianCalendar(1950, Calendar.JANUARY, 1).getTime();
+        ;
         Date finalYearEnd = yearEnd != null ? yearEnd
                 : new GregorianCalendar().getTime();
 

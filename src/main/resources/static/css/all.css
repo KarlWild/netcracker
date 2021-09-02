@@ -3,15 +3,11 @@
     padding-right: 100px;
 }
 
-#label-lk {
+#label-lk, #label-balance {
     font-size: 35px;
 }
 
-#label-balance {
-    font-size: 35px;
-}
-
-#btn-update {
+#btn-update, #btn-buy {
     margin: 40px auto 20px auto;
     width: 100%;
 }
@@ -32,9 +28,10 @@ img {
     width: 100%; /* Try setting this to 400px or something */
     display: table;
 }
-.lk-child{
+.container{
     display: table-cell;
-}
-.button-seller {
-    margin-left: auto;
+    margin: 50px auto 50px auto;
+    border-color: black;
+    border-radius: 25px;
+    font-weight: 450;
 }
