@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping("/all")
     public String mainPage(Principal principal, Model model) {
         User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute( "user", user);
+        model.addAttribute("user", user);
         return "pages/all";
     }
 
@@ -71,8 +71,7 @@ public class UserController {
         }
         if (!user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-        else {
+        } else {
             user.setPassword(loggedUser.getPassword());
         }
 
@@ -133,23 +132,26 @@ public class UserController {
         return "redirect:/lk/wallet";
     }*/
 
-    /**      User's ads      **/
+    /**
+     * User's ads
+     **/
     @Secured("ROLE_SELLER")
     @GetMapping("/my_ads")
-    public String showAds(Model model){
+    public String showAds(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("user", adService.findByUser(userService.findUserByEmail(currentPrincipalName)));
-        User user=new User();
+        User user = new User();
         return "ad/myAds";
     }
+
     //@{/lk/get/role_seller/{id}(id=${user.userId})}
     @GetMapping("/get/role_seller/{id}")
     public String buySellerRole(@PathVariable("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userService.findUserByEmail(currentPrincipalName);
-        if(user.getBalance()-100>=0) user.setBalance(user.getBalance()-100);
+        if (user.getBalance() - 100 >= 0) user.setBalance(user.getBalance() - 100);
         user.addRole(RolesEntity.ROLE_SELLER);
         userService.saveUser(user);
         return "redirect:/lk/all";
@@ -157,7 +159,7 @@ public class UserController {
 
     //   User's favourites
     @GetMapping("/favourite")
-    public String showFavourites(Model model){
+    public String showFavourites(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         model.addAttribute("user", favouriteService.findFavourites(userService.findUserByEmail(currentPrincipalName)));
@@ -165,10 +167,10 @@ public class UserController {
     }
 
     @GetMapping("/map")
-    public String showMap(Model model){
+    public String showMap(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        model.addAttribute("user", favouriteService.findFavourite(userService.findUserByEmail(currentPrincipalName)));
+        model.addAttribute("user", favouriteService.findFavourites(userService.findUserByEmail(currentPrincipalName)));
         return "map/map2";
     }
 }
