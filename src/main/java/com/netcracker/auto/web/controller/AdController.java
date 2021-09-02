@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdController {
@@ -25,9 +26,10 @@ public class AdController {
     private UserService userService;
     private FavouriteRepository favouriteRepository;
     private ReviewService reviewService;
+    private FavouriteService favouriteService;
 
     @Autowired
-    public AdController(AdService adService, PhotoService photoService, TransportService transportService,
+    public AdController(FavouriteService favouriteService, AdService adService, PhotoService photoService, TransportService transportService,
                         AdRepository adRepository, UserService userService, FavouriteRepository favouriteRepository, ReviewService reviewService) {
         this.userService = userService;
         this.adService = adService;
@@ -36,11 +38,12 @@ public class AdController {
         this.adRepository = adRepository;
         this.favouriteRepository = favouriteRepository;
         this.reviewService = reviewService;
+        this.favouriteService=favouriteService;
     }
 
     @GetMapping("ads/{id}")
     public String getAd(@ModelAttribute("user") User user,
-                        Principal principal, @PathVariable("id") int id, Model model) {
+                        Principal principal, @PathVariable("id") int id, Model model, @ModelAttribute("favourite") Favourite favourite) {
         Ad ad = adService.findById(id).get();
 
         Photo preview;
@@ -164,8 +167,7 @@ public class AdController {
         return "redirect:/lk/my_ads";
     }
 
-    //добавление в избранное
-    @GetMapping("ads/{id}/favourite")
+   @PostMapping("ads/{id}/favourite")
     public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -173,6 +175,16 @@ public class AdController {
         f.setAd(adService.findById(adId).get());
         favouriteRepository.save(f);
         return "redirect:/lk/my_ads";
+    }
+
+//убрать из избранного
+    @PostMapping("ads/{id}/notFavourite")
+    public String deleteFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        f=favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+        favouriteRepository.delete(f);
+        return "redirect:/lk/favourite";
     }
 
     //отправка на модерацию
@@ -185,7 +197,7 @@ public class AdController {
     }
 
     //продано
-    @PostMapping("ads/{id}/sold")
+    @GetMapping("ads/{id}/sold")
     public String sold(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
         ad = adService.findById(adId).get();
         ad.setStatus(" продано ");

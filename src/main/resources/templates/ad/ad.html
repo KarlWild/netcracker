@@ -37,7 +37,6 @@
     <link th:href="@{/css/chat.css}" rel="stylesheet">
     <title>Объявление</title>
 </head>
-
 <body>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
@@ -56,6 +55,12 @@
 
 <div th:if="${current.name} == ${ad.user_id.email}">
     <div class="container justify-content-center" style="margin-top: 20px">
+        <div th:if="${ad.status==' продано '}">
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Данная машина продана.</strong>
+            </div>
+        </div>
         <div class="row">
             <div class="col d-grid gap-2">
                 <form th:action="'/ads/' + ${ad.id} + '/remove'" method="post">
@@ -66,7 +71,15 @@
                 <a class="btn btn-dark block" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>
             </div>
             <div class="col d-grid gap-2">
-                <a class="btn btn-dark btn-md" th:href="'/ads/' + ${ad.id} + '/favourite'" id="favourite">Добавить в избранное</a>
+                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">
+                    <button type="submit" class="btn btn-dark"> Добавить в избранное </button>
+                    <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
+                </form>
+            </div>
+            <div class="col d-grid gap-2">
+                <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">
+                    <button type="submit" class="btn btn-dark"> Убрать из избранного </button>
+                </form>
             </div>
             <div class="col d-grid gap-2">
                 <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">

@@ -26,6 +26,8 @@ public interface FavouriteRepository extends CrudRepository<Favourite, Integer> 
     @Query("select a from Favourite a where a.user_id = :id")
     List<Favourite> findFavouriteByUser_id(@Param("id") User user_id );
 
+    @Query("select a from Favourite a where a.user_id = :id and a.ad_id=:adId")
+    Favourite findFavourite(@Param("id") User user_id, @Param("adId") Ad ad);
 //select * from
 //         ad a,
 //    where ad_id in (select ad_id
