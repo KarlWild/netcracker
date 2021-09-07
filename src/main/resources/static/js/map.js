@@ -1,3 +1,4 @@
+const apiKey ="AAPK4dbfd161d2bd48b5bc36f98aa60ebafaceUx9FIHdemXByrdgsv8lzHCuGsLn7uCJjn9ZpdsUXDFl7HOGXDAAFegmRYV8PAO";
 let myRenderer = L.canvas({ padding: 0.5 });
 let map = L.map('map', {
     center: [55.75, 37.61],//Moscow
@@ -14,13 +15,16 @@ let carIcon = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 L.esri.basemapLayer('Streets').addTo(map);
+const geocoder = L.esri.Geocoding.geocodeService({
+    apikey: apiKey
+});
 
 function loadingaddressesOfAds(){
     $.get("http://localhost:8080/api/get_addresses",function (response){
         let addresses = response;
         for(let i = 0; i<addresses.length;i++){
-            L.esri.Geocoding.geocode({apikey: "AAPKef2fa5e336fd40bc8ef6e1d9cfa5f6aeuxjzVTNKmXB3tv9yJCHj-33w83iWQwWZEGFOVTvPyycgbZ1z7TthcCe-tiEgEtFs"}).
-                city("Moscow").address(addresses[i][1]).run(function (err, response) {
+            //"AAPKef2fa5e336fd40bc8ef6e1d9cfa5f6aeuxjzVTNKmXB3tv9yJCHj-33w83iWQwWZEGFOVTvPyycgbZ1z7TthcCe-tiEgEtFs"}).city("Moscow").address(addresses[i][1])
+                geocoder.geocode().text(addresses[i][1]).run(function (err, response) {//.forStorage(false)
                 if (err) {
                     console.log(err);
                     return;
@@ -41,4 +45,4 @@ function addingPopupsOnMap(resp,id){
     // marker.bindPopup("<b>Hello world!</b><br>I am a popup.\n"+array[0].latlng.toString()).openPopup();
 }
 
-loadingaddressesOfAds();
+//loadingaddressesOfAds();
