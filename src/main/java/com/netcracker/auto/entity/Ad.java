@@ -68,6 +68,7 @@ public class Ad {
     }
 
     @OneToMany(mappedBy = "ad")
+    //@JoinColumn(name="ad")
     private List<Photo> photos;
 
     public void addPhoto(Photo photo) {
