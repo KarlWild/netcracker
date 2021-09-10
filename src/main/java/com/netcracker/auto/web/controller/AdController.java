@@ -207,7 +207,7 @@ public class AdController {
     }
 
     //продано
-    @GetMapping("ads/{id}/sold")
+    @PostMapping("ads/{id}/sold")
     public String sold(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
         ad = adService.findById(adId).get();
         ad.setStatus(" продано ");
