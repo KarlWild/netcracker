@@ -1,3 +1,7 @@
 #buttons {
     margin-top: 20px;
 }
+
+#favourite:active{
+    background-color: red;
+}
