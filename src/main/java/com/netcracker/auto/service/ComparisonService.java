@@ -7,6 +7,7 @@ import com.netcracker.auto.repository.ComparisonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,15 @@ public class ComparisonService {
     public Optional<ComparisonAds> findComparisonByAdAndUser(Ad ad, User user) {
         return comparisonRepository.findByAdAndUser(ad, user);
     }
+
+    @Transactional
+    public void deleteComparisonByAdAndUser(Ad ad, User user) {
+        comparisonRepository.deleteByAdAndUser(ad, user);
+    }
+
+    public void deleteComparison(ComparisonAds ad) {
+        comparisonRepository.delete(ad);
+    }
+
 
 }

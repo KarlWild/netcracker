@@ -82,9 +82,11 @@ public class UserController {
     }
 
     @PostMapping("/addBalance")
-    public String addBalance(@RequestParam(value = "money") Double money,
+    public String addBalance(Integer money,
                              @ModelAttribute("user") User user) {
-        userService.updateBalance(money, user.getUserId());
+        Double finalMoney = money == null ? 0.0 : money;
+
+        userService.updateBalance(finalMoney, user.getUserId());
         return "redirect:/lk/all";
     }
 

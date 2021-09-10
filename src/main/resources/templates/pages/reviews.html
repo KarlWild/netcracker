@@ -27,7 +27,6 @@
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/themes/krajee-fas/theme.js"></script>
 
-    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" th:href="@{/css/wallet.css}">
     <title>Отзывы</title>
 </head>
@@ -63,7 +62,7 @@
                     <td th:text="*{review.comment}"></td>
                     <td>
                         <input id="rating-view" class="review rating-stars" th:value="*{review.rating}"
-                               dir="ltr" data-size="md"
+                               dir="ltr" data-size="sm"
                                data-show-clear=false data-show-caption=false data-display-only=true>
                         <br/>
                     </td>
