@@ -304,7 +304,7 @@
     </div>
 </fieldset>
 
-<div class="container clearfix">
+<div th:if="${user} != ${ad.user_id}" class="container clearfix">
     <div class="chat">
         <div class="chat-header clearfix">
             <!--            <img alt="avatar" height="55px"-->
