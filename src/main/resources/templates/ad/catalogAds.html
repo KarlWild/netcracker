@@ -48,26 +48,26 @@
     <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
 </div>
 
-<div class="container">
+<div class="container whole-container">
     <form th:action="@{/ads}" method="get" id="filter-form">
-        <div class="form-group" style="width: 80%; margin-top: 30px">
-            <div class="container-fluid">
+        <div class="row" style="margin-top: 30px">
+            <div class="container form-group col-6">
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-6">
                         <select class="form-select form-select-sm" id="brandSelect" name="brand">
                             <option value="" selected disabled hidden>Брэнд</option>
                             <option value="">Любой</option>
                             <option th:each="brand : ${brands}" th:value="*{brand}" th:text="*{brand}"></option>
                         </select>
                     </div>
-                    <div class="col-5">
+                    <div class="col-6">
                         <input type="text" class="form-control form-control-sm"
                                placeholder="Модель" id="modelSelect"
                                name="carModel">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-6">
                         <div class="input-group">
                             <div class="col-6">
                                 <select class="form-select form-select-sm" id="yearStartSelect" name="yearStart">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-5">
+                    <div class="col-6">
                         <div class="input-group">
                             <div class="col-6">
                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
@@ -103,39 +103,71 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-6">
                         <select class="form-select form-select-sm" id="ownersSelect" name="ownersCount">
                             <option value="" selected disabled hidden>Число владельцев</option>
                             <option value="">Любое</option>
                             <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="*{i}" th:text="*{i}"></option>
                         </select>
                     </div>
-                    <div class="col col-md-6">
-                        <button type="submit" class="btn btn-primary" id="btn-filter">Искать</button>
+                    <div class="col col-6">
+                        <button type="submit" class="btn btn-primary btn-block" id="btn-filter">Искать</button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="accordion-item map-accordion">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button" type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="true"
-                                    aria-controls="collapseTwo">
-                                Карта объявлений
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse show"
-                             aria-labelledby="headingTwo" data-bs-parent="#accordionExample"
-                             style="">
-                            <div class="accordion-body">
-                                <div id="map"></div>
-                                <script th:src="@{/js/map.js}"></script>
+            </div>
+            <div class="container col-6">
+                <div class="card bg-secondary">
+                    <div class="card-body">
+                        <div id="map"></div>
+                        <script th:src="@{/js/map.js}"></script>
+                    </div>
+                </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Запустить модальное окно
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <!--<div class="accordion-item map-accordion">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="true"
+                                aria-controls="collapseTwo">
+                            Карта объявлений
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show"
+                         aria-labelledby="headingTwo" data-bs-parent="#accordionExample"
+                         style="">
+                        <div class="accordion-body">
+                            <div id="map"></div>
+                            <script th:src="@{/js/map.js}"></script>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
         </div>
     </form>
 
@@ -206,8 +238,15 @@
         if (priceStart) $('#priceStartSelect').val(priceStart);
         if (priceEnd) $('#priceEndSelect').val(priceEnd);
         if (ownersCount) $('#ownersSelect').val(ownersCount);
-
     }
+
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
+
 
 </script>
 

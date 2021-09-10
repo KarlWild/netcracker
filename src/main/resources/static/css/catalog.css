@@ -1,4 +1,4 @@
-.container {
+.whole-container {
     width: 70%;
     margin:0 auto;
 }
@@ -28,19 +28,23 @@ td {
 }
 
 #btn-filter {
-    width: 82%;
+    width: 100%;
     padding-bottom: 7px;
     padding-top: 7px;
 }
-#btn-filter2 {
-    width: 82%;
-    padding-bottom: 7px;
-    padding-top: 7px;
-}
+
 #map {
-    height: 500px;
-    margin: 20px;
+    height: 130px;
 }
+
+.card {
+    margin-top: 10px;
+}
+
+.card-body {
+    padding: 0;
+}
+
 .map-accordion {
     margin-top: 20px;
     width: 81%;
