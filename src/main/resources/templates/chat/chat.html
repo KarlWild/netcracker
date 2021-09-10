@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+    <script src="https://kit.fontawesome.com/28e8f88d79.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
@@ -71,7 +71,10 @@
 <!--                 width="55px"/>-->
 
             <div class="chat-about">
-                <div class="chat-with" id="selectedUserId">You didn't select the user</div>
+                <div class="chat-with" id="selectedUserId">
+                    Вы не выбрали пользователя
+                    <i class="far fa-frown m-lg-2" style="font-size: 20px"></i>
+                </div>
                 <div class="chat-num-messages"></div>
             </div>
 <!--            <i class="fa fa-star"></i>-->
@@ -100,7 +103,7 @@
 <script id="message-template" type="text/x-handlebars-template">
     <li class="clearfix">
         <div class="message-data align-right">
-            <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
+            <span class="message-data-time">{{time}}</span> &nbsp; &nbsp;
             <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
         </div>
         <div class="message other-message float-right">
@@ -113,7 +116,7 @@
     <li>
         <div class="message-data">
             <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
-            <span class="message-data-time">{{time}}, Today</span>
+            <span class="message-data-time">{{time}}</span>
         </div>
         <div class="message my-message">
             {{response}}
