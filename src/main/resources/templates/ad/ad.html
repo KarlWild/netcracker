@@ -53,19 +53,7 @@
     <div th:replace="fragments/navbar :: header-lk"/>
 </div>
 
-<div class="col d-grid gap-2">
-    <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">
-        <button type="submit" class="btn btn-dark"> Добавить в избранное </button>
-        <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
-    </form>
-</div>
-<div class="col d-grid gap-2">
-    <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">
-        <button type="submit" class="btn btn-dark"> Убрать из избранного </button>
-    </form>
-</div>
-
-<div th:if="${current.name} == ${ad.user_id.email}">
+<div sec:authorize="isAuthenticated()" th:if="${user.email} == ${ad.user_id.email}">
     <div class="container justify-content-center" style="margin-top: 20px">
         <div th:if="${ad.status==' продано '}">
             <div class="alert alert-dismissible alert-warning">
@@ -106,15 +94,18 @@
         </div>
     </div>
 </div>
-<div th:unless="${current.name} == ${ad.user_id.email}">
+<div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">
     <div class="container justify-content-center" style="margin-top: 20px">
         <div class="row">
             <div class="col d-grid gap-2">
-                <a class="btn btn-dark btn-md" th:href="'/ads/' + ${ad.id} + '/favourite'">Добавить в избранное</a>
+                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">
+                    <button type="submit" class="btn btn-dark"> Добавить в избранное </button>
+                    <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
+                </form>
             </div>
             <div class="col d-grid gap-2">
-                <form th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">
-                    <button type="submit" class="btn btn-dark"> Убрать из избранного</button>
+                <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">
+                    <button type="submit" class="btn btn-dark"> Убрать из избранного </button>
                 </form>
             </div>
             <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">
@@ -132,7 +123,7 @@
 </div>
 
 <div style="display: flex; justify-content: flex-start; align-items: center">
-    <div style="margin-left: 10%;">
+    <div style="margin-left: 10%; margin-top: 30px">
         <div>
             <h2 class="h2_style">
                 <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
@@ -273,7 +264,7 @@
     <p th:text="${ad.description}"></p>
 </div>
 
-<fieldset>
+<fieldset sec:authorize="isAuthenticated()">
     <div class="container">
         <form action="#"
               th:action="@{/ads/post-review}"
@@ -308,7 +299,7 @@
     </div>
 </fieldset>
 
-<div th:if="${user} != ${ad.user_id}" class="container clearfix">
+<div sec:authorize="isAuthenticated()" th:if="${user} != ${ad.user_id}" class="container clearfix">
     <div class="chat">
         <div class="chat-header clearfix">
             <!--            <img alt="avatar" height="55px"-->

@@ -41,15 +41,24 @@ public class AdController {
         this.adRepository = adRepository;
         this.favouriteRepository = favouriteRepository;
         this.reviewService = reviewService;
-        this.favouriteService=favouriteService;
+        this.favouriteService = favouriteService;
     }
 
     @GetMapping("ads/{id}")
     public String getAd(@ModelAttribute("user") User user,
                         Principal principal, @PathVariable("id") int id, Model model, @ModelAttribute("favourite") Favourite favourite) {
         Ad ad = adService.findById(id).get();
-        User loggedInUser = userService.findUserByEmail(principal.getName());
-        Optional<ComparisonAds> isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
+        User loggedInUser;
+        if (principal != null)
+            loggedInUser = userService.findUserByEmail(principal.getName());
+        else {
+            loggedInUser = new User();
+            loggedInUser.setEmail("");
+        }
+        Optional<ComparisonAds> isAdInComparison;
+        if(principal !=null)
+         isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
+        else isAdInComparison = Optional.of(new ComparisonAds());
         List<Photo> photos = new ArrayList<>();
 
         if (ad.getPhotos().isEmpty()) {
@@ -58,14 +67,13 @@ public class AdController {
             photos = ad.getPhotos();
         }
 
-        model.addAttribute("user", userService.findUserByEmail(principal.getName()));
+        model.addAttribute("user", loggedInUser);
         model.addAttribute("photos", photos);
         model.addAttribute("ad", ad);
-        model.addAttribute("current", principal);
         model.addAttribute("comparison", isAdInComparison);
 
         Review review = new Review(ad.getUser_id().getEmail(),
-                " ", 0, principal.getName());
+                " ", 0, loggedInUser.getEmail());
         model.addAttribute("review", review);
 
         return "ad/ad";
@@ -169,7 +177,7 @@ public class AdController {
         return "redirect:/lk/my_ads";
     }
 
-   @PostMapping("ads/{id}/favourite")
+    @PostMapping("ads/{id}/favourite")
     public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -179,12 +187,12 @@ public class AdController {
         return "redirect:/lk/my_ads";
     }
 
-//убрать из избранного
+    //убрать из избранного
     @PostMapping("ads/{id}/notFavourite")
     public String deleteFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        f=favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+        f = favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
         favouriteRepository.delete(f);
         return "redirect:/lk/favourite";
     }
@@ -215,7 +223,8 @@ public class AdController {
         }*/
 
     @GetMapping("/api/get_addresses")
-    public @ResponseBody List<Object[]> getAllAddresses(){
+    public @ResponseBody
+    List<Object[]> getAllAddresses() {
         return adService.findAllAddresses();
     }
 }
