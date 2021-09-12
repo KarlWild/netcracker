@@ -60,4 +60,15 @@ public class ComparisonController {
 
         return "redirect:/ads/" + id;
     }
+
+    @PostMapping("/ads/{id}/deleteComparison")
+    public String deleteComparison(@PathVariable("id") Integer id, Principal principal) {
+        Ad ad = adService.findById(id).orElse(null);
+        User loggedInUser = userService.findUserByEmail(principal.getName());
+        /*ComparisonAds comparisonAd = new ComparisonAds(ad, loggedInUser);*/
+
+        comparisonService.deleteComparisonByAdAndUser(ad, loggedInUser);
+
+        return "redirect:/ads/" + id;
+    }
 }

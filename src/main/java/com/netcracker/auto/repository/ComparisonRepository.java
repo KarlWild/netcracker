@@ -17,10 +17,11 @@ import java.util.Optional;
 public interface ComparisonRepository extends CrudRepository<ComparisonAds, Long> {
     List<ComparisonAds> findByUser(User user);
 
-
     @Override
     Optional<ComparisonAds> findById(Long aLong);
 
     Optional<ComparisonAds> findByAdAndUser(Ad ad, User user);
+
+    void deleteByAdAndUser(Ad ad, User user);
 
 }

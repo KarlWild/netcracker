@@ -1,3 +1,20 @@
 #buttons {
     margin-top: 20px;
 }
+
+#favourite:active{
+    background-color: red;
+}
+.all-ad-container{
+    margin-top: 40px;
+    padding-left: 200px;
+    padding-right: 50px;
+    max-width: 100%;
+}
+.owner-btn{
+    width: 80%;
+    margin: 10px;
+}
+.button-container{
+    margin-top: 20%;
+}
