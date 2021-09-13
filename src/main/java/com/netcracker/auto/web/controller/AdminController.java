@@ -23,6 +23,22 @@ public class AdminController {
         this.adService = adService;
         this.photoService = photoService;
     }
+    class Comment{
+        AdminController adminController;
+        private String text;
+        public Comment(AdminController adminController){
+            this.adminController = adminController;
+            text = "";
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+    }
 
     @Secured("ROLE_ADMIN")
     @GetMapping
@@ -35,7 +51,7 @@ public class AdminController {
     @PostMapping("/approve/{id}")
     public String verifyAd(@PathVariable("id") int id) {
         Ad ad = adService.findById(id).get();
-        ad.setStatus("closed");
+        ad.setStatus("Активно");
         ad.setVerified(true);
         adService.saveAd(ad);
 
@@ -46,14 +62,16 @@ public class AdminController {
     @GetMapping("/reject/{id}")
     public String getChangeStatus(@PathVariable("id") int id, Model model) {
         model.addAttribute("id", id);
+        Comment comment = new Comment(this);
+        model.addAttribute("comment", comment);
         return "/admin/comment_form";
     }
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/reject/{id}")
-    public String changeStatus(@PathVariable("id") int id, @ModelAttribute("comment") @Valid String comment) {
+    public String changeStatus(@PathVariable("id") int id, @ModelAttribute("comment") @Valid Comment comment) {
         Ad ad = adService.findById(id).get();
-        ad.setStatus(comment);
+        ad.setStatus("\nОтвет администратора: " + comment.getText());
         adService.saveAd(ad);
         return "redirect:/admin";
     }

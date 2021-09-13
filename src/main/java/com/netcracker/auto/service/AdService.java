@@ -41,7 +41,7 @@ public class AdService {
 
     @Transactional
     public List<Ad> findUnVerified() {
-        List<Ad> list = adRepository.findByVerifiedAndStatus("неактивно");
+        List<Ad> list = adRepository.findByVerifiedAndStatus("На модерации");
         return list;
     }
 
@@ -95,7 +95,6 @@ public class AdService {
         Integer finalPriceEnd = priceEnd == null ? Integer.MAX_VALUE : priceEnd;
         Integer finalMileageStart = mileageStart == null ? 0 : mileageStart;
         Integer finalMileageEnd = mileageEnd == null ? Integer.MAX_VALUE : mileageEnd;
-
 
         Specification<Ad> specification = Specification
                 .where(brand == null ? null : brandLike(brand))

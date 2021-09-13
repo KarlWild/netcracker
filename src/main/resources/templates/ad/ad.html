@@ -7,26 +7,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
-
-    <!-- Style -->
-    <link th:href="@{/css/adpage.css}" rel="stylesheet">
-
     <!-- Font Awesome -->
-
     <!-- Links -->
     <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/css/star-rating.css" media="all"
           rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/star-rating.min.css}">
     <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/themes/krajee-fas/theme.css"
           media="all" rel="stylesheet" type="text/css"/>
-
-    <!-- Scripts -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
     <link th:href="@{/css/chat.css}" rel="stylesheet">
-
+    <link th:href="@{/css/adpage.css}" rel="stylesheet">
     <title>Объявление</title>
 </head>
 <body>
@@ -66,33 +58,33 @@
         </div>
     </div>
 </div>
-<div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">
-    <div class="container justify-content-center" style="margin-top: 20px">
-        <div class="row">
-            <div class="col d-grid gap-2">
-                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">
-                    <button type="submit" class="btn btn-dark"> Добавить в избранное </button>
-                    <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
-                </form>
-            </div>
-            <div class="col d-grid gap-2">
-                <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">
-                    <button type="submit" class="btn btn-dark"> Убрать из избранного </button>
-                </form>
-            </div>
-            <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">
-                <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
-                    <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
-                </form>
-            </div>
-            <div th:unless="${comparison.isEmpty()}" class="col d-grid gap-2">
-                <form th:action="'/ads/' + ${ad.id} + '/deleteComparison'" method="post">
-                    <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">-->
+<!--    <div class="container justify-content-center" style="margin-top: 20px">-->
+<!--        <div class="row">-->
+<!--            <div class="col d-grid gap-2">-->
+<!--                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">-->
+<!--                    <button type="submit" class="btn btn-dark"> Добавить в избранное </button>-->
+<!--                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="col d-grid gap-2">-->
+<!--                <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
+<!--                    <button type="submit" class="btn btn-dark"> Убрать из избранного </button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">-->
+<!--                <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">-->
+<!--                    <button class="btn btn-dark btn-md" type="submit">Сравнить</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div th:unless="${comparison.isEmpty()}" class="col d-grid gap-2">-->
+<!--                <form th:action="'/ads/' + ${ad.id} + '/deleteComparison'" method="post">-->
+<!--                    <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="container w-100 all-ad-container">
     <div class="row">
@@ -299,7 +291,6 @@
                         <!--            <img alt="avatar" height="55px"-->
                         <!--                 src=""-->
                         <!--                 width="55px"/>-->
-
                         <div class="chat-about">
                             <div class="chat-with" th:text="${ad.user_id.getFullName()}" id="selectedUserId"></div>
                             <div class="chat-num-messages"></div>
@@ -313,13 +304,9 @@
                     </div> <!-- end chat-history -->
 
                     <div class="chat-message clearfix">
-                        <textarea id="message-to-send" name="message-to-send" placeholder="Type your message"
+                        <textarea id="message-to-send" name="message-to-send" placeholder="Напишите сообщение..."
                                   rows="3"></textarea>
-
-                        <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
-                        <i class="fa fa-file-image-o"></i>
-
-                        <button id="sendBtn">Send</button>
+                        <button id="sendBtn">Отправить</button>
 
                     </div> <!-- end chat-message -->
 

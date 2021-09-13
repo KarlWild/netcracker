@@ -28,7 +28,7 @@ public interface AdRepository extends CrudRepository<Ad, Integer>, JpaSpecificat
     List<Ad> findByKeyword(@Param("keyword") String keyword);
    // public void update(Ad ad);
 
-    @Query(value = "select AD_ID, address from Ad  where status='closed'",nativeQuery = true)
+    @Query(value = "select AD_ID, address from Ad  where status='Активно'",nativeQuery = true)
     List<Object[]> findAllAddresses();
     /*@Query("select t from Ad t where t.id = :ad_id")
     List<Ad> findFavourite(@Param("ad_id") Favourite ad_id);*/

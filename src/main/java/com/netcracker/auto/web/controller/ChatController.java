@@ -6,6 +6,7 @@ import com.netcracker.auto.entity.chat.ChatNotification;
 import com.netcracker.auto.repository.UserRepository;
 import com.netcracker.auto.service.UserService;
 import com.netcracker.auto.service.chat.ChatMessageService;
+import com.netcracker.auto.service.chat.ChatNotificationService;
 import com.netcracker.auto.service.chat.ChatRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -32,6 +33,7 @@ public class ChatController {
     private ChatRoomService chatRoomService;
     @Autowired
     UserService userService;
+    @Autowired private ChatNotificationService chatNotificationService;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
@@ -41,6 +43,7 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
         ChatNotification notification = new ChatNotification(saved.getId(), saved.getSenderId(), saved.getSenderName(), saved.getContent());
+        chatNotificationService.saveNotification(notification);
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId().toString(),"/queue/messages", notification);
     }
@@ -50,6 +53,7 @@ public class ChatController {
         String currentPrincipalName = authentication.getName();
         model.addAttribute("user", userService.findUserByEmail(currentPrincipalName));
         model.addAttribute("chats", userRepository.findAll());
+        chatNotificationService.findAll();
         return "chat/chat";
     }
     @GetMapping("/chat/{id}")

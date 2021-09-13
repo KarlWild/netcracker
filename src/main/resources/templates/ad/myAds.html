@@ -13,14 +13,36 @@
 
     <!-- Style -->
     <link rel="stylesheet" th:href="@{/css/catalog.css}">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <title>Мои объявления</title>
 </head>
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
+<script>
+    function changeLanguage(language) {
+        var element = document.getElementById("url");
+        element.value = language;
+        element.innerHTML = language;
+    }
 
+    function showDropdown() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
 
-
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
 <div class="container">
     <div class="col-6">
         <form th:action="@{/ad/tmp}"
@@ -51,7 +73,56 @@
                     <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
                 </td>
                 <td>
-                    <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
+                    <div class="row">
+                        <div class="col more-btn">
+                            <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
+                        </div>
+                        <div class="col">
+<!--                            &lt;!&ndash; three dot menu &ndash;&gt;-->
+<!--                            <div class="dropdown">-->
+<!--                                &lt;!&ndash; three dots &ndash;&gt;-->
+<!--                                <ul class="dropbtn icons showLeft" onclick="showDropdown()">-->
+<!--                                    <li></li>-->
+<!--                                    <li></li>-->
+<!--                                    <li></li>-->
+<!--                                </ul>-->
+<!--                                &lt;!&ndash; menu &ndash;&gt;-->
+<!--                                <div id="myDropdown" class="dropdown-content">-->
+<!--                                    <a href="#home">Удалить</a>-->
+<!--                                    <a href="#about">Редактировать</a>-->
+<!--                                    <a href="#contact">Отправить на модерацию</a>-->
+<!--                                    <a href="#contact">Продано</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Действия</a>
+                            <div class="dropdown-menu" style="">
+                                <div class="d-grid gap-2">
+                                    <form th:action="'/ads/' + ${ad.id} + '/remove'" method="post">
+                                        <button class="btn btn-danger btn-block owner-btn" type="submit">Удалить</button>
+                                    </form>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <a class="btn btn-warning btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">
+                                        <button class="btn btn-info btn-block owner-btn" type="submit">Отправить на модерацию
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <form th:action="'/ads/' + ${ad.id} + '/sold'" method="post">
+                                        <button class="btn btn-success btn-block owner-btn" type="submit">Продано</button>
+                                    </form>
+                                </div>
+<!--                                <a class="dropdown-item" th:href="'/ads/' + ${ad.id} + '/remove'" onclick="this.parentNode.submit()">Удалить</a>-->
+<!--                                <a class="dropdown-item" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>-->
+<!--                                <a class="dropdown-item" th:href="'/ads/' + ${ad.id} + '/check'" onclick="this.parentNode.submit()">Отправить на модерацию</a>-->
+<!--                                <a class="dropdown-item" th:href="'/ads/' + ${ad.id} + '/sold'" onclick="this.parentNode.submit()">Продано</a>-->
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </th:block>

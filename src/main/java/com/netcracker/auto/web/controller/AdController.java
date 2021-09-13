@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Controller
 public class AdController {
@@ -99,7 +100,9 @@ public class AdController {
                          Integer ownersCount) {
         List<Ad> ads = adService.findByAnyCriteria(brand, carModel,
                 yearStart, yearEnd, priceStart, priceEnd, mileageStart, mileageEnd, ownersCount);
-
+        Predicate<Ad> isQualified = ad -> !ad.isVerified();
+        ads.removeIf(isQualified);
+        //ads.stream().filter(isQualified);
         model.addAttribute("brands", transportService.findDistinctBrand());
         model.addAttribute("ads", ads);
         return "ad/catalogAds";
@@ -167,8 +170,8 @@ public class AdController {
 
     //удаление
     @PostMapping("ads/{id}/remove")
-    public String delete(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
-        ad = adService.findById(adId).get();
+    public String delete(@PathVariable("id") Integer adId) {
+        Ad ad = adService.findById(adId).get();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -189,27 +192,27 @@ public class AdController {
 
     //убрать из избранного
     @PostMapping("ads/{id}/notFavourite")
-    public String deleteFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
+    public String deleteFavourite(@PathVariable("id") int adId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        f = favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+        Favourite f = favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
         favouriteRepository.delete(f);
         return "redirect:/lk/favourite";
     }
 
     //отправка на модерацию
     @PostMapping("ads/{id}/check")
-    public String check(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
-        ad = adService.findById(adId).get();
-        ad.setStatus("open");
+    public String check(@PathVariable("id") Integer adId) {
+        Ad ad = adService.findById(adId).get();
+        ad.setStatus("На модерации");
         adRepository.save(ad);
         return "redirect:/lk/my_ads";
     }
 
     //продано
     @PostMapping("ads/{id}/sold")
-    public String sold(@PathVariable("id") Integer adId, @ModelAttribute("ad") Ad ad) {
-        ad = adService.findById(adId).get();
+    public String sold(@PathVariable("id") Integer adId) {
+        Ad ad = adService.findById(adId).get();
         ad.setStatus(" продано ");
         adRepository.save(ad);
         return "redirect:/lk/my_ads";

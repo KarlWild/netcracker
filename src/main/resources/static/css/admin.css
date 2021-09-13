@@ -1,0 +1,14 @@
+h1{
+    padding: 20px;
+}
+form{
+    padding: 50px 30% 50px 50px;
+}
+.reject button{
+    float: right;
+    margin-top: 20px;
+    width: 200px;
+}
+.reject textarea{
+    height: 200px;
+}
