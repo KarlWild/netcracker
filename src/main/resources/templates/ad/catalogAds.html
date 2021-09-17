@@ -181,6 +181,7 @@
     <table class="table table-hover" id="result-table">
         <tbody>
         <th:block th:each="ad : ${ads}">
+
             <tr scope="row">
                 <td>
                     <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>

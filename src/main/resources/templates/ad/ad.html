@@ -47,11 +47,11 @@
 
 <div sec:authorize="isAuthenticated()">
     <div class="container w-100 justify-content-center" style="margin-top: 20px">
-        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"
-             class="alert alert-dismissible alert-warning">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>Данная машина продана.</strong>
-        </div>
+<!--        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"-->
+<!--             class="alert alert-dismissible alert-warning">-->
+<!--            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>-->
+<!--            <strong>Данная машина продана.</strong>-->
+<!--        </div>-->
         <div th:if="${ad.user_id} == ${user}" class="alert alert-dismissible alert-info">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong th:text="'Статус объявления:'+ ${ad.status}"></strong>
@@ -315,6 +315,7 @@
                 </div> <!-- end chat -->
 
             </div> <!-- end container -->
+
             <div th:unless="${user} != ${ad.user_id}">
                 <div class="col button-container">
                     <div class="d-grid gap-2">
@@ -322,17 +323,17 @@
                             <button class="btn btn-danger btn-block owner-btn" type="submit">Удалить</button>
                         </form>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <a class="btn btn-warning btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>
                     </div>
 
-                    <div class="d-grid gap-2">
+                    <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">
                             <button class="btn btn-info btn-block owner-btn" type="submit">Отправить на модерацию
                             </button>
                         </form>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/sold'" method="post">
                             <button class="btn btn-success btn-block owner-btn" type="submit">Продано</button>
                         </form>

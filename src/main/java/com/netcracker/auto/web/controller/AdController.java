@@ -205,7 +205,7 @@ public class AdController {
         Ad ad = adService.findById(adId).get();
         ad.setStatus("На модерации");
         adRepository.save(ad);
-        return "redirect:/lk/my_ads";
+        return "redirect:/ads/{id}";
     }
 
     //продано

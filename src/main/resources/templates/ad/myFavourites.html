@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!-- Required meta tags -->
@@ -9,21 +10,27 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
-    <title>Мои избранные объявления</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" th:href="@{/css/catalog.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Мои объявления</title>
 </head>
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
-
-<div style="width: 70%; margin:0 auto; font-family: Arial,Helvetica Neue,Helvetica, sans-serif;">
-    <table width="100%" style="border-spacing: 50px 0px">
+<div class="container">
+    <table class="table table-hover">
         <tbody>
         <th:block th:each="ad : ${user}">
-            <tr>
-                <td colspan="2">
-                    <b>
-                        <p style="margin: 5px"
-                           th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
-                    </b>
+            <tr scope="row">
+                <td>
+                    <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+                    <p th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
+                    <p th:text="${ad.transport.bodyType}"></p>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
+                    <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
                 </td>
                 <td>
                     <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
@@ -34,52 +41,19 @@
                 <td>
                     <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
                 </td>
-            </tr>
-
-            <tr>
-                <td style="color: grey">
-                    <p style="margin: 5px"
-                       th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
-                </td>
-                <td style="color: grey">
-                    <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td>
-                    <form th:action="@{/ads/{id}(id=${ad.id})}" method="GET">
-                        <button class="btn btn-dark" href="#" onclick="this.parentNode.submit()">Подробнее</button>
-                    </form>
-                </td>
-                <td>
-                    <p th:text="'Статус объявления: '+${ad.status}"></p>
-                </td>
-                <!--td>
-                    <form th:action="@{/admin/approve/{id}(id=${ad.id})}" method="POST">
-                        <button class="btn btn-success" href="#" onclick="this.parentNode.submit()">Одобрить</button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/admin/reject/{id}(id=${ad.id})}" method="GET">
-                        <button class="btn btn-danger" href="#" onclick="this.parentNode.submit()">Отклонить</button>
-                    </form>
-                </td-->
-            </tr>
-
-            <tr>
-                <td style="color: grey">
-                    <p style="margin: 5px" th:text="${ad.transport.bodyType}"></p>
-                </td>
-                <td style="color: grey">
-                    <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
+                    <div class="row">
+                        <div class="col more-btn">
+                            <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </th:block>
         </tbody>
-
     </table>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
