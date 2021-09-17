@@ -83,7 +83,6 @@ public class AdController {
     @PostMapping("/ads/post-review")
     public String postReview(@ModelAttribute("review") Review review) {
         reviewService.saveReview(review);
-
         User user = userService.findUserByEmail(review.getUsername());
         Double seller_rating = reviewService.calculateSellerRatingByUsername(user.getEmail());
         user.setSeller_rating(seller_rating);
@@ -108,10 +107,10 @@ public class AdController {
         return "ad/catalogAds";
     }
 
-    @GetMapping("/ad/tmp")
-    public String tmp() {
-        return "ad/button";
-    }
+//    @PostMapping("/ad/button")
+//    public String tmp() {
+//        return "ad/brands";
+//    }
 
     @GetMapping("/new/{id}")
     public String newAd(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
@@ -120,7 +119,7 @@ public class AdController {
         return "ad/form";
     }
 
-    @PostMapping("/ad/tmp")
+    @PostMapping("/ad/create")
     public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
         Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -192,10 +191,10 @@ public class AdController {
 
     //убрать из избранного
     @PostMapping("ads/{id}/notFavourite")
-    public String deleteFavourite(@PathVariable("id") int adId) {
+    public String deleteFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        Favourite f = favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+        f=favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
         favouriteRepository.delete(f);
         return "redirect:/lk/favourite";
     }

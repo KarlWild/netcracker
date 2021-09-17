@@ -1,35 +1,64 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
-    <title>Заполнение</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" th:href="@{/css/catalog.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Заполнение данных</title>
 </head>
 <body>
-<div th:replace="fragments/navbar :: header"/>
-<form th:method="POST" th:action="@{/ad/tmp}" th:object="${ad}">
+<div th:replace="fragments/navbar :: header-lk"/>
+<form th:method="POST" th:action="@{/ad/create}" th:object="${ad}">
 
     <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId"/>
     <label for="address">Введите адрес: </label>
     <input type="text" th:field="*{address}" id="address"/>
     <br/>
-    <label for="color">Выберите цвет: </label>
-    <input type="text" th:field="*{color}" id="color"/>
+    <label for="color" id="color">Выберите цвет: </label>
+    <select>
+        <option> Красный </option>
+        <option> Белый </option>
+        <option> Чёрный </option>
+        <option> Серый </option>
+        <option> Жёлтый </option>
+        <option> Синий </option>
+        <option> Зелёный </option>
+    </select>
     <br/>
     <label for="description">Описание: </label>
-    <input type="text" th:field="*{description}" id="description"/>
+    <input type="text" data-validation="alphanumeric" th:field="*{description}" id="description"/>
     <br/>
-    <label for="driveUnit">Выберите привод машины</label>
-    <input type="text" th:field="*{driveUnit}" id="driveUnit"/>
+
+
+    <label for="driveUnit" id="driveUnit" th:field="*{driveUnit}">Выберите привод машины</label>
+    <select>
+        <option> Передний </option>
+        <option> Задний </option>
+        <option> Полный </option>
+    </select>
     <br/>
+    <!--    <input type="text" th:field="*{driveUnit}" id="driveUnit"/>-->
+    <!--    <br/>-->
+    <!--    -->
+
     <label for="mileage">Введите пробег: </label>
-    <input type="text" th:field="*{mileage}" id="mileage"/>
+    <input type="number" min="0" th:field="*{mileage}" id="mileage"/>
     <br/>
     <label for="numberOfOwners">Введите количество владельцев: </label>
-    <input type="text" th:field="*{numberOfOwners}" id="numberOfOwners"/>
+    <input type="number" min="0" th:field="*{numberOfOwners}" id="numberOfOwners"/>
     <br/>
     <label for="price">Введите цену: </label>
-    <input type="text" th:field="*{price}" id="price"/>
+    <input type="number" min="0" th:field="*{price}" id="price"/>
     <br/>
     <label for="stateNumber">Введите номер машины: </label>
     <input type="text" th:field="*{stateNumber}" id="stateNumber"/>
@@ -38,7 +67,7 @@
     <input type="text" th:field="*{sts}" id="sts"/>
     <br/>
     <label for="vin">Введите ВИН: </label>
-    <input type="text" th:field="*{vin}" id="vin"/>
+    <input type="number" min="0" th:field="*{vin}" id="vin"/>
     <br/>
     <label for="yearOfIssue">Введите дату выпуска: </label>
     <input type="date" th:field="*{yearOfIssue}" id="yearOfIssue"/>
@@ -46,7 +75,7 @@
     <input type="hidden" th:value="${ad.getStatus()}" th:name="status" />
     <input type="hidden" th:value="${ad.isVerified()}" th:name="verified" />
 
-    <input type="submit" value="Создать!"/>
+    <input type="submit" value="Создать"/>
 
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

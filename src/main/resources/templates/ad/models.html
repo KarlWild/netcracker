@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Создание объявления</title>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 </head>
 <body>
-<div th:replace="fragments/navbar :: header"/>
+<div th:replace="fragments/navbar :: header-lk"/>
 <h2 class="h2_style">Выбор модели <p th:text="${brand}"></p></h2>
 <div class="column">
 
