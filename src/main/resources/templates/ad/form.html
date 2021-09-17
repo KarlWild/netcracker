@@ -22,29 +22,30 @@
 
     <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId"/>
     <label for="address">Введите адрес: </label>
-    <input type="text" th:field="*{address}" id="address"/>
+    <input type="text" th:name="*{address}" id="address"/>
     <br/>
-    <label for="color" id="color">Выберите цвет: </label>
-    <select>
-        <option> Красный </option>
-        <option> Белый </option>
-        <option> Чёрный </option>
-        <option> Серый </option>
-        <option> Жёлтый </option>
-        <option> Синий </option>
-        <option> Зелёный </option>
+    <label for="color" id="color">Выберите цвет:
+    <select th:field="*{color}">
+        <option th:value="Красный"> Красный </option>
+        <option th:value="Белый"> Белый </option>
+        <option th:value="Чёрный"> Чёрный </option>
+        <option th:value="Серый"> Серый </option>
+        <option th:value="Жёлтый"> Жёлтый </option>
+        <option th:value="Синий"> Синий </option>
+        <option th:value="Зелёный"> Зелёный </option>
     </select>
+    </label>
     <br/>
     <label for="description">Описание: </label>
     <input type="text" data-validation="alphanumeric" th:field="*{description}" id="description"/>
     <br/>
 
 
-    <label for="driveUnit" id="driveUnit" th:field="*{driveUnit}">Выберите привод машины</label>
-    <select>
-        <option> Передний </option>
-        <option> Задний </option>
-        <option> Полный </option>
+    <label for="driveUnit" id="driveUnit">Выберите привод машины</label>
+    <select th:field="*{driveUnit}">
+        <option th:value="Передний"> Передний </option>
+        <option th:value="Задний"> Задний </option>
+        <option th:value="Полный"> Полный </option>
     </select>
     <br/>
     <!--    <input type="text" th:field="*{driveUnit}" id="driveUnit"/>-->
