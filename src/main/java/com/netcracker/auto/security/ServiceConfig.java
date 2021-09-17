@@ -1,4 +1,4 @@
-package com.netcracker.auto.security;
+/*package com.netcracker.auto.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,4 +12,4 @@ public class ServiceConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-}
+}*/

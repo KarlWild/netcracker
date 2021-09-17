@@ -67,7 +67,7 @@ public class Ad {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "ad")
+    @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER)
     //@JoinColumn(name="ad")
     private List<Photo> photos;
 
