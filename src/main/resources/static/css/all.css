@@ -1,0 +1,36 @@
+#main-form {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+#label-lk, #label-balance {
+    font-size: 35px;
+}
+
+#btn-update, #btn-buy {
+    margin: 40px auto 20px auto;
+    width: 100%;
+}
+
+#btn-balance {
+    margin: auto auto 20px auto;
+    width: 100%;
+    align-self: center;
+}
+
+img {
+    border-radius: 50%;
+    width: 64px;
+    margin-right: 15px;
+}
+
+.lk-table{
+    width: 100%; /* Try setting this to 400px or something */
+    display: table;
+}
+.container{
+    display: table-cell;
+    margin: 50px auto 50px auto;
+    border-color: black;
+    font-weight: 450;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" th:href="@{/css/catalog.css}">
+
+    <title>Мои объявления</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: header-lk"/>
+
+
+
+<div class="container">
+    <div class="col-6">
+        <form th:action="@{/ad/tmp}"
+              method="GET">
+            <button class="btn btn-dark" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px">Создать объявление</button>
+        </form>
+    </div>
+    <table class="table table-hover">
+        <tbody>
+        <th:block th:each="ad : ${user}">
+            <tr scope="row">
+                <td>
+                    <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+                    <p th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
+                    <p th:text="${ad.transport.bodyType}"></p>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
+                    <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
+                </td>
+                <td>
+                    <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
+                </td>
+                <td>
+                    <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

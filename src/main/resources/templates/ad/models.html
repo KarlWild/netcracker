@@ -6,15 +6,16 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-    <h2 class="h2_style">Выбор модели <p th:text="${brand}"></p> </h2>
-    <div class="column">
+<div th:replace="fragments/navbar :: header"/>
+<h2 class="h2_style">Выбор модели <p th:text="${brand}"></p></h2>
+<div class="column">
 
-        <li style="margin-bottom: 10px" type="none" th:each="model : ${models}">
-            <a class="link_theme_auto"
-               th:text="${model.toString()}"
-               th:href="@{{brand}/{model}(brand=${brand.toString()}, model=${model.toString()})}">
-            </a>
-        </li>
+    <li style="margin-bottom: 10px" type="none" th:each="model : ${models}">
+        <a class="link_theme_auto"
+           th:text="${model.toString()}"
+           th:href="@{{brand}/{model}(brand=${brand.toString()}, model=${model.toString()})}">
+        </a>
+    </li>
 </div>
 </body>
 </html>

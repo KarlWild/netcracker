@@ -10,14 +10,9 @@ import javax.transaction.Transactional;
 @Service
 public class PhotoService {
 
+    @Autowired
     private PhotoRepository photoRepository;
 
-    @Autowired
-    public PhotoService(PhotoRepository photoRepository) {
-        this.photoRepository = photoRepository;
-    }
-
-    @Transactional
     public Photo getNoPhoto() {
         return photoRepository.findByFileName("nophoto.jpg");
     }

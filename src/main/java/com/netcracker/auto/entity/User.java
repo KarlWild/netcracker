@@ -34,11 +34,13 @@ public class User {
     @Column(name = "balance")
     private double balance;
     @Column(name = "seller_rating")
-    private int seller_rating;
+    private Double seller_rating;
     @Column(name = "buyers_rating")
-    private int buyers_rating;
+    private Double buyers_rating;
     @Column(name = "password")
     private String password;
+    @Column(name = "images", length = 64)
+    private String images;
 
     @ElementCollection(targetClass = RolesEntity.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -50,13 +52,27 @@ public class User {
         return getRoles();
     }
 
-    public void setDefault(){
+    public void setDefault() {
         confirmed = false;
-        date_of_birth =  LocalDate.now();
+        date_of_birth = LocalDate.now();
         balance = 0;
-        buyers_rating = 0;
-        seller_rating = 0;
+        buyers_rating = 0.0;
+        seller_rating = 0.0;
         phone_number = "";
+    }
+
+    @Transient
+    public String getImagesPath() {
+        if (images == null || userId == null) return null;
+        return "/user-photos/" + userId + "/" + images;
+    }
+
+    public String getFullName() {
+        return last_name + " " + first_name;
+    }
+
+    public void addRole(RolesEntity rolesEntity) {
+        this.roles.add(rolesEntity);
     }
 
     public Set<RolesEntity> getRoles() {
@@ -103,7 +119,7 @@ public class User {
         return balance;
     }
 
-    public int getBuyers_rating() {
+    public Double getBuyers_rating() {
         return buyers_rating;
     }
 
@@ -111,7 +127,7 @@ public class User {
         return userId;
     }
 
-    public int getSeller_rating() {
+    public Double getSeller_rating() {
         return seller_rating;
     }
 
@@ -131,7 +147,7 @@ public class User {
         this.balance = balance;
     }
 
-    public void setBuyers_rating(int buyers_rating) {
+    public void setBuyers_rating(Double buyers_rating) {
         this.buyers_rating = buyers_rating;
     }
 
@@ -159,7 +175,15 @@ public class User {
         this.userId = userId;
     }
 
-    public void setSeller_rating(int seller_rating) {
+    public void setSeller_rating(Double seller_rating) {
         this.seller_rating = seller_rating;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 }

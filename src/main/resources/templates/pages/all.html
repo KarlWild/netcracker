@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -11,110 +11,187 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
-    <title>Кошелек</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+
+    <!-- Style -->
+    <link rel="stylesheet" th:href="@{/css/all.css}">
+
+    <title>Настройки</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalog/cars}">Объявления</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/reviews}">Отзывы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Сообщения</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Избранное</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/wallet}">Кошелек</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">История</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/lk/all}">Настройки</a>
-                </li>
-            </ul>
-            <th:block sec:authorize="isAuthenticated()">
-                <h2 th:text="${user.email}" style="color:white"></h2>
-                <form th:action="@{/logout}" class="d-flex">
-                    <button type="submit" class="btn btn-danger">Выход</button>
-                </form>
-            </th:block>
-
-            <!--<form th:action="@{/reg}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Личный кабинет</button>
-            </form>-->
-        </div>
-    </div>
-</nav>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
+</div>
 
 <fieldset>
-    <div class="form-group" style="width: 35%; padding-left: 50px">
-        <label class="form-label mt-4" style="font-size: 35px;">Личный кабинет</label>
-        <!--<span sec:authentication="principal.first_name">Roles</span>-->
+    <div class="form-group" id="main-form">
+        <div class="row justify-content-around">
+            <div class="container col-5 border-5 shadow-lg">
+                <label class="form-label mt-4" id="label-lk" th:text="${user.fullName}">Личный кабинет</label>
+                <!--<img th:object="${user}" style="border-radius: 50%; width: 64px; margin-right: 15px;" th:src="@{${user.imagesPath}}"/>-->
+                <form action="#"
+                      th:action="@{/lk/all/update}"
+                      th:object="${user}"
+                      method="post"
+                      enctype="multipart/form-data">
 
-        <!--<th:block sec:authorize="isAuthenticated()">
-            Hello
-            <a th:href="@{/lk/all}" th:utext="${user.balance}">..</a>
-            &nbsp;|&nbsp;
-            <a th:href="@{/lk/logout}">Logout</a>
-        </th:block>
+                    <input type="hidden" th:field="${user.userId}">
+                    <input type="hidden" th:field="${user.balance}">
+                    <input type="hidden" th:field="${user.confirmed}">
+                    <input type="hidden" th:field="${user.seller_rating}">
+                    <input type="hidden" th:field="${user.buyers_rating}">
+                    <input type="hidden" th:field="${user.date_of_birth}">
+                    <input type="hidden" th:field="${user.images}">
+                    <input type="hidden" th:field="${user.roles}">
+                    <input type="hidden" th:field="${user.authorities}">
 
-        <th:block sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}">Login</a>
-        </th:block>-->
 
-        <form action="#"
-              th:action="@{/lk/all/update}"
-              th:object="${user}"
-              method="post">
-            <input type="hidden" th:field="*{userId}">
-            <input type="hidden" th:field="*{seller_rating}">
-            <input type="hidden" th:field="*{buyers_rating}">
-            <input type="hidden" th:field="*{confirmed}">
-            <input type="hidden" th:field="*{balance}">
-            <input type="hidden" th:field="*{date_of_birth}">
-
-            <div class="form-group">
-                <label for="exampleInputFirstName" class="form-label mt-4">Имя</label>
-                <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="firstNameHelp" th:field="*{first_name}">
+                    <div class="form-group">
+                        <label for="exampleInputFirstName" class="form-label mt-4">Имя</label>
+                        <input type="text" class="form-control" id="exampleInputFirstName"
+                               aria-describedby="firstNameHelp" th:field="*{first_name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputLastName" class="form-label mt-4">Фамилия</label>
+                        <input type="text" class="form-control" id="exampleInputLastName"
+                               aria-describedby="lastNameHelp" th:field="*{last_name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPhoneNumber" class="form-label mt-4">Номер телефона</label>
+                        <input type="text" class="form-control" id="exampleInputPhoneNumber"
+                               aria-describedby="phoneNumberHelp" th:field="*{phone_number}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="form-label mt-4">E-mail</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               th:field="*{email}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="form-label mt-4">Пароль</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                               aria-describedby="passwordHelp" placeholder="Оставьте пустым, если не меняете пароль"
+                               th:field="*{password}">
+                    </div>
+                    <div class="form-group">
+                        <img class="img-thumbnail" th:src="@{${user.imagesPath}}"/>
+                        <label for="image" class="form-label mt-4">Загрузить фото</label>
+                        <input class="form-control" type="file" id="image" name="image" title=" "
+                               accept="image/png, image/jpeg"/>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary" id="btn-update">Редактировать</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="exampleInputLastName" class="form-label mt-4">Фамилия</label>
-                <input type="text" class="form-control" id="exampleInputLastName" aria-describedby="lastNameHelp" th:field="*{last_name}">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1" class="form-label mt-4">E-mail</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:field="*{email}">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" th:placeholder="*{password}" th:field="*{password}">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPhoneNumber" class="form-label mt-4">Номер телефона</label>
-                <input type="text" class="form-control" id="exampleInputPhoneNumber" aria-describedby="phoneNumberHelp" th:field="*{phone_number}">
-            </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 50%">Редактировать</button>
-        </form>
+            <!--<div class="card  " style="background-color:#f3f3f3;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the bulk of the
+                        card's content.
+                    </p>
 
-        <!--<h1 th:text="${user.getBalance()}"></h1>-->
-        <!--<h1 th:text="${user.getUsername()}"></h1>
-        <h1 th:text="${user.getFirstName()}"></h1>-->
+
+                </div>
+            </div>-->
+
+            <div class="container col-5 border-5 shadow-lg">
+                <label class="form-label mt-4" id="label-balance">Баланс</label>
+                <div>
+                    <p th:text="*{user.balance}" style="size: 20px">Balance</p>
+                    <form action="#"
+                          th:action="@{/lk/addBalance}"
+                          th:object="${user}"
+                          method="post">
+                        <input type="hidden" th:field="*{userId}">
+                        <input type="hidden" th:field="*{first_name}">
+                        <input type="hidden" th:field="*{last_name}">
+                        <input type="hidden" th:field="*{phone_number}">
+                        <input type="hidden" th:field="*{email}">
+                        <input type="hidden" th:field="*{date_of_birth}">
+                        <input type="hidden" th:field="*{seller_rating}">
+                        <input type="hidden" th:field="*{buyers_rating}">
+                        <input type="hidden" th:field="*{confirmed}">
+                        <input type="hidden" th:field="*{balance}">
+                        <input type="hidden" th:field="*{password}">
+
+                        <div class="form-group">
+                            <div class="col">
+                                <hr>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">₽</span>
+                                <input type="text" class="form-control" placeholder="Введите сумму"
+                                       th:name="money" aria-label="Количество">
+                                <span class="input-group-text">.00</span>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary" id="btn-balance">Пополнить</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div ><!--sec:authorize="!hasRole('ROLE_SELLER')&&!hasRole('ROLE_ADMIN')"-->
+                    <form th:object="${user}"
+                          th:action="@{/lk/get/role_seller/{id}(id=${user.userId})}"
+                          method="GET">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="true"
+                                        aria-controls="collapseTwo">
+                                    Получить возможности продавца
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse show"
+                                 aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+                                <div class="accordion-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Возможности</th>
+                                            <th scope="col">Обычный пользователь</th>
+                                            <th scope="col">Продавец</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Просматривать объявления</th>
+                                            <td>*</td>
+                                            <td>*</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Выкладывать объявления</th>
+                                            <td>-</td>
+                                            <td>*</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Просматривать статистику</th>
+                                            <td>-</td>
+                                            <td>*</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>Роль продавца стоит 100 рублей.</p>
+
+                                    <div class="col">
+                                        <button class="btn btn-primary" id="btn-buy" onclick="this.parentNode.submit()">Получить возможности продавца</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </fieldset>
 

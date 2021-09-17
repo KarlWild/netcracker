@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.WebRequest;
 
 /**
  * @author Anton Popkov
@@ -15,7 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 public class PagesController {
     @GetMapping
     public String home() {
-        return "pages/index";
+        return "redirect:/ads";
     }
 
     @GetMapping("/login")
@@ -24,7 +23,7 @@ public class PagesController {
     }
 
     @GetMapping("/reg")
-    public String registration(WebRequest request, Model model){
+    public String registration(Model model){
         UserDTO userDTO = new UserDTO();
         model.addAttribute("user", userDTO);
         return "pages/reg";

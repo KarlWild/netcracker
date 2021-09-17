@@ -28,7 +28,7 @@ public class RegistrationController {
             @ModelAttribute("user") @Valid UserDTO userDto,
             HttpServletRequest request,
             Errors errors) {
-        userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        //userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         //try {
         User registered = userService.registerNewUserAccount(userDto);
         //} catch (UserAlreadyExistException uaeEx) {
