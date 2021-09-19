@@ -4,25 +4,24 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name="Ad")
+@Table(name = "Ad")
 public class Ad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ad_id")
+    @Column(name = "ad_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="transport_id")
+    @JoinColumn(name = "transport_id")
     private Transport transport;
 
     @OneToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user_id;
 
     @Column(name = "year_Of_Issue")
@@ -41,9 +40,10 @@ public class Ad {
     @Column(name = "drive_Unit")
     private String driveUnit;
     private boolean verified;
-    private String status="неактивно";
+    private String status = "неактивно";
 
-    public Ad(){}
+    public Ad() {
+    }
 
     public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
               String stateNumber, String vin, String sts, Integer numberOfOwners,
@@ -67,17 +67,10 @@ public class Ad {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "ad", fetch = FetchType.EAGER)
-    //@JoinColumn(name="ad")
+    @ElementCollection
+    @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
+    @Column(name = "file_name")
     private List<Photo> photos;
-
-    public void addPhoto(Photo photo) {
-        if (photos == null) {
-            photos = new ArrayList<>();
-        }
-        photos.add(photo);
-        photo.setAd(this);
-    }
 
     public Integer getId() {
         return id;

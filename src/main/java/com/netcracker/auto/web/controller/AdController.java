@@ -19,31 +19,30 @@ import java.util.function.Predicate;
 
 @Controller
 public class AdController {
-
+    @Autowired
     private AdService adService;
-    private PhotoService photoService;
+
+    @Autowired
     private TransportService transportService;
+
+    @Autowired
     private AdRepository adRepository;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private FavouriteRepository favouriteRepository;
+
+    @Autowired
     private ReviewService reviewService;
+
+    @Autowired
     private FavouriteService favouriteService;
 
     @Autowired
     private ComparisonService comparisonService;
 
-    @Autowired
-    public AdController(FavouriteService favouriteService, AdService adService, PhotoService photoService, TransportService transportService,
-                        AdRepository adRepository, UserService userService, FavouriteRepository favouriteRepository, ReviewService reviewService) {
-        this.userService = userService;
-        this.adService = adService;
-        this.photoService = photoService;
-        this.transportService = transportService;
-        this.adRepository = adRepository;
-        this.favouriteRepository = favouriteRepository;
-        this.reviewService = reviewService;
-        this.favouriteService = favouriteService;
-    }
 
     @GetMapping("ads/{id}")
     public String getAd(@ModelAttribute("user") User user,
@@ -57,19 +56,11 @@ public class AdController {
             loggedInUser.setEmail("");
         }
         Optional<ComparisonAds> isAdInComparison;
-        if(principal !=null)
-         isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
+        if (principal != null)
+            isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
         else isAdInComparison = Optional.of(new ComparisonAds());
-        List<Photo> photos = new ArrayList<>();
-
-        if (ad.getPhotos().isEmpty()) {
-            photos.add(photoService.getNoPhoto());
-        } else {
-            photos = ad.getPhotos();
-        }
 
         model.addAttribute("user", loggedInUser);
-        model.addAttribute("photos", photos);
         model.addAttribute("ad", ad);
         model.addAttribute("comparison", isAdInComparison);
 
@@ -138,18 +129,8 @@ public class AdController {
 //        String currentPrincipalName = authentication.getName();
 //        ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
 
-        Photo preview;
         List<Ad> ads = new ArrayList<>();
 
-        if (ad.getPhotos().isEmpty()) {
-            preview = photoService.getNoPhoto();
-        } else {
-            preview = ad.getPhotos().get(0);
-            ad.getPhotos().remove(0);
-            ads.add(ad);
-        }
-
-        model.addAttribute("preview", preview);
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
         return "ad/edit";

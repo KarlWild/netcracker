@@ -2,7 +2,6 @@ package com.netcracker.auto.web.controller;
 
 import com.netcracker.auto.entity.Ad;
 import com.netcracker.auto.service.AdService;
-import com.netcracker.auto.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -16,12 +15,10 @@ import javax.validation.Valid;
 @RequestMapping("/admin")
 public class AdminController {
     private AdService adService;
-    private PhotoService photoService;
 
     @Autowired
-    public AdminController(AdService adService, PhotoService photoService) {
+    public AdminController(AdService adService) {
         this.adService = adService;
-        this.photoService = photoService;
     }
     class Comment{
         AdminController adminController;
