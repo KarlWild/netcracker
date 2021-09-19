@@ -46,21 +46,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/ads/**").permitAll()
+                .antMatchers("/", "/ads/**", "/reg*").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/photos/**").permitAll()
                 .antMatchers("/lk/**", "/chat/**", "/comparison").authenticated()
-                .antMatchers("/h2-console/**").permitAll()//hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
+                .antMatchers("/h2-console/**").permitAll() //hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers("/ad/**").hasAnyAuthority("ROLE_SELLER")
-                .antMatchers("/new/**").hasAnyAuthority("ROLE_SELLER")
-                .antMatchers("/reg*").permitAll()
+                .antMatchers("/ad/**", "/new/**").hasAnyAuthority("ROLE_SELLER")
                 .antMatchers("/login*").permitAll().anyRequest().authenticated().and()
                 .csrf().disable().
                 formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/lk/all", true)
                 .failureUrl("/login?error=true");
-        ;
+
         http.headers().frameOptions().disable();
     }
 

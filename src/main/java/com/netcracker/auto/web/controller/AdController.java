@@ -55,6 +55,7 @@ public class AdController {
             loggedInUser = new User();
             loggedInUser.setEmail("");
         }
+
         Optional<ComparisonAds> isAdInComparison;
         if (principal != null)
             isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);

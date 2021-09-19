@@ -47,17 +47,44 @@
 
 <div sec:authorize="isAuthenticated()">
     <div class="container w-100 justify-content-center" style="margin-top: 20px">
-        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"
-             class="alert alert-dismissible alert-warning">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>Данная машина продана.</strong>
-        </div>
+        <!--        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"-->
+        <!--             class="alert alert-dismissible alert-warning">-->
+        <!--            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>-->
+        <!--            <strong>Данная машина продана.</strong>-->
+        <!--        </div>-->
         <div th:if="${ad.user_id} == ${user}" class="alert alert-dismissible alert-info">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong th:text="'Статус объявления:'+ ${ad.status}"></strong>
         </div>
     </div>
 </div>
+<!--<div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">-->
+<!--    <div class="container justify-content-center" style="margin-top: 20px">-->
+<!--        <div class="row">-->
+<!--            <div class="col d-grid gap-2">-->
+<!--                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">-->
+<!--                    <button type="submit" class="btn btn-dark">Добавить в избранное </button>-->
+<!--                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="col d-grid gap-2">-->
+<!--                <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
+<!--                    <button type="submit" class="btn btn-dark"> Убрать из избранного </button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">-->
+<!--                <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">-->
+<!--                    <button class="btn btn-dark btn-md" type="submit">Сравнить</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div th:unless="${comparison.isEmpty()}" class="col d-grid gap-2">-->
+<!--                <form th:action="'/ads/' + ${ad.id} + '/deleteComparison'" method="post">-->
+<!--                    <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="container w-100 all-ad-container">
     <div class="row">
@@ -78,15 +105,15 @@
                             <div class="row">
                                 <div class="col d-grid gap-2">
                                     <form id="favourite" th:action="'/ads/' + ${ad.id} + '/favourite'" method="post">
-                                        <button type="submit" class="btn btn-dark"> В избранное</button>
+                                        <button id="favouriteButton" class="btn btn-dark">Добавить в избранное</button>
                                         <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
                                     </form>
                                 </div>
-<!--                                <div class="col d-grid gap-2">-->
-<!--                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
-<!--                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>-->
-<!--                                    </form>-->
-<!--                                </div>-->
+                                <div class="col d-grid gap-2">
+                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">
+                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>
+                                    </form>
+                                </div>
                                 <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">
                                     <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
                                         <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
@@ -286,6 +313,7 @@
                 </div> <!-- end chat -->
 
             </div> <!-- end container -->
+
             <div th:unless="${user} != ${ad.user_id}">
                 <div class="col button-container">
                     <div class="d-grid gap-2">
@@ -293,17 +321,17 @@
                             <button class="btn btn-danger btn-block owner-btn" type="submit">Удалить</button>
                         </form>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <a class="btn btn-warning btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>
                     </div>
 
-                    <div class="d-grid gap-2">
+                    <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">
                             <button class="btn btn-info btn-block owner-btn" type="submit">Отправить на модерацию
                             </button>
                         </form>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/sold'" method="post">
                             <button class="btn btn-success btn-block owner-btn" type="submit">Продано</button>
                         </form>
@@ -347,43 +375,66 @@
             });
         });
 </script>
-
 <script>
     let user = "[[${user.getEmail()}]]";
     selectedUser = "[[${ad.user_id}]]";
     let selectedUserId = "[[${ad.user_id.getUserId()}]]";
     let selectedUserName = "[[${ad.user_id.getEmail()}]]";
     let userId = "[[${user.getUserId()}]]";
-</script>
+</script>>
 
 <script th:src="@{/js/custom.js}"></script>
 <script th:src="@{/js/chatInAd.js}"></script>
 
-<script>
-    $('#favourite').submit(function (e){
-        e.preventDefault();
+<!--<script>-->
+<!--function changeFavourite(){-->
+<!--    let btn=document.getElementById(favouriteButton);-->
+<!--    if(btn.text==="Добавить в избранное"){-->
+<!--        $.ajax({-->
+<!--            url:"'/ads/' + ${ad.id} + '/favourite'",-->
+<!--            type:"GET",-->
+<!--            // success: function () {-->
+<!--            //     doucment.location="ad.html";-->
+<!--            //     btn.innerText="Убрать изизбранного"-->
+<!--            // },-->
+<!--            // error: function (result) {-->
+<!--            //     console.log()-->
+<!--            // }-->
+<!--        }).done(function (data) {-->
+<!--            -->
+<!--        })-->
+<!--    }-->
+<!--}-->
+<!--</script>-->
 
+<script>
+    let btn = document.getElementById("favouriteButton");
+    $('#favourite').submit(function (e) {
+        btn.innerHTML="Добавлено";
+        btn.disabled=true;
+        e.preventDefault();
         $.ajax({
-            url:$(this).attr('action'),
-            type:$(this).attr('method'),
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
             cache: false,
             processData: false
-        }).done(function(data){
+        }).done(function (data) {
             console.log(data);
         })
     })
 </script>
 
 <script>
-    $('#notFavourite').submit(function (e){
+    $('#notFavourite').submit(function (e) {
+        btn.innerHTML="Добавить в избранное";
+        btn.disabled=false;
         e.preventDefault();
-
         $.ajax({
-            url:$(this).attr('action'),
-            type:$(this).attr('method'),
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
             cache: false,
             processData: false
-        }).done(function(data){
+        }).done(function (data) {
             console.log(data);
         })
     })
