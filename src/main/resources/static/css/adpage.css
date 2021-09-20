@@ -19,9 +19,10 @@
     margin-top: 20%;
 }
 
-img {
-    float: left;
-    /*width:  100px;
-    height: 100px;*/
+.carousel-item img {
+    height: 410px;
+    width: 410px;
     object-fit: cover;
 }
+
+
