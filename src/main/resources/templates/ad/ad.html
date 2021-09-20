@@ -103,19 +103,19 @@
                     <div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">
                         <div class="container justify-content-center" style="margin-top: 20px">
                             <div class="row">
-                                <div class="col d-grid gap-2">
+                                <!--<div class="col d-grid gap-2">
                                     <button id="favouriteButton" onclick="changeAction()" class="btn btn-dark"></button>
-                                    <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
-                                </div>
+                                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;
+                                </div>-->
 <!--                                <div class="col d-grid gap-2">-->
 <!--                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
 <!--                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>-->
 <!--                                    </form>-->
 <!--                                </div>-->
-                                <!--<button class="btn favourite" id="favouriteButton" onclick="changeAction()"
+                                <button class="btn favourite" id="favouriteButton" onclick="changeAction()"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в избранное">
-                                    <img src="/images/car-compare.png">
-                                </button>-->
+                                    <img id="favourite-icon">
+                                </button>
                                 <button class="btn car-compare" id="btn-compare" onclick="compare()"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
                                     <img src="/images/car-compare.png">
