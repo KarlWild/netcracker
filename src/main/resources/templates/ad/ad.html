@@ -104,16 +104,14 @@
                         <div class="container justify-content-center" style="margin-top: 20px">
                             <div class="row">
                                 <div class="col d-grid gap-2">
-                                    <form id="favourite" th:action="'/ads/' + ${ad.id} + '/favourite'" method="post">
-                                        <button id="favouriteButton" class="btn btn-dark">Добавить в избранное</button>
-                                        <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
-                                    </form>
+                                    <button id="favouriteButton" onclick="changeAction()" class="btn btn-dark"></button>
+                                    <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
                                 </div>
-                                <div class="col d-grid gap-2">
-                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">
-                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>
-                                    </form>
-                                </div>
+<!--                                <div class="col d-grid gap-2">-->
+<!--                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
+<!--                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>-->
+<!--                                    </form>-->
+<!--                                </div>-->
                                 <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">
                                     <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
                                         <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
@@ -383,10 +381,12 @@
     let selectedUserId = "[[${ad.user_id.getUserId()}]]";
     let selectedUserName = "[[${ad.user_id.getEmail()}]]";
     let userId = "[[${user.getUserId()}]]";
+    let id="[[${ad.getId()}]]";
 </script>>
 
 <script th:src="@{/js/custom.js}"></script>
 <script th:src="@{/js/chatInAd.js}"></script>
+<script th:src="@{/js/favourite.js}"></script>
 
 <!--<script>-->
 <!--function changeFavourite(){-->
@@ -409,38 +409,38 @@
 <!--}-->
 <!--</script>-->
 
-<script>
-    let btn = document.getElementById("favouriteButton");
-    $('#favourite').submit(function (e) {
-        btn.innerHTML="Добавлено";
-        btn.disabled=true;
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            cache: false,
-            processData: false
-        }).done(function (data) {
-            console.log(data);
-        })
-    })
-</script>
+<!--<script>-->
+<!--    let btn = document.getElementById("favouriteButton");-->
+<!--    $('#favourite').submit(function (e) {-->
+<!--        btn.innerHTML="Добавлено";-->
+<!--        btn.disabled=true;-->
+<!--        e.preventDefault();-->
+<!--        $.ajax({-->
+<!--            url: $(this).attr('action'),-->
+<!--            type: $(this).attr('method'),-->
+<!--            cache: false,-->
+<!--            processData: false-->
+<!--        }).done(function (data) {-->
+<!--            console.log(data);-->
+<!--        })-->
+<!--    })-->
+<!--</script>-->
 
-<script>
-    $('#notFavourite').submit(function (e) {
-        btn.innerHTML="Добавить в избранное";
-        btn.disabled=false;
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            cache: false,
-            processData: false
-        }).done(function (data) {
-            console.log(data);
-        })
-    })
-</script>
+<!--<script>-->
+<!--    $('#notFavourite').submit(function (e) {-->
+<!--        btn.innerHTML="Добавить в избранное";-->
+<!--        btn.disabled=false;-->
+<!--        e.preventDefault();-->
+<!--        $.ajax({-->
+<!--            url: $(this).attr('action'),-->
+<!--            type: $(this).attr('method'),-->
+<!--            cache: false,-->
+<!--            processData: false-->
+<!--        }).done(function (data) {-->
+<!--            console.log(data);-->
+<!--        })-->
+<!--    })-->
+<!--</script>-->
 
 
 </body>
