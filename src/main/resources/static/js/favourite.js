@@ -20,3 +20,5 @@ function drawButton() {
         else btn.innerHTML="Добавить в избранное";
     });
 }
+
+drawButton();

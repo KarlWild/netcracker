@@ -112,17 +112,11 @@
 <!--                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>-->
 <!--                                    </form>-->
 <!--                                </div>-->
-                                <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">
-                                    <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
-                                        <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
-                                    </form>
-                                </div>
-                                <div th:unless="${comparison.isEmpty()}" class="col d-grid gap-2">
-                                    <form th:action="'/ads/' + ${ad.id} + '/deleteComparison'" method="post">
-                                        <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>
-                                    </form>
-                                </div>
-                                <button class="btn car-compare" id="btn-compare" onclick="addToCompare()"
+                                <!--<button class="btn favourite" id="favouriteButton" onclick="changeAction()"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в избранное">
+                                    <img src="/images/car-compare.png">
+                                </button>-->
+                                <button class="btn car-compare" id="btn-compare" onclick="compare()"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
                                     <img src="/images/car-compare.png">
                                 </button>
@@ -372,6 +366,7 @@
     let selectedUserId = "[[${ad.user_id.getUserId()}]]";
     let selectedUserName = "[[${ad.user_id.getEmail()}]]";
     let userId = "[[${user.getUserId()}]]";
+    let id = "[[${ad.getId()}]]";
 </script>
 
 <script th:src="@{/js/custom.js}"></script>
