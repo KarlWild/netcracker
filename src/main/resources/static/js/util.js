@@ -23,3 +23,17 @@ $('#favourite').submit(function (e) {
         console.log(data);
     })
 })
+
+function addToCompare() {
+    const compareButton = document.getElementById("btn-compare");
+    $.ajax({
+        type: "POST",
+        url: "/ads/" + id + "/addComparison",
+        cache: false,
+        success: function( data ) {
+            btn.style(
+                "filter: invert(8%), sepia(100%) saturate(7195%) hue-rotate(14deg) brightness(102%) contrast(105%);"
+            );
+        }
+    });
+}
