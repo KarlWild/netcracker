@@ -237,4 +237,9 @@ public class AdController {
     List<Object[]> getAllAddresses() {
         return adService.findAllAddresses();
     }
+    @GetMapping("/api/get_transport_name/{id}")
+    public @ResponseBody String getFullName(@PathVariable("id") Integer id){
+        Transport transport = transportService.findById(id).get();
+        return transport.getFullName();
+    }
 }

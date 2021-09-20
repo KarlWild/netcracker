@@ -47,11 +47,11 @@
 
 <div sec:authorize="isAuthenticated()">
     <div class="container w-100 justify-content-center" style="margin-top: 20px">
-<!--        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"-->
-<!--             class="alert alert-dismissible alert-warning">-->
-<!--            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>-->
-<!--            <strong>Данная машина продана.</strong>-->
-<!--        </div>-->
+        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"
+             class="alert alert-dismissible alert-warning">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Данная машина продана.</strong>
+        </div>
         <div th:if="${ad.user_id} == ${user}" class="alert alert-dismissible alert-info">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong th:text="'Статус объявления:'+ ${ad.status}"></strong>
@@ -63,7 +63,7 @@
 <!--        <div class="row">-->
 <!--            <div class="col d-grid gap-2">-->
 <!--                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">-->
-<!--                    <button type="submit" class="btn btn-dark">Добавить в избранное </button>-->
+<!--                    <button type="submit" class="btn btn-dark"> Добавить в избранное </button>-->
 <!--                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;-->
 <!--                </form>-->
 <!--            </div>-->
@@ -372,6 +372,7 @@
     let selectedUserId = "[[${ad.user_id.getUserId()}]]";
     let selectedUserName = "[[${ad.user_id.getEmail()}]]";
     let userId = "[[${user.getUserId()}]]";
+    let adId = "[[${ad.getId()}]]";
 </script>
 
 <script th:src="@{/js/custom.js}"></script>

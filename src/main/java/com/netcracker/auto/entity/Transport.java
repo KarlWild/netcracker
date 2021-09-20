@@ -122,4 +122,8 @@ public class Transport {
     public void setBodyTypeId(String bodyTypeId) {
         this.bodyTypeId = bodyTypeId;
     }
+
+    public String getFullName(){
+        return brand + ' ' + model + ' ' + generationName;
+    }
 }

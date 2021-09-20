@@ -5,6 +5,11 @@ let map = L.map('map', {
     zoom: 12
 });
 
+// let map_modal = L.map('map-modal', {
+//     center: [55.75, 37.61],//Moscow
+//     zoom: 12
+// });
+
 let carIcon = L.icon({
     iconUrl: '../images/map_car.png',
     // shadowUrl: 'leaf-shadow.png',
@@ -16,50 +21,37 @@ let carIcon = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 L.esri.basemapLayer('Streets').addTo(map);
-const geocoder = L.esri.Geocoding.geocodeService({
-    apikey: apiKey
-});
-
-/*let mapModal = L.map('map2', {
-    center: [55.75, 37.61],//Moscow
-    zoom: 12
-});
-
-L.esri.basemapLayer('Streets').addTo(mapModal);
-const geocoder = L.esri.Geocoding.geocodeService({
-    apikey: apiKey
-});*/
+// L.esri.basemapLayer('Streets').addTo(map_modal);
 
 function loadingaddressesOfAds(){
     $.get("http://localhost:8080/api/get_addresses",function (response){
         let addresses = response;
         for(let i = 0; i<addresses.length;i++){
-            //"AAPKef2fa5e336fd40bc8ef6e1d9cfa5f6aeuxjzVTNKmXB3tv9yJCHj-33w83iWQwWZEGFOVTvPyycgbZ1z7TthcCe-tiEgEtFs"}).city("Moscow").address(addresses[i][1])
-                //geocoder.geocode().city("Moscow").text(addresses[i][1]).run(function (err, response) {//.forStorage(false)
-            L.esri.Geocoding.geocode({apikey: apiKey}).
+            L.esri.Geocoding.geocode().
             city("Moscow").address(addresses[i][1]).run(function (err, response) {
                 if (err) {
                     console.log(err);
                     return;
                 }
-                addingPopupsOnMap(response,addresses[i][0]);
+                addingPopupsOnMap(response,addresses[i][0], addresses[i][2],addresses[i][3]);
             });
         }
     });
 }
-function addingPopupsOnMap(resp,id){
+function addingPopupsOnMap(resp,id,name, price){
     let array = resp['results'];//55.75, 37.61
     let link = "/ads/"+id;
-    L.marker([array[0].latlng.lat,array[0].latlng.lng], {
-        icon: carIcon,
-        renderer: myRenderer
-    }).addTo(map).bindPopup('<a href='+link+'>Посмотреть Объявление</a>',id);
-
-    /*L.marker([array[0].latlng.lat,array[0].latlng.lng], {
-        icon: carIcon,
-        renderer: myRenderer
-    }).addTo(mapModal).bindPopup('<a href='+link+'>Посмотреть Объявление</a>',id);*/
-
+    $.get("http://localhost:8080/api/get_transport_name/"+name,function (response){
+        let fullName = response;
+        L.marker([array[0].latlng.lat,array[0].latlng.lng], {
+            icon: carIcon,
+            renderer: myRenderer
+        }).addTo(map).bindPopup('<p>Машина: '+fullName+'</p><p>Цена: '+price+' рублей</p><a href='+link+'>Посмотреть Объявление</a>',id);
+    })
+    // L.marker([array[0].latlng.lat,array[0].latlng.lng], {
+    //     icon: carIcon,
+    //     renderer: myRenderer
+    // }).addTo(map_modal).bindPopup('<a href='+link+'>Посмотреть Объявление</a>',id);
    //  let marker = L.marker([array[0].latlng.lat,array[0].latlng.lng]).addTo(map);
    // marker.bindPopup("<b>Hello world!</b><br>I am a popup.\n"+array[0].latlng.toString()).openPopup();
 }

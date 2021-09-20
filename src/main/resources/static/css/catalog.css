@@ -132,6 +132,11 @@ td {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
+#map-modal{
+    height: 500px;
+    width: 80%;
+    margin-left: 10%;
+}
 
 .dropdown-content a {
     color: black;
@@ -146,4 +151,7 @@ td {
 .owner-btn{
     width: 98%;
     margin: 3px;
+}
+.modal-dialog{
+    max-width: 1000px;
 }
