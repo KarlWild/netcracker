@@ -99,11 +99,6 @@ public class AdController {
         return "ad/catalogAds";
     }
 
-//    @PostMapping("/ad/button")
-//    public String tmp() {
-//        return "ad/brands";
-//    }
-
     @GetMapping("/new/{id}")
     public String newAd(@PathVariable("id") Integer id, @ModelAttribute("ad") Ad ad) {
         Transport transport = transportService.findById(id).get();
@@ -161,25 +156,56 @@ public class AdController {
         return "redirect:/lk/my_ads";
     }
 
-    @PostMapping("ads/{id}/favourite")
-    public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
+    @GetMapping("ads/{id}/getButton")
+    public @ResponseBody Boolean getFavourite(@PathVariable int id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        f.setUser_id(userService.findUserByEmail(currentPrincipalName));
-        f.setAd(adService.findById(adId).get());
-        favouriteRepository.save(f);
-        return "redirect:/lk/my_ads";
+        boolean flag=true;
+        if(favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(id).get())==null){
+            flag=false;
+        }
+        return flag;
     }
 
-    //убрать из избранного
-    @PostMapping("ads/{id}/notFavourite")
-    public String deleteFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
+    @PostMapping("ads/{id}/favourite")
+    public String addFavourite(@PathVariable("id") int adId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        f=favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
-        favouriteRepository.delete(f);
-        return "redirect:/lk/favourite";
+        Favourite favourite=favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+        if(favourite==null)
+        {
+            favourite=new Favourite();
+            favourite.setUser_id(userService.findUserByEmail(currentPrincipalName));
+            favourite.setAd(adService.findById(adId).get());
+            favouriteRepository.save(favourite);
+        }
+        else {
+            favouriteRepository.delete(favourite);
+        }
+        return "redirect:/ads/{id}";
     }
+
+
+//    //добавить в избранное
+//    @PostMapping("ads/{id}/favourite")
+//    public String addFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//        f.setUser_id(userService.findUserByEmail(currentPrincipalName));
+//        f.setAd(adService.findById(adId).get());
+//        favouriteRepository.save(f);
+//        return "redirect:/lk/my_ads";
+//    }
+//
+//    //убрать из избранного
+//    @PostMapping("ads/{id}/notFavourite")
+//    public String deleteFavourite(@PathVariable("id") int adId, @ModelAttribute("favourite") Favourite f) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//        f = favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+//        favouriteRepository.delete(f);
+//        return "redirect:/lk/favourite";
+//    }
 
     //отправка на модерацию
     @PostMapping("ads/{id}/check")
