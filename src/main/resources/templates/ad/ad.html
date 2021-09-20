@@ -103,26 +103,20 @@
                     <div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">
                         <div class="container justify-content-center" style="margin-top: 20px">
                             <div class="row">
-                                <div class="col d-grid gap-2">
+                                <!--<div class="col d-grid gap-2">
                                     <button id="favouriteButton" onclick="changeAction()" class="btn btn-dark"></button>
-                                    <!--            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>-->
-                                </div>
+                                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;
+                                </div>-->
 <!--                                <div class="col d-grid gap-2">-->
 <!--                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
 <!--                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>-->
 <!--                                    </form>-->
 <!--                                </div>-->
-                                <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">
-                                    <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">
-                                        <button class="btn btn-dark btn-md" type="submit">Сравнить</button>
-                                    </form>
-                                </div>
-                                <div th:unless="${comparison.isEmpty()}" class="col d-grid gap-2">
-                                    <form th:action="'/ads/' + ${ad.id} + '/deleteComparison'" method="post">
-                                        <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>
-                                    </form>
-                                </div>
-                                <button class="btn car-compare" id="btn-compare" onclick="addToCompare()"
+                                <button class="btn favourite" id="favouriteButton" onclick="changeAction()"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в избранное">
+                                    <img id="favourite-icon">
+                                </button>
+                                <button class="btn car-compare" id="btn-compare" onclick="compare()"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
                                     <img src="/images/car-compare.png">
                                 </button>
@@ -372,7 +366,7 @@
     let selectedUserId = "[[${ad.user_id.getUserId()}]]";
     let selectedUserName = "[[${ad.user_id.getEmail()}]]";
     let userId = "[[${user.getUserId()}]]";
-    let adId = "[[${ad.getId()}]]";
+    let id = "[[${ad.getId()}]]";
 </script>
 
 <script th:src="@{/js/custom.js}"></script>
