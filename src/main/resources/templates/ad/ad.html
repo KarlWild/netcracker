@@ -99,9 +99,11 @@
                                         <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>
                                     </form>
                                 </div>
-                                <div>
-                                    <button class="btn"><i src=""></i>Compare</button>
-                                </div>
+                                <button class="btn car-compare" id="btn-compare"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
+                                    <img src="/images/car-compare.png">
+                                </button>
+                                <!--<span class="icon-compare"></span><a href="#">Compare</a><span></span>-->
                             </div>
                         </div>
                     </div>
@@ -343,16 +345,6 @@
         </div>
     </li>
 </script>
-
-<script>
-    $(document).ready(
-        function () {
-            $('.kv-ltr-theme-fas-star').rating({
-                theme: 'krajee-fas'
-            });
-        });
-</script>
-
 <script>
     let user = "[[${user.getEmail()}]]";
     selectedUser = "[[${ad.user_id}]]";
@@ -363,6 +355,7 @@
 
 <script th:src="@{/js/custom.js}"></script>
 <script th:src="@{/js/chatInAd.js}"></script>
+<script th:src="@{/js/util.js}"></script>
 
 <script>
     let btn = document.getElementById("favouriteButton");
