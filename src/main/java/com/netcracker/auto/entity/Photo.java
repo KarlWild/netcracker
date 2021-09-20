@@ -1,57 +1,21 @@
 package com.netcracker.auto.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-//sdf
-@Data
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "photo")
+@Embeddable
 public class Photo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long photoId;
-
-    @ManyToOne
-    @JoinColumn(name = "ad_id")
-    private Ad ad;
+    @NotNull
+    @Size(max = 100)
     private String fileName;
-
-    @Override
-    public String toString() {
-        return "Photo{" +
-                "photoId=" + photoId +
-                ", adId=" + ad.getId() +
-                ", fileName='" + fileName + '\'' +
-                '}';
-    }
-
-    public Long getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(Long photoId) {
-        this.photoId = photoId;
-    }
-
-    public Ad getAd() {
-        return ad;
-    }
-
-    public void setAd(Ad ad) {
-        this.ad = ad;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 }

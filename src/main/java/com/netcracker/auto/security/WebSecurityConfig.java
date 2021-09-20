@@ -1,7 +1,6 @@
 package com.netcracker.auto.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,44 +27,43 @@ import java.util.List;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     @Resource
-    private final UserDetailsService userDetailsService;
+    private final MyUserDetailsService userDetailsService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService) {
+    public WebSecurityConfig(MyUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/ads/**").permitAll()
+                .antMatchers("/", "/ads/**", "/reg*").permitAll()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/photos/**").permitAll()
                 .antMatchers("/lk/**", "/chat/**", "/comparison").authenticated()
-                .antMatchers("/h2-console/**").permitAll()//hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
+                .antMatchers("/h2-console/**").permitAll() //hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_SELLER")
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers("/ad/**").hasAnyAuthority("ROLE_SELLER")
-                .antMatchers("/new/**").hasAnyAuthority("ROLE_SELLER")
-                .antMatchers("/reg*").permitAll()
+                .antMatchers("/ad/**", "/new/**").hasAnyAuthority("ROLE_SELLER")
                 .antMatchers("/login*").permitAll().anyRequest().authenticated().and()
                 .csrf().disable().
                 formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/lk/all", true)
                 .failureUrl("/login?error=true");
-        ;
+
         http.headers().frameOptions().disable();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    public MyUserDetailsService userDetailsService() {
         return new MyUserDetailsService();
     }
 

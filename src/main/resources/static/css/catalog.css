@@ -37,6 +37,10 @@ td {
     height: 130px;
 }
 
+#map2 {
+    height: 500px;
+}
+
 .card {
     margin-top: 10px;
 }

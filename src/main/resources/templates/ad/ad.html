@@ -124,6 +124,11 @@
                                         <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>
                                     </form>
                                 </div>
+                                <button class="btn car-compare" id="btn-compare"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
+                                    <img src="/images/car-compare.png">
+                                </button>
+                                <!--<span class="icon-compare"></span><a href="#">Compare</a><span></span>-->
                             </div>
                         </div>
                     </div>
@@ -216,16 +221,12 @@
                     </table>
                 </div>
                 <div class="col-6 my-carousel">
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div id="carouselExampleControls" class="carousel slide mt-5" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-inner" style="width: 640px; height: 480px;">
-                                <div class="carousel-item"
-                                     th:each="photo, iter : ${ad.photos}"
-                                     th:classappend="${iter.index == 1}?'active'">
-                                    <1ё90-09876й    ячсмить3
-
-                                    ,0i mg class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}"/>
-                                </div>0ё
+                            <div class="carousel-item"
+                                 th:each="photo, iter : ${ad.photos}"
+                                 th:classappend="${iter.index == 0}?'active'">
+                                <img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}"/>
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -262,7 +263,8 @@
                                     <div class="form-group">
                                         <input type="hidden" class="form-control" th:field="*{author}">
                                         <input type="hidden" class="form-control" th:field="*{username}">
-                                        <label for="inputComment" class="form-label mt-4" style="font-size: 25px; font-weight: bolder">Оставить
+                                        <label for="inputComment" class="form-label mt-4"
+                                               style="font-size: 25px; font-weight: bolder">Оставить
                                             отзыв</label>
                                         <textarea class="form-control" id="inputComment" rows="4"
                                                   style="height: 125px; margin-bottom: 50px; background-color: hsl(0, 0%, 93.3%)"
@@ -315,7 +317,6 @@
                 </div> <!-- end chat -->
 
             </div> <!-- end container -->
-
             <div th:unless="${user} != ${ad.user_id}">
                 <div class="col button-container">
                     <div class="d-grid gap-2">
@@ -368,25 +369,17 @@
         </div>
     </li>
 </script>
-
-<script>
-    $(document).ready(
-        function () {
-            $('.kv-ltr-theme-fas-star').rating({
-                theme: 'krajee-fas'
-            });
-        });
-</script>
 <script>
     let user = "[[${user.getEmail()}]]";
     selectedUser = "[[${ad.user_id}]]";
     let selectedUserId = "[[${ad.user_id.getUserId()}]]";
     let selectedUserName = "[[${ad.user_id.getEmail()}]]";
     let userId = "[[${user.getUserId()}]]";
-</script>>
+</script>
 
 <script th:src="@{/js/custom.js}"></script>
 <script th:src="@{/js/chatInAd.js}"></script>
+<script th:src="@{/js/util.js}"></script>
 
 <!--<script>-->
 <!--function changeFavourite(){-->

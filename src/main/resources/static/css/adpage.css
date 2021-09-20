@@ -18,3 +18,31 @@
 .button-container{
     margin-top: 20%;
 }
+
+.carousel-item img {
+    height: 410px;
+    width: 410px;
+    object-fit: cover;
+}
+
+/*.icon-compare {
+    background: url(static/images/car-compare.png) no-repeat;
+    float: left;
+    height: 40px;
+    width: 40px;
+}*/
+
+.btn.car-compare {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+}
+.car-compare img {
+    height: 30px;
+    width: 30px;
+
+    /* change the color to red (link: https://codepen.io/sosuke/pen/Pjoqqp)
+    filter: invert(8%) sepia(100%) saturate(7195%) hue-rotate(14deg) brightness(102%) contrast(105%);*/
+}
+
+

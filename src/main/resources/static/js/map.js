@@ -4,6 +4,7 @@ let map = L.map('map', {
     center: [55.75, 37.61],//Moscow
     zoom: 12
 });
+
 let carIcon = L.icon({
     iconUrl: '../images/map_car.png',
     // shadowUrl: 'leaf-shadow.png',
@@ -18,6 +19,16 @@ L.esri.basemapLayer('Streets').addTo(map);
 const geocoder = L.esri.Geocoding.geocodeService({
     apikey: apiKey
 });
+
+/*let mapModal = L.map('map2', {
+    center: [55.75, 37.61],//Moscow
+    zoom: 12
+});
+
+L.esri.basemapLayer('Streets').addTo(mapModal);
+const geocoder = L.esri.Geocoding.geocodeService({
+    apikey: apiKey
+});*/
 
 function loadingaddressesOfAds(){
     $.get("http://localhost:8080/api/get_addresses",function (response){
@@ -43,6 +54,12 @@ function addingPopupsOnMap(resp,id){
         icon: carIcon,
         renderer: myRenderer
     }).addTo(map).bindPopup('<a href='+link+'>Посмотреть Объявление</a>',id);
+
+    /*L.marker([array[0].latlng.lat,array[0].latlng.lng], {
+        icon: carIcon,
+        renderer: myRenderer
+    }).addTo(mapModal).bindPopup('<a href='+link+'>Посмотреть Объявление</a>',id);*/
+
    //  let marker = L.marker([array[0].latlng.lat,array[0].latlng.lng]).addTo(map);
    // marker.bindPopup("<b>Hello world!</b><br>I am a popup.\n"+array[0].latlng.toString()).openPopup();
 }
