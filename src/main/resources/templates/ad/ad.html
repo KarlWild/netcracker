@@ -52,40 +52,20 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong>Данная машина продана.</strong>
         </div>
-        <div th:if="${ad.user_id} == ${user}" class="alert alert-dismissible alert-info">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong th:text="'Статус объявления:'+ ${ad.status}"></strong>
+        <div th:if="${ad.user_id} == ${user}">
+            <div th:if="${#strings.contains(ad.status, 'Ответ')}">
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <strong th:text="${ad.status}"></strong>
+                </div>
+            </div>
+            <div th:unless="${#strings.contains(ad.status, 'Ответ')}" class="alert alert-dismissible alert-info">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong th:text="'Статус объявления: '+ ${ad.status}"></strong>
+            </div>
         </div>
     </div>
 </div>
-<!--<div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">-->
-<!--    <div class="container justify-content-center" style="margin-top: 20px">-->
-<!--        <div class="row">-->
-<!--            <div class="col d-grid gap-2">-->
-<!--                <form id="favourite" th:action= "'/ads/' + ${ad.id} + '/favourite'" method="post">-->
-<!--                    <button type="submit" class="btn btn-dark"> Добавить в избранное </button>-->
-<!--                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div class="col d-grid gap-2">-->
-<!--                <form id="notFavourite" th:action= "'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
-<!--                    <button type="submit" class="btn btn-dark"> Убрать из избранного </button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div th:if="${comparison.isEmpty()}" class="col d-grid gap-2">-->
-<!--                <form th:action="'/ads/' + ${ad.id} + '/addComparison'" method="post">-->
-<!--                    <button class="btn btn-dark btn-md" type="submit">Сравнить</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div th:unless="${comparison.isEmpty()}" class="col d-grid gap-2">-->
-<!--                <form th:action="'/ads/' + ${ad.id} + '/deleteComparison'" method="post">-->
-<!--                    <button class="btn btn-dark btn-md" type="submit">Убрать из сравнения</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="container w-100 all-ad-container">
     <div class="row">
         <div class="col-8 justify-content-center ad-container">
@@ -330,7 +310,7 @@
 <script id="message-template" type="text/x-handlebars-template">
     <li class="clearfix">
         <div class="message-data align-right">
-            <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
+            <span class="message-data-time">{{time}}</span> &nbsp; &nbsp;
             <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
         </div>
         <div class="message other-message float-right">
@@ -343,7 +323,7 @@
     <li>
         <div class="message-data">
             <span class="message-data-name"><i class="fa fa-circle online"></i> {{userName}}</span>
-            <span class="message-data-time">{{time}}, Today</span>
+            <span class="message-data-time">{{time}}</span>
         </div>
         <div class="message my-message">
             {{response}}

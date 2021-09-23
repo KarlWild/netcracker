@@ -212,6 +212,7 @@ public class AdController {
     public String check(@PathVariable("id") Integer adId) {
         Ad ad = adService.findById(adId).get();
         ad.setStatus("На модерации");
+        ad.setVerified(false);
         adRepository.save(ad);
         return "redirect:/ads/{id}";
     }

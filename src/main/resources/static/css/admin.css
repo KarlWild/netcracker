@@ -1,8 +1,10 @@
 h1{
-    padding: 20px;
+    padding-left: 50px;
+    padding-top: 50px;
+    font-size: 35px;
 }
 form{
-    padding: 50px 30% 50px 50px;
+    padding: 0px 30% 50px 50px;
 }
 .reject button{
     float: right;
