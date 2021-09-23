@@ -47,7 +47,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<RolesEntity> roles;
 
-
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }

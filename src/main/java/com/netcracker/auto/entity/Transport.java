@@ -17,7 +17,6 @@ public class Transport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="transport_id")
     private Integer transportId;
-
     private String brand;
     private String model;
     @Column(name="generation_name")
@@ -34,6 +33,20 @@ public class Transport {
     private String equipment;
     @Column(name="body_type_id")
     private String bodyTypeId;
+
+    public Transport(Integer transportId, String brand, String model, String generationName, String generationYears, String bodyType, String specificationType, String specificationPower, String fuel, String equipment, String bodyTypeId, String type) {
+        this.transportId = transportId;
+        this.brand = brand;
+        this.model = model;
+        this.generationName = generationName;
+        this.generationYears = generationYears;
+        this.bodyType = bodyType;
+        this.specificationType = specificationType;
+        this.specificationPower = specificationPower;
+        this.fuel = fuel;
+        this.equipment = equipment;
+        this.bodyTypeId = bodyTypeId;
+    }
 
     public Integer getTransportId() {
         return transportId;
