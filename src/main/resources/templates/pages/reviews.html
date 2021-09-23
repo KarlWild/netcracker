@@ -47,12 +47,22 @@
             </div>
         </div>
         <div th:unless="${reviewList.size()} == 0">
-            <label class="form-label mt-4" id="label-lk">Отзывы</label>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <label class="form-label" id="label-lk">Отзывы</label>
+                </div>
+                <div class="col-8 text-end">
+                    <span>Рейтинг продавца</span>
+                    <input class="seller-rating rating-stars" th:value="*{user.seller_rating}"
+                           dir="ltr" data-size="sm"
+                           data-show-clear=false data-show-caption=true data-display-only=true>
+                </div>
+            </div>
             <table class="table table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Отправитель</th>
-                    <th scope="col">Текст</th>
+                    <th scope="col">Отзыв</th>
                     <th scope="col">Рейтинг</th>
                 </tr>
                 </thead>
@@ -69,11 +79,6 @@
                 </tr>
                 </tbody>
             </table>
-
-            <h4>Рейтинг продавца</h4>
-            <input class="seller-rating rating-stars" th:value="*{user.seller_rating}"
-                   dir="ltr" data-size="md"
-                   data-show-clear=false data-show-caption=false data-display-only=true>
         </div>
     </div>
 </div>
