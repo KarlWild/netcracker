@@ -11,8 +11,21 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/28e8f88d79.js" crossorigin="anonymous"></script>
+
+    <!-- Links -->
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/css/star-rating.css" media="all"
+          rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/star-rating.min.css}">
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/themes/krajee-fas/theme.css"
+          media="all" rel="stylesheet" type="text/css"/>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/js/star-rating.js"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.0/themes/krajee-fas/theme.js"></script>
 
     <!-- Style -->
     <link rel="stylesheet" th:href="@{/css/all.css}">
@@ -33,6 +46,9 @@
         <div class="row justify-content-around">
             <div class="container col-5 border-5 shadow-lg">
                 <label class="form-label mt-4" id="label-lk" th:text="${user.fullName}">Личный кабинет</label>
+                <input class="seller-rating rating-stars" th:value="*{user.seller_rating}"
+                       dir="ltr" data-size="sm"
+                       data-show-clear=false data-show-caption=true data-display-only=true>
                 <!--<img th:object="${user}" style="border-radius: 50%; width: 64px; margin-right: 15px;" th:src="@{${user.imagesPath}}"/>-->
                 <form action="#"
                       th:action="@{/lk/all/update}"
@@ -195,6 +211,18 @@
     </div>
 </fieldset>
 
+<script>
+    $(document).ready(function () {
+        $('.review').rating({
+            theme: 'krajee-fas',
+        });
+
+        $('.seller-rating').rating({
+            theme: 'krajee-fas',
+            step: 0.1
+        });
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

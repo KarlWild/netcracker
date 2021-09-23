@@ -47,39 +47,35 @@ public class ComparisonController {
     }
 
     @PostMapping("/ads/{id}/addComparison")
-    public String addDeleteComparison(@PathVariable("id") Integer id, Principal principal) {
+    public String addOrDeleteComparison(@PathVariable("id") Integer id, Principal principal) {
         Ad ad = adService.findById(id).orElse(null);
 
         User loggedInUser = userService.findUserByEmail(principal.getName());
         ComparisonAds comparisonAd = new ComparisonAds(ad, loggedInUser);
+        List<ComparisonAds> adsList = comparisonService.listComparisonAds(loggedInUser);
 
-        if (comparisonService.findComparisonByAdAndUser(ad, loggedInUser).isEmpty())
-            comparisonService.saveAd(comparisonAd);
-        else comparisonService.deleteComparisonByAdAndUser(ad, loggedInUser);
+        if (adsList.size() < 5) {
+            if (comparisonService.findComparisonByAdAndUser(ad, loggedInUser).isEmpty())
+                comparisonService.saveAd(comparisonAd);
+            else comparisonService.deleteComparisonByAdAndUser(ad, loggedInUser);
+        } else comparisonService.deleteComparisonByAdAndUser(ad, loggedInUser);
 
         return "redirect:/ads/" + id;
     }
 
+    @ResponseBody
     @GetMapping("ads/{id}/getComparison")
-    public @ResponseBody Boolean getComparison(@PathVariable int id, Principal principal) {
+    public Boolean getComparison(@PathVariable int id, Principal principal) {
         Ad ad = adService.findById(id).orElse(null);
         User loggedInUser = userService.findUserByEmail(principal.getName());
+        List<ComparisonAds> adsList = comparisonService.listComparisonAds(loggedInUser);
 
-        boolean flag = false;
-        if (comparisonService.findComparisonByAdAndUser(ad, loggedInUser).isPresent()) {
-            flag = true;
+        Boolean flag = Boolean.FALSE;
+        if (adsList.size() <= 5) {
+            if (comparisonService.findComparisonByAdAndUser(ad, loggedInUser).isPresent())
+                flag = Boolean.TRUE;
         }
+
         return flag;
     }
-
-    /*@PostMapping("/ads/{id}/deleteComparison")
-    public String deleteComparison(@PathVariable("id") Integer id, Principal principal) {
-        Ad ad = adService.findById(id).orElse(null);
-        User loggedInUser = userService.findUserByEmail(principal.getName());
-        *//*ComparisonAds comparisonAd = new ComparisonAds(ad, loggedInUser);*//*
-
-        comparisonService.deleteComparisonByAdAndUser(ad, loggedInUser);
-
-        return "redirect:/ads/" + id;
-    }*/
 }

@@ -23,5 +23,4 @@ public interface ComparisonRepository extends CrudRepository<ComparisonAds, Long
     Optional<ComparisonAds> findByAdAndUser(Ad ad, User user);
 
     void deleteByAdAndUser(Ad ad, User user);
-
 }

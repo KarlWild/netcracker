@@ -1,6 +1,7 @@
 package com.netcracker.auto.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,7 +19,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -26,20 +27,21 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-    @Resource
-    private final MyUserDetailsService userDetailsService;
+
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(MyUserDetailsService userDetailsService) {
+    @Autowired
+    public WebSecurityConfig(@Qualifier("myUserDetailsService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
-        auth.userDetailsService(userDetailsService);
+        //auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -60,11 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .failureUrl("/login?error=true");
 
         http.headers().frameOptions().disable();
-    }
-
-    @Bean
-    public MyUserDetailsService userDetailsService() {
-        return new MyUserDetailsService();
     }
 
     @Bean

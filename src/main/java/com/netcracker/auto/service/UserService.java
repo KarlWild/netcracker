@@ -5,15 +5,10 @@ import com.netcracker.auto.entity.User;
 import com.netcracker.auto.repository.UserRepository;
 import com.netcracker.auto.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -44,11 +39,11 @@ public class UserService implements IUserService {
 
     @Override
     public User findUserByEmail(String email) {
-        return repository.findByEmail(email);
+        return repository.findByEmail(email).orElse(null);
     }
 
     private boolean emailExist(String email) {
-        return repository.findByEmail(email) != null;
+        return repository.findByEmail(email).isPresent();
     }
 
     public void updateBalance(Double money, Long id) {

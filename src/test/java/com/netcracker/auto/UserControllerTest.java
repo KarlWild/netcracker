@@ -33,7 +33,7 @@ public class UserControllerTest {
         this.mockMvc.perform(get("/lk/all"))
                 .andDo(print())
                 .andExpect(authenticated())
-                .andExpect(xpath("//*[@id='label-lk']").string("Popkov Anton"));
+                .andExpect(content().string(containsString("Popkov Anton")));
 
     }
 }

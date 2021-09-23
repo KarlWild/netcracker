@@ -51,3 +51,7 @@ td {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.name-col {
+    align-content: center;
+}

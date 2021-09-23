@@ -31,90 +31,29 @@
     <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
 </div>
 
-<!--<table class="table table-hover" id="result-table">
-    <tbody>
-    <th:block th:each="item : ${ads}">
-        <tr scope="row" th:with="ad = ${item.ad}">
-            <td>
-                <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
-                <p th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
-                <p th:text="${ad.transport.bodyType}"></p>
-            </td>
-            <td>
-                <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
-                <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
-                <p style="margin: 5px" th:text=" Автор + '  '  + ${ad.user_id.email}"></p>
-            </td>
-            <td>
-                <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
-            </td>
-            <td>
-                <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
-            </td>
-            <td>
-                <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
-            </td>
-            <td>
-                <a class="btn btn-dark" th:href="@{/ads/{id}(id=${ad.id})}">Подробнее</a>
-            </td>
-        </tr>
-
-    </th:block>
-    </tbody>
-</table>-->
-
-<!--<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2 mt-5">
-            <div class="table-responsive compare-packages">
-                <table class="table table-bordered">
-                    <th:block th:each="item : ${ads}">
-                        <thead th:with="ad = ${item.ad}">
-                        <tr>
-                            <th width="240px">Сравнение</th>
-                            <th>
-                                <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody th:with="ad = ${item.ad}">
-                        <tr>
-                            <td>Цена</td>
-                            <td><b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b></td>
-                        </tr>
-
-                        <tr>
-                            <td>Год</td>
-                            <td><p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p></td>
-                        </tr>
-
-                        <tr>
-                            <td>Пробег</td>
-                            <td><p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p></td>
-                        </tr>
-                        </tbody>
-                    </th:block>
-                </table>
-            </div>
+<div class="container border border-secondary border-4" style="margin-top:50px;">
+    <div th:if="${ads.size()} == 0">
+        <div class="col text-center" style="margin: auto">
+            <label class="form-label mt-4" style="font-size: 35px">Пока вы не добавили сравнения  </label>
+            <i class="far fa-frown m-lg-2" style="font-size: 30px"></i>
         </div>
     </div>
-</div>-->
-
-<div class="container border border-secondary border-4" style="margin-top:50px;">
-    <div class="row">
-        <div class="col-md-2 name-col">
-            <p>Название</p>
-            <p>Цена</p>
-            <p>Кузов</p>
-            <p>Цвет</p>
-            <p>Пробег</p>
-        </div>
-        <div class="col-md-2 ad text-center" th:each="item : ${ads}" th:with="ad=${item.ad}">
-            <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
-            <p th:text="${ad.price} + ' ' + ₽"></p>
-            <p th:text="${ad.transport.bodyType}"></p>
-            <p th:text="${ad.color}"></p>
-            <p th:text="${ad.mileage} + ' ' + км"></p>
+    <div th:unless="${ads.size()} == 0">
+        <div class="row">
+            <div class="col-md-2 name-col">
+                <p>Название</p>
+                <p>Цена</p>
+                <p>Кузов</p>
+                <p>Цвет</p>
+                <p>Пробег</p>
+            </div>
+            <div class="col-md-2 ad text-center" th:each="item : ${ads}" th:with="ad=${item.ad}">
+                <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+                <p th:text="${ad.price} + ' ' + ₽"></p>
+                <p th:text="${ad.transport.bodyType}"></p>
+                <p th:text="${ad.color}"></p>
+                <p th:text="${ad.mileage} + ' ' + км"></p>
+            </div>
         </div>
     </div>
 </div>

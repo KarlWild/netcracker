@@ -16,7 +16,7 @@ public class Ad {
     @Column(name = "ad_id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transport_id")
     private Transport transport;
 
@@ -42,8 +42,12 @@ public class Ad {
     private boolean verified;
     private String status = "неактивно";
 
-    public Ad() {
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
+    @Column(name = "file_name")
+    private List<Photo> photos;
+
+    public Ad() {}
 
     public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
               String stateNumber, String vin, String sts, Integer numberOfOwners,
@@ -66,11 +70,6 @@ public class Ad {
         this.verified = verified;
         this.status = status;
     }
-
-    @ElementCollection
-    @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
-    @Column(name = "file_name")
-    private List<Photo> photos;
 
     public Integer getId() {
         return id;
