@@ -9,6 +9,7 @@
 </head>
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
+<div class="form-group" style="padding-top:20px">
 <h2 class="h2_style">Выбор поколения <p th:text="${brand + ' ' + model}"></p></h2>
 <div style="width: 60%; font-family:Arial, Verdana, sans-serif; margin-top: 20px; margin:0 auto;">
 
@@ -18,7 +19,7 @@
            th:href="@{{model}/{generation}(model=${model.toString()}, generation=${generation.value})}">
         </a>
     </li>
-
+</div>
 </div>
 </body>
 </html>
