@@ -59,10 +59,10 @@ public class UserController {
                               @RequestParam("image") MultipartFile multipartFile) throws IOException {
         User loggedUser = userService.findUserByEmail(principal.getName());
         if (!multipartFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(loggedUser.getEmail().concat(".jpg")));
             user.setImages(fileName);
             //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
-            String uploadDir = "user-photos/" + loggedUser.getUserId();
+            String uploadDir = "user-photos/";
 
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         } else {
