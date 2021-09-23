@@ -33,4 +33,5 @@ public interface AdRepository extends CrudRepository<Ad, Integer>, JpaSpecificat
     /*@Query("select t from Ad t where t.id = :ad_id")
     List<Ad> findFavourite(@Param("ad_id") Favourite ad_id);*/
 
+
 }

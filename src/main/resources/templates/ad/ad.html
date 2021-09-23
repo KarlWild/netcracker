@@ -90,39 +90,26 @@
     <div class="row">
         <div class="col-8 justify-content-center ad-container">
             <div class="row justify-content-between">
-                <div class="col">
+                <div class="col-5 text-wrap">
                     <h2 th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></h2>
                 </div>
                 <div class="col">
-                    <h2 style="text-align: right" th:text="${ad.price} + ' ' + '&#8381;'"></h2>
+                    <button class="btn favourite" id="favouriteButton" onclick="changeAction()"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в избранное">
+                        <img id="favourite-icon">
+                    </button>
+                    <button class="btn car-compare" id="btn-compare" onclick="compare()"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
+                        <img src="/images/car-compare.png">
+                    </button>
+                </div>
+                <div class="col text-end">
+                    <h2 th:text="${ad.price} + ' ' + '&#8381;'"></h2>
                 </div>
             </div><!-- НАЗВАНИЕ -->
             <div class="row">
                 <div class="col-6">
                     <hr>
-                    <div sec:authorize="isAuthenticated()" th:unless="${user.email} == ${ad.user_id.email}">
-                        <div class="container justify-content-center" style="margin-top: 20px">
-                            <div class="row">
-                                <!--<div class="col d-grid gap-2">
-                                    <button id="favouriteButton" onclick="changeAction()" class="btn btn-dark"></button>
-                                    &lt;!&ndash;            <button id="oldButton" type="submit" onclick="changeAction()" class="btn btn-dark"> Добавить в избранное </button>&ndash;&gt;
-                                </div>-->
-<!--                                <div class="col d-grid gap-2">-->
-<!--                                    <form id="notFavourite" th:action="'/ads/' + ${ad.id} + '/notFavourite'" method="post">-->
-<!--                                        <button type="submit" class="btn btn-dark"> Убрать из избранного</button>-->
-<!--                                    </form>-->
-<!--                                </div>-->
-                                <button class="btn favourite" id="favouriteButton" onclick="changeAction()"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в избранное">
-                                    <img id="favourite-icon">
-                                </button>
-                                <button class="btn car-compare" id="btn-compare" onclick="compare()"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Добавить в сравнение">
-                                    <img src="/images/car-compare.png">
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     <label style="font-size: 25px; font-weight: bolder">Характеристики</label>
                     <table width="100%" cellspacing="0" cellpadding="0">
                         <tr>
@@ -188,7 +175,6 @@
                                 <p style="margin: 5px" th:text="${ad.numberOfOwners}"></p>
                             </td>
                         </tr>
-
 
                         <tr>
                             <td width="40%" valign="top" style="color: grey">
@@ -260,8 +246,6 @@
                                         <textarea class="form-control" id="inputComment" rows="4"
                                                   style="height: 125px; margin-bottom: 50px; background-color: hsl(0, 0%, 93.3%)"
                                                   placeholder="Напишите отзыв" th:field="*{comment}"></textarea>
-                                        <!--<input type="text" class="form-control" id="inputComment"
-                                               aria-describedby="commentHelp" placeholder="Оставьте отзыв" th:field="*{comment}">-->
                                     </div>
                                 </div>
                                 <div class="col-4" id="stars" style="margin-top: 70px">
@@ -312,22 +296,28 @@
                 <div class="col button-container">
                     <div class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/remove'" method="post">
-                            <button class="btn btn-danger btn-block owner-btn" type="submit">Удалить</button>
+                            <button class="btn btn-primary btn-block owner-btn" type="submit" style="color: #d9534f">
+                                Удалить
+                            </button>
                         </form>
                     </div>
                     <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
-                        <a class="btn btn-warning btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>
+                        <a class="btn btn-primary btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'"
+                           style="color: #f0ad4e">Редактировать</a>
                     </div>
 
                     <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">
-                            <button class="btn btn-info btn-block owner-btn" type="submit">Отправить на модерацию
+                            <button class="btn btn-primary btn-block owner-btn" type="submit" style="color:#1f9bcf">
+                                Отправить на модерацию
                             </button>
                         </form>
                     </div>
                     <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                         <form th:action="'/ads/' + ${ad.id} + '/sold'" method="post">
-                            <button class="btn btn-success btn-block owner-btn" type="submit">Продано</button>
+                            <button class="btn btn-primary btn-block owner-btn" type="submit" style="color: #4bbf73">
+                                Продано
+                            </button>
                         </form>
                     </div>
                 </div>
