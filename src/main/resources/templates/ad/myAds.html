@@ -98,22 +98,28 @@
                             <div class="dropdown-menu" style="">
                                 <div class="d-grid gap-2">
                                     <form th:action="'/ads/' + ${ad.id} + '/remove'" method="post">
-                                        <button class="btn btn-danger btn-block owner-btn" type="submit">Удалить</button>
-                                    </form>
-                                </div>
-                                <div class="d-grid gap-2">
-                                    <a class="btn btn-warning btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'">Редактировать</a>
-                                </div>
-
-                                <div class="d-grid gap-2">
-                                    <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">
-                                        <button class="btn btn-info btn-block owner-btn" type="submit">Отправить на модерацию
+                                        <button class="btn btn-primary btn-block owner-btn" type="submit" style="color: #d9534f">
+                                            Удалить
                                         </button>
                                     </form>
                                 </div>
-                                <div class="d-grid gap-2">
+                                <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
+                                    <a class="btn btn-primary btn-block owner-btn" th:href="'/ads/' + ${ad.id} + '/edit'"
+                                       style="color: #f0ad4e">Редактировать</a>
+                                </div>
+
+                                <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
+                                    <form th:action="'/ads/' + ${ad.id} + '/check'" method="post">
+                                        <button class="btn btn-primary btn-block owner-btn" type="submit" style="color:#1f9bcf">
+                                            Отправить на модерацию
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if=" ${ad.status!='На модерации'}" class="d-grid gap-2">
                                     <form th:action="'/ads/' + ${ad.id} + '/sold'" method="post">
-                                        <button class="btn btn-success btn-block owner-btn" type="submit">Продано</button>
+                                        <button class="btn btn-primary btn-block owner-btn" type="submit" style="color: #4bbf73">
+                                            Продано
+                                        </button>
                                     </form>
                                 </div>
 <!--                                <a class="dropdown-item" th:href="'/ads/' + ${ad.id} + '/remove'" onclick="this.parentNode.submit()">Удалить</a>-->

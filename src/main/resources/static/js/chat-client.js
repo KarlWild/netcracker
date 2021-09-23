@@ -69,7 +69,7 @@ function selectUser(id) {
         $('#selectedUserId').html('');
         let preview = document.getElementById("selectedUserId");
         preview.setAttribute("chatIdAttr", selectedUser.userId);
-        $('#selectedUserId').append('Chat with ' + selectedUser.last_name + " " + selectedUser.first_name);
+        $('#selectedUserId').append('Чат с ' + selectedUser.last_name + " " + selectedUser.first_name);
         $.get(url + "/chat/messages?authedUser="+userId+"&toUser="+selectedUser.userId, function (response){
            let messages = response;
            for(let i = 0; i<messages.length;i++){

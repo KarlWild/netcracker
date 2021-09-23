@@ -10,11 +10,29 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
-
+<style>
+    .label-lk {
+        font-size: 35px;
+        padding-left: 300px;
+        padding-right: 100px;
+        width: 1000px;
+    }
+</style>
 </head>
 <body>
 <div th:replace="fragments/navbar :: header-admin"/>
-
+<!--<div class="row mt-4">-->
+<!--    <div class="col-4">-->
+<!--        <label class="form-label" id="label-lk">Объявления на модерации</label>-->
+<!--    </div>-->
+<!--</div>-->
+<div th:if="${admin.size()} == 0" class="container-fluid">
+    <label class="col-form-label mt-2 label-lk">Ничего не найдено</label>
+</div>
+<div th:unless="${admin.size()} == 0" class="container-fluid">
+    <label class="col-form-label mt-2 label-lk">Найдено <span th:text="${ads.size()}">size</span>
+        объявлений</label>
+</div>
 <div style="width: 70%; font-family: Arial,Helvetica Neue,Helvetica, sans-serif; margin: 30px auto 0;">
     <table class="table table-hover">
         <tbody>
