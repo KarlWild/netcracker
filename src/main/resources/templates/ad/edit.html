@@ -14,54 +14,106 @@
     <!-- Style -->
     <link rel="stylesheet" th:href="@{/css/catalog.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <title>Изменение объявления</title>
+    <title>Изменение данных</title>
 </head>
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
 
-<form method="POST">
+<div class="form-group" style="padding-left: 20px; padding-right: 100px;">
+    <label class="form-label mt-4" id="label-login" style="font-size: 35px">Измените информацию о Вашей машине </label>
+    <form method="POST">
 
     <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId" />
-    <label for="address">Введите адрес: </label>
-    <input type="text" th:field="*{ad.address}" id="address"/>
-    <br/>
-    <label for="color">Выберите цвет: </label>
-    <input type="text" th:field="*{ad.color}" id="color"/>
-    <br/>
-    <label for="description">Описание: </label>
-    <input type="text" th:field="*{ad.description}" id="description"/>
-    <br/>
-    <label for="driveUnit">Выберите привод машины</label>
-    <input type="text" th:field="*{ad.driveUnit}" id="driveUnit"/>
-    <br/>
-    <label for="mileage">Введите пробег: </label>
-    <input type="text" th:field="*{ad.mileage}" id="mileage"/>
-    <br/>
-    <label for="numberOfOwners">Введите количество владельцев: </label>
-    <input type="text" th:field="*{ad.numberOfOwners}" id="numberOfOwners"/>
-    <br/>
-    <label for="price">Введите цену: </label>
-    <input type="text" th:field="*{ad.price}" id="price"/>
-    <br/>
-    <label for="stateNumber">Введите номер машины: </label>
-    <input type="text" th:field="*{ad.stateNumber}" id="stateNumber"/>
-    <br/>
-    <label for="sts">Введите СТС: </label>
-    <input type="text" th:field="*{ad.sts}" id="sts"/>
-    <br/>
-    <label for="vin">Введите ВИН: </label>
-    <input type="text" th:field="*{ad.vin}" id="vin"/>
-    <br/>
-    <label for="yearOfIssue">Введите дату выпуска: </label>
-    <input type="text" th:field="*{ad.yearOfIssue}" id="yearOfIssue"/>
-    <br/>
-    <input type="hidden" th:value="${ad.getStatus()}" th:name="status" />
-    <input type="hidden" th:value="${ad.isVerified()}" th:name="verified" />
-
-
-    <input type="submit" value="Изменить "/>
-
-</form>
-<!--    </div>-->
+        <div class="form-group row">
+        <label for="address" class="col-xs-2 col-form-label" >Введите адрес: </label>
+            <div class="col-sm-5">
+            <input class="form-control" type="text" th:field="*{ad.address}" id="address"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="color" class="col-xs-2 col-form-label">Выберите цвет</label>
+            <div class="col-sm-5" id="color">
+                <!--                <input class="form-control" id="color">-->
+                <select class="form-control" th:field="*{ad.color}">
+                    <option th:value="Красный"> Красный </option>
+                    <option th:value="Белый"> Белый </option>
+                    <option th:value="Чёрный"> Чёрный </option>
+                    <option th:value="Серый"> Серый </option>
+                    <option th:value="Жёлтый"> Жёлтый </option>
+                    <option th:value="Синий"> Синий </option>
+                    <option th:value="Зелёный"> Зелёный </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-xs-2 col-form-label">Описание</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="text" th:field="*{ad.description}" id="description">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="driveUnit" class="col-xs-2 col-form-label">Выберите привод машины</label>
+            <div class="col-sm-5" id="driveUnit">
+                <select class="form-control" th:field="*{ad.driveUnit}">
+                    <option th:value="Передний"> Передний </option>
+                    <option th:value="Задний"> Задний </option>
+                    <option th:value="Полный"> Полный </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="mileage" class="col-xs-2 col-form-label">Введите пробег</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="number" min="0" th:field="*{ad.mileage}" id="mileage">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="numberOfOwners" class="col-xs-2 col-form-label">Введите количество владельцев</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="number"  min="0" th:field="*{ad.numberOfOwners}" id="numberOfOwners">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="price" class="col-xs-2 col-form-label">Введите цену</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="number" min="0" th:field="*{ad.price}" id="price">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="stateNumber" class="col-xs-2 col-form-label">Введите номер машины</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="text" th:field="*{ad.stateNumber}" id="stateNumber">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sts" class="col-xs-2 col-form-label">Введите СТС</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="text" th:field="*{ad.sts}" id="sts">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="vin" class="col-xs-2 col-form-label">Введите ВИН</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="number" min="0" th:field="*{ad.vin}" id="vin"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="yearOfIssue" class="col-xs-2 col-form-label">Введите дату выпуска</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="date" th:field="*{ad.yearOfIssue}" id="yearOfIssue"/>
+            </div>
+        </div>
+        <input type="hidden" th:value="${ad.getStatus()}" th:name="status" />
+        <input type="hidden" th:value="${ad.isVerified()}" th:name="verified" />
+        <div class="form-group row">
+            <div class="col-sm-5">
+                <input class="btn btn-dark" type="submit" value="Изменить"/>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
