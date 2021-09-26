@@ -114,8 +114,13 @@ public class AdController {
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
         adRepository.save(ad);
-        return "ad/myAds";
+        return "redirect:/lk/my_ads";
     }
+
+    /*@GetMapping("/ad/created/{id}")
+    public String method(@PathVariable int id){
+        return "redirect:ads/{id}(id=ad.id)";
+    }*/
 
     @GetMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int id, Model model) {
