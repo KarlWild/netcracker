@@ -47,7 +47,7 @@ public class Ad {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
     @Column(name = "file_name")
-    private List<Photo> photos = List.of(new Photo("nophoto.jpg"));
+    private List<Photo> photos;
 
     public Ad() {}
 

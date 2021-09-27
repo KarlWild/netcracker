@@ -4,16 +4,21 @@ import com.netcracker.auto.entity.*;
 import com.netcracker.auto.repository.AdRepository;
 import com.netcracker.auto.repository.FavouriteRepository;
 import com.netcracker.auto.service.*;
+import com.netcracker.auto.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -107,14 +112,27 @@ public class AdController {
     }
 
     @PostMapping("/ad/create")
-    public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
+    public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad,
+                         @RequestParam("image") MultipartFile multipartFile) throws IOException {
         Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
+
+        if (!multipartFile.isEmpty()) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            ad.setPhotos(List.of(new Photo(fileName)));
+            //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
+            String uploadDir = "user-photos/";
+
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+
         adRepository.save(ad);
-        return "redirect:/ads/"+ad.getId();
+        return "redirect:/ads/" + ad.getId();
+
+
     }
 
     @GetMapping("ads/{id}/edit")
@@ -122,7 +140,7 @@ public class AdController {
         Ad ad = adService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-       ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
+        ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
 
         List<Ad> ads = new ArrayList<>();
 
@@ -157,12 +175,13 @@ public class AdController {
     }
 
     @GetMapping("ads/{id}/getButton")
-    public @ResponseBody Boolean getFavourite(@PathVariable int id){
+    public @ResponseBody
+    Boolean getFavourite(@PathVariable int id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        boolean flag=true;
-        if(favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(id).get())==null){
-            flag=false;
+        boolean flag = true;
+        if (favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(id).get()) == null) {
+            flag = false;
         }
         return flag;
     }
@@ -171,15 +190,13 @@ public class AdController {
     public String addFavourite(@PathVariable("id") int adId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        Favourite favourite=favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
-        if(favourite==null)
-        {
-            favourite=new Favourite();
+        Favourite favourite = favouriteRepository.findFavourite(userService.findUserByEmail(currentPrincipalName), adService.findById(adId).get());
+        if (favourite == null) {
+            favourite = new Favourite();
             favourite.setUser_id(userService.findUserByEmail(currentPrincipalName));
             favourite.setAd(adService.findById(adId).get());
             favouriteRepository.save(favourite);
-        }
-        else {
+        } else {
             favouriteRepository.delete(favourite);
         }
         return "redirect:/ads/{id}";
@@ -238,8 +255,10 @@ public class AdController {
     List<Object[]> getAllAddresses() {
         return adService.findAllAddresses();
     }
+
     @GetMapping("/api/get_transport_name/{id}")
-    public @ResponseBody String getFullName(@PathVariable("id") Integer id){
+    public @ResponseBody
+    String getFullName(@PathVariable("id") Integer id) {
         Transport transport = transportService.findById(id).get();
         return transport.getFullName();
     }

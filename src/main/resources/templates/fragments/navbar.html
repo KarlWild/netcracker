@@ -86,7 +86,8 @@
             </ul>
             <th:block sec:authorize="isAuthenticated()">
                 <img th:src="'/user-photos/' + ${#authentication.getPrincipal().getUsername()} + '.jpg'"
-                     style="border-radius: 50%; width: 64px; margin-right: 15px;"/>
+                     style="border-radius: 50%; width: 64px; margin-right: 15px;"
+                     onerror="this.onerror=null;this.src='/user-photos/nophoto.jpg';"/>
                 <!--<img th:object="${user}" style="border-radius: 50%; width: 64px; margin-right: 15px;" th:src="@{${user.imagesPath}}"/>-->
                 <div class="btn-group" role="group">
                     <a class="btn btn-info" th:href="@{/lk/all}" sec:authentication="name">Name</a>
@@ -143,5 +144,19 @@
         </div>
     </div>
 </nav>
+
+<script>
+    const image = document.querySelector('img');
+
+    console.log(image.getAttribute('src'));
+
+    function replaceEmptySrc(image) {
+        if (image.getAttribute('src') === '') {
+            image.src = '/user-photos/nophoto.jpg';
+        }
+    }
+
+    replaceEmptySrc(image);
+</script>
 </body>
 </html>

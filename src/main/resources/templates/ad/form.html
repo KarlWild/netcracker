@@ -21,7 +21,11 @@
 
 <div class="form-group" style="padding-left: 20px; padding-right: 100px;">
     <label class="form-label mt-4" id="label-login" style="font-size: 35px">Заполните информацию о Вашей машине </label>
-    <form th:method="POST" th:action="@{/ad/create}" th:object="${ad}">
+    <form th:method="POST"
+          th:action="@{/ad/create}"
+          th:object="${ad}"
+          enctype="multipart/form-data">
+
         <input type="hidden" th:value="${ad.transport.getTransportId()}" th:name="transportId"/>
         <div class="form-group row">
             <label for="address" class="col-xs-2 col-form-label">Введите адрес</label>
@@ -32,15 +36,15 @@
         <div class="form-group row">
             <label for="color" class="col-xs-2 col-form-label">Выберите цвет</label>
             <div class="col-sm-5" id="color">
-<!--                <input class="form-control" id="color">-->
+                <!--                <input class="form-control" id="color">-->
                 <select class="form-control" th:field="*{color}">
-                    <option th:value="Красный"> Красный </option>
-                    <option th:value="Белый"> Белый </option>
-                    <option th:value="Чёрный"> Чёрный </option>
-                    <option th:value="Серый"> Серый </option>
-                    <option th:value="Жёлтый"> Жёлтый </option>
-                    <option th:value="Синий"> Синий </option>
-                    <option th:value="Зелёный"> Зелёный </option>
+                    <option th:value="Красный"> Красный</option>
+                    <option th:value="Белый"> Белый</option>
+                    <option th:value="Чёрный"> Чёрный</option>
+                    <option th:value="Серый"> Серый</option>
+                    <option th:value="Жёлтый"> Жёлтый</option>
+                    <option th:value="Синий"> Синий</option>
+                    <option th:value="Зелёный"> Зелёный</option>
                 </select>
             </div>
         </div>
@@ -54,9 +58,9 @@
             <label for="driveUnit" class="col-xs-2 col-form-label">Выберите привод машины</label>
             <div class="col-sm-5" id="driveUnit">
                 <select class="form-control" th:field="*{driveUnit}">
-                    <option th:value="Передний"> Передний </option>
-                    <option th:value="Задний"> Задний </option>
-                    <option th:value="Полный"> Полный </option>
+                    <option th:value="Передний"> Передний</option>
+                    <option th:value="Задний"> Задний</option>
+                    <option th:value="Полный"> Полный</option>
                 </select>
             </div>
         </div>
@@ -69,7 +73,7 @@
         <div class="form-group row">
             <label for="numberOfOwners" class="col-xs-2 col-form-label">Введите количество владельцев</label>
             <div class="col-sm-5">
-                <input class="form-control" type="number"  min="0" th:field="*{numberOfOwners}" id="numberOfOwners">
+                <input class="form-control" type="number" min="0" th:field="*{numberOfOwners}" id="numberOfOwners">
             </div>
         </div>
         <div class="form-group row">
@@ -102,8 +106,13 @@
                 <input class="form-control" type="date" th:field="*{yearOfIssue}" id="yearOfIssue"/>
             </div>
         </div>
-        <input type="hidden" th:value="${ad.getStatus()}" th:name="status" />
-        <input type="hidden" th:value="${ad.isVerified()}" th:name="verified" />
+        <div class="form-group">
+            <label for="image" class="form-label mt-4">Загрузить фото</label>
+            <input class="form-control" type="file" id="image" name="image" title=" "
+                   accept="image/png, image/jpeg"/>
+        </div>
+        <input type="hidden" th:value="${ad.getStatus()}" th:name="status"/>
+        <input type="hidden" th:value="${ad.isVerified()}" th:name="verified"/>
         <div class="form-group row">
             <div class="col-sm-5">
                 <input class="btn btn-dark" type="submit" value="Создать"/>
