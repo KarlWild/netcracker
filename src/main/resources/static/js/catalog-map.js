@@ -1,8 +1,7 @@
-const apiKey ="AAPK41e2df5b09f24f1fb7d09a8b29b71552G6LcxcbxNpObN-BHLepUcB-LQK2vm5y0Op9ijhvsFjztrUO4ocBEP5z8s1Xsz0iy";
 let myRenderer = L.canvas({ padding: 0.5 });
 let map = L.map('map', {
     center: [55.75, 37.61],//Moscow
-    zoom: 12
+    zoom: 11
 });
 
 let map_modal = L.map('map-modal', {
@@ -22,6 +21,15 @@ let carIcon = L.icon({
 });
 L.esri.basemapLayer('Streets').addTo(map);
 L.esri.basemapLayer('Streets').addTo(map_modal);
+
+function openModal(){
+    $('#map-modal').on('shown.bs.modal', function(event) {
+        print("123");
+        map_modal.invalidateSize();
+        print("321");
+    });
+}
+
 
 function loadingaddressesOfAds(){
     $.get("http://localhost:8080/api/get_addresses",function (response){

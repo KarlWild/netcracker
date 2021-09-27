@@ -125,9 +125,8 @@
                 <div class="card bg-secondary">
                     <div class="card-body">
                         <div id="map"></div>
-
                         <!-- Button trigger modal -->
-                        <button type="button" id="btn-modal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Открыть</button>
+                        <button type="button" id="btn-modal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal()">Открыть</button>
                     </div>
                 </div>
 
@@ -148,6 +147,11 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    $('#map-modal').on('shown.bs.modal', function(event) {
+                        map_modal.invalidateSize();
+                    });
+                </script>
                 <script th:src="@{/js/catalog-map.js}"></script>
             </div>
         </div>

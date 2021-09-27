@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
     <!-- Style -->
+    <script src="https://kit.fontawesome.com/28e8f88d79.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/catalog.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <title>Мои объявления</title>
@@ -19,7 +20,7 @@
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
 
-<div class="form-group" style="padding-top:20px">
+<div class="form-group" style="padding-top:15%">
 <div class="container">
     <div th:if="${user.size()} == 0">
         <div class="col text-center" style="margin: auto">

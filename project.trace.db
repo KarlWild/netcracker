@@ -41701,3 +41701,7 @@ update ad set address=?, color=?, description=?, drive_unit=?, mileage=?, number
 org.h2.jdbc.JdbcSQLDataException: Значение слишком длинное для поля "STATUS VARCHAR(50)": "STRINGDECODE('\n\u041e\u0442\u0432\u0435\u0442 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0... (75)"
 Value too long for column "STATUS VARCHAR(50)": "STRINGDECODE('\n\u041e\u0442\u0432\u0435\u0442 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0... (75)"; SQL statement:
 update ad set address=?, color=?, description=?, drive_unit=?, mileage=?, number_of_owners=?, price=?, state_number=?, status=?, sts=?, transport_id=?, user_id=?, verified=?, vin=?, year_of_issue=? where ad_id=? [22001-200]
+2021-09-26 14:12:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Значение слишком длинное для поля "STATUS VARCHAR(50)": "STRINGDECODE('\n\u041e\u0442\u0432\u0435\u0442 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0... (55)"
+Value too long for column "STATUS VARCHAR(50)": "STRINGDECODE('\n\u041e\u0442\u0432\u0435\u0442 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0... (55)"; SQL statement:
+update ad set address=?, color=?, description=?, drive_unit=?, mileage=?, number_of_owners=?, price=?, state_number=?, status=?, sts=?, transport_id=?, user_id=?, verified=?, vin=?, year_of_issue=? where ad_id=? [22001-200]
