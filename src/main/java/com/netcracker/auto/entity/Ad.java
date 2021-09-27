@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -45,7 +47,7 @@ public class Ad {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
     @Column(name = "file_name")
-    private List<Photo> photos;
+    private List<Photo> photos = List.of(new Photo("nophoto.jpg"));
 
     public Ad() {}
 

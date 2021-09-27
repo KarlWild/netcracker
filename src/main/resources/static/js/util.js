@@ -24,17 +24,17 @@ $('#favourite').submit(function (e) {
     })
 })
 
-function compare() {
+function compare(id) {
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/ads/" + id + "/addComparison",
     })
         .done(function () {
-            drawCompare();
+            drawCompare(id);
         });
 }
 
-function drawCompare() {
+function drawCompare(id) {
     let compareButton = document.getElementById("btn-compare");
     let url = "http://localhost:8080/ads/" + id + "/getComparison";
     $.get(url, function (response) {
@@ -42,8 +42,8 @@ function drawCompare() {
             compareButton.style["filter"] = "invert(8%) sepia(100%) saturate(7195%) hue-rotate(14deg) brightness(102%) contrast(105%)";
             compareButton.title = "Убрать из сравнения";
         } else {
-            compareButton.title = "Добавить в сравнения";
             compareButton.style["filter"] = "none";
+            compareButton.title = "Добавить в сравнения";
         }
     });
 }
