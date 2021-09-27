@@ -180,7 +180,10 @@
                 <div class="col-6 my-carousel">
                     <div id="carouselExampleControls" class="carousel slide mt-5" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item"
+                            <div th:if="${ad.photos.isEmpty()}" class="carousel-item active">
+                                <img class="d-block w-100" th:src="@{'/photos/nophoto.jpg'}"/>
+                            </div>
+                            <div th:unless="${ad.photos.isEmpty()}" class="carousel-item"
                                  th:each="photo, iter : ${ad.photos}"
                                  th:classappend="${iter.index == 0}?'active'">
                                 <img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}"/>

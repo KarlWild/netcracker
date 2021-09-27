@@ -114,13 +114,8 @@ public class AdController {
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
         adRepository.save(ad);
-        return "redirect:/lk/my_ads";
+        return "redirect:/ads/"+ad.getId();
     }
-
-    /*@GetMapping("/ad/created/{id}")
-    public String method(@PathVariable int id){
-        return "redirect:ads/{id}(id=ad.id)";
-    }*/
 
     @GetMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int id, Model model) {
@@ -226,7 +221,7 @@ public class AdController {
     @PostMapping("ads/{id}/sold")
     public String sold(@PathVariable("id") Integer adId) {
         Ad ad = adService.findById(adId).get();
-        ad.setStatus(" продано ");
+        ad.setStatus(" Продано ");
         adRepository.save(ad);
         return "redirect:/lk/my_ads";
     }

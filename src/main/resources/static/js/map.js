@@ -2,7 +2,7 @@ const apiKey ="AAPK41e2df5b09f24f1fb7d09a8b29b71552G6LcxcbxNpObN-BHLepUcB-LQK2vm
 let myRenderer = L.canvas({ padding: 0.5 });
 let map = L.map('map', {
     center: [55.75, 37.61],//Moscow
-    zoom: 12
+    zoom: 10
 });
 
 // let map_modal = L.map('map-modal', {
