@@ -30,7 +30,7 @@
         <div class="form-group row">
             <label for="address" class="col-xs-2 col-form-label">Введите адрес</label>
             <div class="col-sm-5">
-                <input class="form-control" type="text" th:name="*{address}" id="address">
+                <input class="form-control" type="text" th:field="*{address}" id="address">
             </div>
         </div>
         <div class="form-group row">
@@ -106,10 +106,12 @@
                 <input class="form-control" type="date" th:field="*{yearOfIssue}" id="yearOfIssue"/>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
             <label for="image" class="form-label mt-4">Загрузить фото</label>
-            <input class="form-control" type="file" id="image" name="image" title=" "
-                   accept="image/png, image/jpeg"/>
+            <div class="col-sm-5">
+                <input class="form-control" type="file" id="image" name="image" title=" "
+                       accept="image/png, image/jpeg" multiple/>
+            </div>
         </div>
         <input type="hidden" th:value="${ad.getStatus()}" th:name="status"/>
         <input type="hidden" th:value="${ad.isVerified()}" th:name="verified"/>

@@ -16,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 @Controller
@@ -65,7 +62,6 @@ public class AdController {
         if (principal != null)
             isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
         else isAdInComparison = Optional.of(new ComparisonAds());
-
         model.addAttribute("user", loggedInUser);
         model.addAttribute("ad", ad);
         model.addAttribute("comparison", isAdInComparison);
@@ -113,23 +109,25 @@ public class AdController {
 
     @PostMapping("/ad/create")
     public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad,
-                         @RequestParam("image") MultipartFile multipartFile) throws IOException {
+                         @RequestParam("image") MultipartFile[] multipartFile) throws IOException {
         Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
 
-        if (!multipartFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            ad.setPhotos(List.of(new Photo(fileName)));
-            //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
+        //if (!multipartFile.isEmpty()) {
+        if (multipartFile.length!=0) {
             String uploadDir = "user-photos/";
-
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            for(MultipartFile a : multipartFile) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(a.getOriginalFilename()));
+                ad.setPhotos(fileName);
+                //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
+                FileUploadUtil.saveFile(uploadDir, fileName, a);
+            }
         }
 
-        adRepository.save(ad);
+        adService.saveAd(ad);
         return "redirect:/ads/" + ad.getId();
 
 

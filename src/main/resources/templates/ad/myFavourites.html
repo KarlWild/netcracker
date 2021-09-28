@@ -20,10 +20,10 @@
 <body>
 <div th:replace="fragments/navbar :: header-lk"/>
 
-<div class="form-group" style="padding-top:15%">
+<div class="form-group" style="padding-top:20px">
 <div class="container">
     <div th:if="${user.size()} == 0">
-        <div class="col text-center" style="margin: auto">
+        <div class="col text-center" style="margin: auto; padding-top:15%">
             <label class="form-label mt-4" style="font-size: 35px">Пока вы не добавили избранное </label>
             <i class="far fa-frown m-lg-2" style="font-size: 30px"></i>
         </div>

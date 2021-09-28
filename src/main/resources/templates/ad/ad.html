@@ -186,7 +186,7 @@
                             <div th:unless="${ad.photos.isEmpty()}" class="carousel-item"
                                  th:each="photo, iter : ${ad.photos}"
                                  th:classappend="${iter.index == 0}?'active'">
-                                <img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}"/>
+                                <img class="d-block w-100" th:src="@{${'/user-photos/' + photo.fileName}}"/>
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -346,61 +346,5 @@
 <script th:src="@{/js/chatInAd.js}"></script>
 <script th:src="@{/js/util.js}"></script>
 <script th:src="@{/js/favourite.js}"></script>
-
-<!--<script>-->
-<!--function changeFavourite(){-->
-<!--    let btn=document.getElementById(favouriteButton);-->
-<!--    if(btn.text==="Добавить в избранное"){-->
-<!--        $.ajax({-->
-<!--            url:"'/ads/' + ${ad.id} + '/favourite'",-->
-<!--            type:"GET",-->
-<!--            // success: function () {-->
-<!--            //     doucment.location="ad.html";-->
-<!--            //     btn.innerText="Убрать изизбранного"-->
-<!--            // },-->
-<!--            // error: function (result) {-->
-<!--            //     console.log()-->
-<!--            // }-->
-<!--        }).done(function (data) {-->
-<!--            -->
-<!--        })-->
-<!--    }-->
-<!--}-->
-<!--</script>-->
-
-<!--<script>-->
-<!--    let btn = document.getElementById("favouriteButton");-->
-<!--    $('#favourite').submit(function (e) {-->
-<!--        btn.innerHTML="Добавлено";-->
-<!--        btn.disabled=true;-->
-<!--        e.preventDefault();-->
-<!--        $.ajax({-->
-<!--            url: $(this).attr('action'),-->
-<!--            type: $(this).attr('method'),-->
-<!--            cache: false,-->
-<!--            processData: false-->
-<!--        }).done(function (data) {-->
-<!--            console.log(data);-->
-<!--        })-->
-<!--    })-->
-<!--</script>-->
-
-<!--<script>-->
-<!--    $('#notFavourite').submit(function (e) {-->
-<!--        btn.innerHTML="Добавить в избранное";-->
-<!--        btn.disabled=false;-->
-<!--        e.preventDefault();-->
-<!--        $.ajax({-->
-<!--            url: $(this).attr('action'),-->
-<!--            type: $(this).attr('method'),-->
-<!--            cache: false,-->
-<!--            processData: false-->
-<!--        }).done(function (data) {-->
-<!--            console.log(data);-->
-<!--        })-->
-<!--    })-->
-<!--</script>-->
-
-
 </body>
 </html>

@@ -205,9 +205,14 @@ public class Ad {
         return photos;
     }
 
+    public void setPhotos(String photo) {
+        if(this.photos==null) {
+            photos = new ArrayList<>();
+        }
+        photos.add(new Photo(photo));
+    }
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
-
 }
 

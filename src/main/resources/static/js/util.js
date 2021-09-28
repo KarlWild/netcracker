@@ -24,17 +24,17 @@ $('#favourite').submit(function (e) {
     })
 })
 
-function compare(id) {
+function compare() {
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/ads/" + id + "/addComparison",
     })
         .done(function () {
-            drawCompare(id);
+            drawCompare();
         });
 }
 
-function drawCompare(id) {
+function drawCompare() {
     let compareButton = document.getElementById("btn-compare");
     let url = "http://localhost:8080/ads/" + id + "/getComparison";
     $.get(url, function (response) {
