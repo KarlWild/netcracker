@@ -15,6 +15,7 @@
 .ad {
     padding: 1.5rem;
     border: 1px #55595c;
+    text-overflow: ellipsis;
 }
 
 .ad:hover {

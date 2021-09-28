@@ -73,6 +73,10 @@ public class Ad {
         this.status = status;
     }
 
+    public void addPhoto(Photo image) {
+        photos.add(image);
+    }
+
     public Integer getId() {
         return id;
     }
