@@ -109,28 +109,25 @@ public class AdController {
 
     @PostMapping("/ad/create")
     public String create(@RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad,
-                         @RequestParam("image") MultipartFile[] multipartFile) throws IOException {
+                         @RequestParam("image") List<MultipartFile> multipartFile) throws IOException {
         Transport transport = transportService.findById(id).get();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
 
-        //if (!multipartFile.isEmpty()) {
-        if (multipartFile.length!=0) {
+        if (!multipartFile.isEmpty()) {
             String uploadDir = "user-photos/";
-            for(MultipartFile a : multipartFile) {
-                String fileName = StringUtils.cleanPath(Objects.requireNonNull(a.getOriginalFilename()));
-                ad.setPhotos(fileName);
+            for (MultipartFile file : multipartFile) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+                ad.addPhoto(new Photo(fileName));
                 //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
-                FileUploadUtil.saveFile(uploadDir, fileName, a);
+                FileUploadUtil.saveFile(uploadDir, fileName, file);
             }
         }
 
         adService.saveAd(ad);
         return "redirect:/ads/" + ad.getId();
-
-
     }
 
     @GetMapping("ads/{id}/edit")

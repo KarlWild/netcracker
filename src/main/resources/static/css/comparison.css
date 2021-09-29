@@ -13,9 +13,8 @@
 }
 
 .ad {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem 1.5rem 1.42rem;
     border: 1px #55595c;
-    text-overflow: ellipsis;
 }
 
 .ad:hover {
@@ -31,3 +30,8 @@
 .name-col {
     align-content: center;
 }
+
+/*.ltr > p {
+    direction: ltr;
+    text-overflow: ellipsis;
+}*/

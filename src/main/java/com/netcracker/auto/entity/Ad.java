@@ -47,14 +47,14 @@ public class Ad {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
     @Column(name = "file_name")
-    private List<Photo> photos;
+    private List<Photo> photos = new ArrayList<>();
 
     public Ad() {}
 
     public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
               String stateNumber, String vin, String sts, Integer numberOfOwners,
               String address, String description, Long price, String driveUnit,
-              boolean verified, String status) {
+              boolean verified, String status, List<Photo> photos) {
         this.id = id;
         this.transport = transport;
         this.user_id = user_id;
@@ -71,6 +71,7 @@ public class Ad {
         this.driveUnit = driveUnit;
         this.verified = verified;
         this.status = status;
+        this.photos = photos;
     }
 
     public void addPhoto(Photo image) {
@@ -209,12 +210,13 @@ public class Ad {
         return photos;
     }
 
-    public void setPhotos(String photo) {
+    /*public void setPhotos(String photo) {
         if(this.photos==null) {
             photos = new ArrayList<>();
         }
         photos.add(new Photo(photo));
-    }
+    }*/
+
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }

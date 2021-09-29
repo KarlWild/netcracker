@@ -185,7 +185,7 @@
                             </div>
                             <div th:unless="${ad.photos.isEmpty()}" class="carousel-item"
                                  th:each="photo, iter : ${ad.photos}"
-                                 th:classappend="${iter.index == 0}?'active'">
+                                 th:classappend="${iter.index == 1}?'active'">
                                 <img class="d-block w-100" th:src="@{${'/user-photos/' + photo.fileName}}"/>
                             </div>
                         </div>

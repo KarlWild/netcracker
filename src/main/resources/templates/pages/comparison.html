@@ -54,12 +54,13 @@
                 <p>Цвет</p>
                 <p>Пробег</p>
             </div>
-            <div class="col-md-2 ad text-center" th:each="item : ${ads}" th:with="ad=${item.ad}">
-                <p th:href="@{/ads/{id}(id=${ad.id})}" th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+            <div class="col-md-2 ad text-center text-truncate" th:each="item : ${ads}" th:with="ad=${item.ad}">
+                <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
                 <p th:text="${ad.price} + ' ' + ₽"></p>
                 <p th:text="${ad.transport.bodyType}"></p>
                 <p th:text="${ad.color}"></p>
                 <p th:text="${ad.mileage} + ' ' + км"></p>
+                <a th:href="@{/ads/{id}(id=${ad.id})}">Открыть</a>
             </div>
         </div>
     </div>
