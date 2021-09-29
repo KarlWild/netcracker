@@ -63,9 +63,10 @@ public class AdController {
             isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
         else isAdInComparison = Optional.of(new ComparisonAds());
 
-        List<Photo> list = new ArrayList<>();
+        /*List<Photo> list = new ArrayList<>();
         for (int i = 0; i < ad.getPhotos().size(); i += 2) list.add(ad.getPhotos().get(i));
-        ad.setPhotos(list);
+        ad.setPhotos(list);*/
+
         model.addAttribute("user", loggedInUser);
         model.addAttribute("ad", ad);
         model.addAttribute("comparison", isAdInComparison);

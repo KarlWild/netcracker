@@ -4,9 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Entity
@@ -42,14 +40,22 @@ public class Ad {
     @Column(name = "drive_Unit")
     private String driveUnit;
     private boolean verified;
-    private String status = "неактивно";
+    private String status = "Неактивно";
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
     @Column(name = "file_name")
-    private List<Photo> photos;
+    private Set<Photo> photos = new HashSet<>();
 
-    public Ad() {}
+    public void setPhotos(String photo) {
+        if (this.photos == null) {
+            photos = new HashSet<>();
+        }
+        photos.add(new Photo(photo));
+    }
+
+    public Ad() {
+    }
 
     public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
               String stateNumber, String vin, String sts, Integer numberOfOwners,
@@ -201,17 +207,11 @@ public class Ad {
         this.user_id = user_id;
     }
 
-    public List<Photo> getPhotos() {
+    public Set<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(String photo) {
-        if(this.photos==null) {
-            photos = new ArrayList<>();
-        }
-        photos.add(new Photo(photo));
-    }
-    public void setPhotos(List<Photo> photos) {
+    public void setPhotos(Set<Photo> photos) {
         this.photos = photos;
     }
 }
