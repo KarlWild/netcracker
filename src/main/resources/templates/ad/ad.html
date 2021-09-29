@@ -47,7 +47,7 @@
 
 <div sec:authorize="isAuthenticated()">
     <div class="container w-100 justify-content-center" style="margin-top: 20px">
-        <div th:if="${ad.user_id} != ${user} and ${ad.status==' продано '}"
+        <div th:if="${ad.user_id} != ${user} and ${ad.status==' Продано '}"
              class="alert alert-dismissible alert-warning">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong>Данная машина продана.</strong>
