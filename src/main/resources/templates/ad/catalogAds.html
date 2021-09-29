@@ -177,7 +177,7 @@
                     <p style="margin: 5px" th:text=" Автор + '  '  + ${ad.user_id.email}"></p>
                 </td>
                 <td>
-                    <b><p style="margin: 5px" th:text="${ad.price} + ' ₽'"></p></b>
+                    <p style="margin: 5px" th:text="${ad.price} + ' ₽'"></p>
                 </td>
                 <td>
                     <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>

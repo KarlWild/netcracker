@@ -62,8 +62,9 @@ public class AdController {
         if (principal != null)
             isAdInComparison = comparisonService.findComparisonByAdAndUser(ad, loggedInUser);
         else isAdInComparison = Optional.of(new ComparisonAds());
+
         List<Photo> list = new ArrayList<>();
-        for(int i = 0; i<ad.getPhotos().size(); i+=2) list.add(ad.getPhotos().get(i));
+        for (int i = 0; i < ad.getPhotos().size(); i += 2) list.add(ad.getPhotos().get(i));
         ad.setPhotos(list);
         model.addAttribute("user", loggedInUser);
         model.addAttribute("ad", ad);
@@ -120,9 +121,9 @@ public class AdController {
         ad.setTransport(transport);
 
         //if (!multipartFile.isEmpty()) {
-        if (multipartFile.length!=0) {
+        if (multipartFile.length != 0) {
             String uploadDir = "user-photos/";
-            for(MultipartFile a : multipartFile) {
+            for (MultipartFile a : multipartFile) {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(a.getOriginalFilename()));
                 ad.setPhotos(fileName);
                 //String directory = ResourceUtils.getFile("classpath:static/user-photos/").getAbsolutePath();
@@ -147,6 +148,7 @@ public class AdController {
 
         model.addAttribute("ads", ads);
         model.addAttribute("ad", ad);
+        adService.saveAd(ad);
         return "ad/edit";
     }
 
