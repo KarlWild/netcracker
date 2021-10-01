@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Админ-панель</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/catalog.css}">
+    <script src="https://kit.fontawesome.com/28e8f88d79.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+<style>
+    .label-lk {
+        font-size: 35px;
+        padding-left: 300px;
+        padding-right: 100px;
+        width: 1000px;
+    }
+</style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: header-admin"/>
+<div th:if="${admin.size()} == 0" class="container-fluid" style="padding-top: 15%">
+        <div class="col text-center" style="margin: auto">
+            <label class="form-label mt-4" style="font-size: 35px">Ничего не найдено </label>
+            <i class="far fa-frown m-lg-2" style="font-size: 30px"></i>
+        </div>
+</div>
+<div th:unless="${admin.size()} == 0" class="container-fluid">
+    <label class="col-form-label mt-2 label-lk">Найдено <span th:text="${admin.size()}">size</span>
+        объявлений</label>
+</div>
+<div style="width: 70%; font-family: Arial,Helvetica Neue,Helvetica, sans-serif; margin: 30px auto 0;">
+    <table class="table table-hover">
+        <tbody>
+        <th:block th:each="ad : ${admin}">
+            <tr scope="row">
+                <td>
+                    <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+                    <p th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>
+                    <p th:text="${ad.transport.bodyType}"></p>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>
+                    <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>
+                    <p style="margin: 5px" th:text=" Автор + '  '  + ${ad.user_id.email}"></p>
+                </td>
+                <td>
+                    <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>
+                </td>
+                <td>
+                    <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>
+                </td>
+                <td>
+                    <form th:action="@{/ads/{id}(id=${ad.id})}" method="GET">
+                        <button class="btn btn-dark" href="#" onclick="this.parentNode.submit()">Подробнее</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/admin/approve/{id}(id=${ad.id})}" method="POST">
+                        <button class="btn btn-success" href="#" onclick="this.parentNode.submit()">Одобрить</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/admin/reject/{id}(id=${ad.id})}" method="GET">
+                        <button class="btn btn-danger" href="#" onclick="this.parentNode.submit()">Отклонить</button>
+                    </form>
+
+                </td>
+            </tr>
+
+        </th:block>
+        </tbody>
+
+    </table>
+<!--    <table width="100%" style="border-spacing: 50px 0px">-->
+<!--        <tbody>-->
+<!--        <th:block th:each="ad : ${admin}">-->
+<!--            <tr>-->
+<!--                <td colspan="2">-->
+<!--                    <b>-->
+<!--                        <p style="margin: 5px"-->
+<!--                           th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>-->
+<!--                    </b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <b><p style="margin: 5px" th:text="${ad.price} + ' ' + ₽"></p></b>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p style="margin: 5px" th:text="${#dates.format(ad.yearOfIssue, 'yyyy')}"></p>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <p style="margin: 5px" th:text="${ad.mileage} + ' км'"></p>-->
+<!--                </td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td style="color: grey">-->
+<!--                    <p style="margin: 5px"-->
+<!--                       th:text="${ad.transport.specificationType + ' / ' + ad.transport.specificationPower + ' / ' + ad.transport.fuel}"></p>-->
+<!--                </td>-->
+<!--                <td style="color: grey">-->
+<!--                    <p style="margin: 5px" th:text="${ad.driveUnit} + ' привод'"></p>-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td></td>-->
+<!--                <td>-->
+<!--                    <form th:action="@{/ads/{id}(id=${ad.id})}" method="GET">-->
+<!--                        <button class="btn btn-dark" href="#" onclick="this.parentNode.submit()">Подробнее</button>-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <form th:action="@{/admin/approve/{id}(id=${ad.id})}" method="POST">-->
+<!--                        <button class="btn btn-success" href="#" onclick="this.parentNode.submit()">Одобрить</button>-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <form th:action="@{/admin/reject/{id}(id=${ad.id})}" method="GET">-->
+<!--                        <button class="btn btn-danger" href="#" onclick="this.parentNode.submit()">Отклонить</button>-->
+<!--                    </form>-->
+
+<!--                </td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <td style="color: grey">-->
+<!--                    <p style="margin: 5px" th:text="${ad.transport.bodyType}"></p>-->
+<!--                </td>-->
+<!--                <td style="color: grey">-->
+<!--                    <p style="margin: 5px" th:text="${ad.color} + ' цвет'"></p>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </th:block>-->
+<!--        </tbody>-->
+
+<!--    </table>-->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+</body>
+</html>

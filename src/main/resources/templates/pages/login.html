@@ -9,65 +9,53 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
 
+    <!-- Style -->
+
     <title>Главная страница</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Perekupam.net</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<div th:replace="fragments/navbar :: header"/>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalog/cars}">Каталог</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">О нас</a>
-                </li>
-                <li>
-                    <form class="d-flex">
-                        <label>
-                            <input class="form-control me-sm-2" type="text" placeholder="Поиск по объявлениям">
-                        </label>
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Поиск</button>
-                    </form>
-                </li>
-            </ul>
-            <form th:action="@{/reg}" class="d-flex">
-                <button type="submit" class="btn btn-outline-warning">Регистрация</button>
-            </form>
-            <form th:action="@{/login}" class="d-flex" style="margin-left: 15px">
-                <button type="submit" class="btn btn-outline-success">Вход</button>
-            </form>
-        </div>
+
+<div class="form-group" id="main-form" style="padding-left: 100px; padding-right: 100px;">
+    <div class="container col-5">
+        <label class="form-label mt-4" id="label-login" style="font-size: 35px">Вход</label>
+        <form name='f'
+              action="login"
+              method='POST'>
+            <div class="form-group">
+                <div th:if="${param.error}">
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <strong>Неправильная почта или пароль</strong>
+                    </div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-dismissible alert-warning">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <strong>Вы вышли из аккаунта</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1" class="form-label mt-4">E-Mail</label>
+                    <input type="text" name='username' class="form-control" id="exampleInputEmail1"
+                           aria-describedby="emailHelp" placeholder="Введите e-mail">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="form-label mt-4">Пароль</label>
+                    <input type="password" name='password' class="form-control" id="exampleInputPassword1"
+                           placeholder="Введите пароль">
+                </div>
+                <div class="col col-12 text-center">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 50%">Вход</button>
+                </div>
+            </div>
+        </form>
     </div>
-</nav>
-<h1>Login</h1>
-<form name='f' action="login" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='email' name='username' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

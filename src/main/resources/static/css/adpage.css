@@ -1,0 +1,64 @@
+#buttons {
+    margin-top: 20px;
+}
+
+.all-ad-container{
+    margin-top: 40px;
+    padding-left: 200px;
+    padding-right: 50px;
+    max-width: 100%;
+}
+.owner-btn{
+    width: 80%;
+    margin: 10px;
+}
+.button-container{
+    margin-top: 20%;
+}
+
+.carousel-item img {
+    height: 410px;
+    width: 410px;
+    object-fit: cover;
+}
+
+/*.icon-compare {
+    background: url(static/images/car-compare.png) no-repeat;
+    float: left;
+    height: 40px;
+    width: 40px;
+}*/
+
+.btn.car-compare {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+}
+
+.car-compare img {
+    height: 30px;
+    width: 30px;
+
+    /* change the color to red (link: https://codepen.io/sosuke/pen/Pjoqqp) */
+    /* filter: invert(8%) sepia(100%) saturate(7195%) hue-rotate(14deg) brightness(102%) contrast(105%);*/
+}
+
+.btn.favourite {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+}
+
+.favourite img {
+    height: 25px;
+    width: 25px;
+
+    /* change the color to red (link: https://codepen.io/sosuke/pen/Pjoqqp) */
+    /* filter: invert(8%) sepia(100%) saturate(7195%) hue-rotate(14deg) brightness(102%) contrast(105%);*/
+}
+
+
+
+
+
+

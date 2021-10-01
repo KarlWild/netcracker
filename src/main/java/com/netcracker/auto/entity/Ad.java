@@ -1,66 +1,218 @@
 package com.netcracker.auto.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "ad")
+@Table(name = "Ad")
 public class Ad {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long adId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ad_id")
+    private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transport_id")
     private Transport transport;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user_id;
+
+    @Column(name = "year_Of_Issue")
     private Date yearOfIssue;
     private String color;
     private Integer mileage;
-    private Boolean broken;
-    private Boolean customsCleared;
+    @Column(name = "state_Number")
     private String stateNumber;
     private String vin;
     private String sts;
-    private String vehiclePassport;
+    @Column(name = "number_Of_Owners")
     private Integer numberOfOwners;
-    private Boolean guarantee;
     private String address;
-    private Boolean verified;
-    private String status;
     private String description;
     private Long price;
+    @Column(name = "drive_Unit")
     private String driveUnit;
+    private boolean verified;
+    private String status = "Неактивно";
 
-    @OneToMany(mappedBy = "ad")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))
+    @Column(name = "file_name")
     private List<Photo> photos;
 
-    public void addPhoto(Photo photo) {
-        if (photos == null) {
+    public Ad() {}
+
+    public Ad(Integer id, Transport transport, User user_id, Date yearOfIssue, String color, Integer mileage,
+              String stateNumber, String vin, String sts, Integer numberOfOwners,
+              String address, String description, Long price, String driveUnit,
+              boolean verified, String status) {
+        this.id = id;
+        this.transport = transport;
+        this.user_id = user_id;
+        this.yearOfIssue = yearOfIssue;
+        this.color = color;
+        this.mileage = mileage;
+        this.stateNumber = stateNumber;
+        this.vin = vin;
+        this.sts = sts;
+        this.numberOfOwners = numberOfOwners;
+        this.address = address;
+        this.description = description;
+        this.price = price;
+        this.driveUnit = driveUnit;
+        this.verified = verified;
+        this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Transport getTransport() {
+        return transport;
+    }
+
+    public void setTransport(Transport transport) {
+        this.transport = transport;
+    }
+
+    public Date getYearOfIssue() {
+        return yearOfIssue;
+    }
+
+    public void setYearOfIssue(Date yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Integer getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(Integer mileage) {
+        this.mileage = mileage;
+    }
+
+    public String getStateNumber() {
+        return stateNumber;
+    }
+
+    public void setStateNumber(String stateNumber) {
+        this.stateNumber = stateNumber;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
+
+    public String getSts() {
+        return sts;
+    }
+
+    public void setSts(String sts) {
+        this.sts = sts;
+    }
+
+    public Integer getNumberOfOwners() {
+        return numberOfOwners;
+    }
+
+    public void setNumberOfOwners(Integer numberOfOwners) {
+        this.numberOfOwners = numberOfOwners;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public String getDriveUnit() {
+        return driveUnit;
+    }
+
+    public void setDriveUnit(String driveUnit) {
+        this.driveUnit = driveUnit;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public User getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(User user_id) {
+        this.user_id = user_id;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photo) {
+        if(this.photos==null) {
             photos = new ArrayList<>();
         }
-        photos.add(photo);
-        photo.setAd(this);
+        photos.add(new Photo(photo));
     }
-
-    public enum Status{
-        SOLD,
-        ON_SALE
-    }
-
-    public enum DriveUnit{
-        FRONT,
-        REAR,
-        FOUR
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 }
+

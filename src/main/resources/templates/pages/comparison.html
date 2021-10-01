@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Сравнение объявлений</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/28e8f88d79.js" crossorigin="anonymous"></script>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" th:href="@{/css/comparison.css}">
+
+</head>
+<body>
+
+<div sec:authorize="isAnonymous()">
+    <div th:replace="~{/fragments/navbar.html :: header}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:replace="~{/fragments/navbar.html :: header-admin}"/>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    <div th:replace="~{/fragments/navbar.html :: header-lk}"/>
+</div>
+
+
+<div th:if="${ads.size()} == 0">
+    <div class="container" style=" padding-top: 15%">
+        <div class="col text-center" style="margin: auto">
+            <label class="form-label mt-4" style="font-size: 35px">Пока вы не добавили сравнения </label>
+            <i class="far fa-frown m-lg-2" style="font-size: 30px"></i>
+        </div>
+    </div>
+</div>
+<div th:unless="${ads.size()} == 0">
+    <label class="form-label mt-4" style="font-size: 35px; margin-left: 15%">Сравнения</label>
+    <div class="container border border-secondary border-4">
+        <div class="row">
+            <div class="col-md-2 name-col text-center">
+                <p>Название</p>
+                <p>Цена</p>
+                <p>Кузов</p>
+                <p>Цвет</p>
+                <p>Пробег</p>
+            </div>
+            <div class="col-md-2 ad text-center text-truncate" th:each="item : ${ads}" th:with="ad=${item.ad}">
+                <p th:text="${ad.transport.brand + ' ' + ad.transport.model + ' ' + ad.transport.generationName}"></p>
+                <p th:text="${ad.price} + ' ' + ₽"></p>
+                <p th:text="${ad.transport.bodyType}"></p>
+                <p th:text="${ad.color}"></p>
+                <p th:text="${ad.mileage} + ' ' + км"></p>
+                <a th:href="@{/ads/{id}(id=${ad.id})}">Открыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

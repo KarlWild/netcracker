@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.0.2/dist/lux/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar :: header-lk"/>
+<div class="form-group" style="padding-top:20px">
+
+<h2 class="h2_style">Выбор модели <p th:text="${brand}"></p></h2>
+<div class="column">
+
+    <li style="margin-bottom: 10px" type="none" th:each="model : ${models}">
+        <a class="link_theme_auto"
+           th:text="${model.toString()}"
+           th:href="@{{brand}/{model}(brand=${brand.toString()}, model=${model.toString()})}">
+        </a>
+    </li>
+</div>
+</div>
+
+</body>
+</html>

@@ -6,12 +6,17 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
+@Repository
 @Transactional
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     /*@Override
     void delete(User user);
@@ -24,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void updateUserBalanceById(@Param("money") Double money,
                                @Param("id") Long id);
 
+    @Override
+    List<User> findAll();
 }

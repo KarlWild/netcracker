@@ -1,15 +1,16 @@
 package com.netcracker.auto.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Anton Popkov
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,6 +25,33 @@ public class Review {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "rating")
+    private Integer rating;
+
+    @Column(name = "author")
+    private String author;
+
+    public Review(String username, String comment, Integer rating, String author) {
+        this.username = username;
+        this.comment = comment;
+        this.rating = rating;
+        this.author = author;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Review review = (Review) o;
+
+        return Objects.equals(id, review.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1941106846;
+    }
 }
