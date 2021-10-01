@@ -42,7 +42,7 @@ public class Ad {
     @Column(name = "drive_Unit")
     private String driveUnit;
     private boolean verified;
-    private String status = "неактивно";
+    private String status = "Неактивно";
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "photos", joinColumns = @JoinColumn(name = "ad_id"))

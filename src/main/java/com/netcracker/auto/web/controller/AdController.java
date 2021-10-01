@@ -154,12 +154,14 @@ public class AdController {
 
     @PostMapping("ads/{id}/edit")
     public String update(@PathVariable("id") int adId, @RequestParam("transportId") Integer id, @ModelAttribute("ad") Ad ad) {
+//        Ad oldAd = adService.findById(adId);
         Transport transport = transportService.findById(id).get();
         ad.setTransport(transport);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ad.setUser_id(userService.findUserByEmail(currentPrincipalName));
         ad.setTransport(transport);
+
         //adService.updateAd(adId, ad);
         adRepository.save(ad);
         return "redirect:/lk/my_ads";
